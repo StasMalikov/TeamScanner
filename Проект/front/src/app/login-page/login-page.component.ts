@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import {AuthUser} from '../models/authUser';
 import {AuthService} from '../services/auth.service';
 
@@ -20,7 +20,5 @@ export class LoginPageComponent implements OnInit {
 
   signIn() {
     this.auth.signIn(this.authUser);
-    // this.onSubmit.emit(this.authUser);
-    // console.log(this.authUser.login + ' ' + this.authUser.password);
   }
 }
