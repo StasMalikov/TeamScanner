@@ -1,0 +1,10 @@
+
+.mylogo {
+  font-family: 'Arial Black'; /* Гарнитура текста */
+  font-size: 200%; /* Размер шрифта в процентах */
+}
+
+.mynavlinks {
+  font-size: 140%; /* Размер шрифта в процентах */
+  color: white;
+}
