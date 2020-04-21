@@ -1,10 +1,10 @@
 package teamScanner.security.jwt;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import teamScanner.model.Role;
 import teamScanner.model.Status;
 import teamScanner.model.User;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,26 +1,25 @@
 package teamScanner.controller;
 
-import teamScanner.dto.*;
-import teamScanner.model.Category;
-import teamScanner.model.Event;
-import teamScanner.repository.EventRepository;
-import teamScanner.repository.SearchSpecification;
-import teamScanner.repository.UserRepository;
-import teamScanner.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import teamScanner.dto.*;
+import teamScanner.model.Category;
+import teamScanner.model.Event;
 import teamScanner.model.Status;
 import teamScanner.model.User;
+import teamScanner.repository.EventRepository;
+import teamScanner.repository.SearchSpecification;
+import teamScanner.repository.UserRepository;
+import teamScanner.service.UserService;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 
 
 @RestController

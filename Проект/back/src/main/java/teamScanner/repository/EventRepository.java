@@ -1,12 +1,12 @@
 package teamScanner.repository;
 
-import teamScanner.model.Event;
-import teamScanner.model.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import teamScanner.model.Event;
+import teamScanner.model.Status;
 
 import java.util.List;
 

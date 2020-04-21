@@ -1,7 +1,7 @@
 package teamScanner.repository;
 
-import teamScanner.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
+import teamScanner.model.Role;
 
 
 public interface RoleRepository extends JpaRepository<Role, Long> {

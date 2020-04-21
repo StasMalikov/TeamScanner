@@ -6,6 +6,7 @@ import teamScanner.model.Role;
 import teamScanner.model.Status;
 import teamScanner.model.User;
 
+
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AdminUserDto {

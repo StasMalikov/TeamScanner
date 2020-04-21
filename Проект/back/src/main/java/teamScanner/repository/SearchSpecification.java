@@ -1,9 +1,9 @@
 package teamScanner.repository;
 
 import lombok.Data;
+import org.springframework.data.jpa.domain.Specification;
 import teamScanner.model.Category;
 import teamScanner.model.Event;
-import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

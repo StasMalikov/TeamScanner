@@ -1,18 +1,17 @@
 package teamScanner.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 import teamScanner.model.Role;
 import teamScanner.model.Status;
 import teamScanner.model.User;
 import teamScanner.repository.RoleRepository;
 import teamScanner.repository.UserRepository;
 import teamScanner.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 @Service
