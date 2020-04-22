@@ -7,7 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
 import { SubscriptionsComponent } from './cabinet/subscriptions/subscriptions.component';
 import { EventsComponent } from './cabinet/events/events.component';
@@ -20,6 +20,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
 import { CreateEventComponent } from './cabinet/create-event/create-event.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 
 @NgModule({
@@ -34,19 +37,22 @@ import { CreateEventComponent } from './cabinet/create-event/create-event.compon
     UserDataComponent,
     CreateEventComponent
   ],
-    imports: [
-      BrowserModule,
-      AppRoutingModule,
-      FormsModule,
-      HttpClientModule,
-      BrowserAnimationsModule,
-      MatButtonModule,
-      MatCardModule,
-      MatFormFieldModule,
-      MatInputModule,
-      MatSelectModule,
-      MatIconModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatIconModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
+    MatNativeDateModule,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
