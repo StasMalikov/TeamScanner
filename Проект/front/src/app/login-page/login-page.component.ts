@@ -13,7 +13,7 @@ export class LoginPageComponent implements OnInit {
     login: '',
     password: ''
   };
-
+hide = true;
   constructor(private auth: AuthService) { }
 
   ngOnInit() {}

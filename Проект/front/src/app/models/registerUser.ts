@@ -2,7 +2,7 @@ export class RegisterUser {
   login: string;
   password: string;
   city: string;
-  age: number;
+  age: string;
   //firstName: string;
   //lastName: string;
 
