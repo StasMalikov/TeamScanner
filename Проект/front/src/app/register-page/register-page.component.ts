@@ -18,15 +18,15 @@ export class RegisterPageComponent implements OnInit {
     login: '',
     password: '',
     city: '',
-    age: ''
+    age: new Date()
   };
 
   city: City[] = [
-    {value: '0', viewValue: 'Москва'},
-    {value: '1', viewValue: 'Санкт-Петербург'},
-    {value: '2', viewValue: 'Казань'},
-    {value: '2', viewValue: 'Нижний Новгород'},
-    {value: '2', viewValue: 'Екатеринбург'}
+    {value: 'Москва', viewValue: 'Москва'},
+    {value: 'Санкт-Петербург', viewValue: 'Санкт-Петербург'},
+    {value: 'Казань', viewValue: 'Казань'},
+    {value: 'Нижний Новгород', viewValue: 'Нижний Новгород'},
+    {value: 'Екатеринбург', viewValue: 'Екатеринбург'}
   ];
   selectedCity: string;
   hide1 = true;
@@ -39,6 +39,7 @@ export class RegisterPageComponent implements OnInit {
   ngOnInit() {}
 
   register() {
+    this.registerUser.city = this.selectedCity;
     this.auth.register(this.registerUser);
   }
 

@@ -1,4 +1,5 @@
 export class AuthUser {
-    username: string;
+    login: string;
     token: string;
+    roles: string[];
 }

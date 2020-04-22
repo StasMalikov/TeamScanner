@@ -22,6 +22,8 @@ export class AuthService {
   logout() {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('login');
+    localStorage.removeItem('roles');
+
   }
 
   public get logIn(): boolean {
@@ -35,9 +37,12 @@ export class AuthService {
   register(user: RegisterUser) {
     this.http.post( environment.apiUrl + '/api/v1/auth/registration' , user)
       .subscribe((resp: AuthUser) => {
-        localStorage.setItem('auth_token', resp.token);
-        localStorage.setItem('login', resp.username);
-        //this.router.navigate(['']).then(r => '');
+          localStorage.setItem('auth_token', resp.token);
+          localStorage.setItem('login', resp.login);
+          localStorage.setItem('roles', resp.roles.toString());
+          this.router.navigate(['']);
+      }, error => {
+        alert('Пользователь с таким логином уже существует');
       });
   }
 }
