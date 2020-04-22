@@ -3,6 +3,8 @@ package teamScanner.dto;
 import lombok.Data;
 import teamScanner.model.Event;
 
+import java.util.Date;
+
 @Data
 public class EventDTO {
     private Long eventID;
@@ -11,6 +13,8 @@ public class EventDTO {
     private String category;
     private String address;
     private Long creator_id;
+    private Date dateEvent;
+    private int participantsCount;
 
     public static EventDTO fromEvent(Event event) {
         EventDTO eventDTO = new EventDTO();
@@ -20,7 +24,8 @@ public class EventDTO {
         eventDTO.setCategory(event.getCategory().name());
         eventDTO.setAddress(event.getAddress());
         eventDTO.setCreator_id(event.getCreator_id());
-
+        eventDTO.setDateEvent(event.getDateEvent());
+        eventDTO.setParticipantsCount(event.getParticipants().size());
         return eventDTO;
     }
 }

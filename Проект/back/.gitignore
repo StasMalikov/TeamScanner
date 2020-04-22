@@ -1,0 +1,4 @@
+/.idea
+/target
+TeamScanner.iml
+/src/main/java/teamScanner/config/SwaggerConfig.java

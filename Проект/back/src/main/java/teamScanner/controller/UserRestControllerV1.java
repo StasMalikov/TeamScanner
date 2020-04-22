@@ -1,22 +1,13 @@
 package teamScanner.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import teamScanner.dto.*;
 import teamScanner.model.*;
-import teamScanner.repository.CommentRepository;
-import teamScanner.repository.EventRepository;
 import teamScanner.repository.UserRepository;
 import teamScanner.service.UserService;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -50,13 +41,16 @@ public class UserRestControllerV1 {
         if (user == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
+        if(!userService.matchesPassword(userService.encodePassword(userDto.getOldPass()),user.getPassword()))
+            return new ResponseEntity<>( HttpStatus.NOT_ACCEPTABLE);
+
         if (userDto.getLogin() != null)
             user.setLogin(userDto.getLogin());
         if (userDto.getPassword() != null)
             user.setPassword(userService.encodePassword(userDto.getPassword()));
         if (userDto.getCity() != null)
             user.setCity(userDto.getCity());
-        if (userDto.getAge() > 0 && userDto.getAge() < 110)
+        if (userDto.getAge() != null)
             user.setAge(userDto.getAge());
 
         userRepository.save(user);

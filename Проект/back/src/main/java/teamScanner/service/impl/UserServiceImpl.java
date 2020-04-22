@@ -61,6 +61,9 @@ public class UserServiceImpl implements UserService {
         return passwordEncoder.encode(password);
     }
 
+    public boolean matchesPassword(String inputPass, String dbPass){
+        return passwordEncoder.matches(inputPass,dbPass);
+    }
 
     @Override
     public User register(User user) {

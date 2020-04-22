@@ -18,6 +18,8 @@ public interface UserService {
 
     String encodePassword(String password);
 
+    public boolean matchesPassword(String password1, String password2);
+
     void delete(Long id);
 
     public User removeUserRole(User user, String roleName);

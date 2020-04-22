@@ -3,6 +3,8 @@ package teamScanner.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -30,11 +32,17 @@ public class User extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private List<Role> roles;
 
+    public List<String> getRolesStr() {
+        List<String> list = new ArrayList<>();
+        roles.forEach(role -> list.add(role.getName()));
+        return list;
+    }
+
     @Column(name = "city")
     private String city;
 
     @Column(name = "age")
-    private int age;
+    private Date age;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "user_event",

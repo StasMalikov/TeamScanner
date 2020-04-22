@@ -6,6 +6,8 @@ import teamScanner.model.Role;
 import teamScanner.model.Status;
 import teamScanner.model.User;
 
+import java.util.Date;
+
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -14,7 +16,7 @@ public class AdminUserDto {
     private String login;
     private String status;
     private String city;
-    private int age;
+    private Date age;
     private String roles;
 
     public User toUser() {

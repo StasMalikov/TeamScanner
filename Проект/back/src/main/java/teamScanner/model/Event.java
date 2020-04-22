@@ -3,6 +3,7 @@ package teamScanner.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -11,6 +12,9 @@ import java.util.List;
 public class Event extends BaseEntity {
     @Column(name = "name")
     private String name;
+
+    @Column(name = "date_event")
+    private Date dateEvent;
 
     @Column(name = "description")
     private String description;

@@ -13,7 +13,7 @@ public class JwtUser implements UserDetails {
     private final Long id;
     private final String username;
     private final String city;
-    private final int age;
+    private final Date age;
     private final String password;
 //    private final String email;
     private final boolean enabled;
@@ -25,7 +25,7 @@ public class JwtUser implements UserDetails {
             Long id,
             String username,
             String city,
-            int age,
+            Date age,
 //            String email,
             String password, Collection<? extends GrantedAuthority> authorities,
             boolean enabled,
@@ -76,7 +76,7 @@ public class JwtUser implements UserDetails {
         return city;
     }
 
-    public int getAge() {
+    public Date getAge() {
         return age;
     }
 

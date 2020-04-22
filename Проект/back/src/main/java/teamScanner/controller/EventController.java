@@ -3,6 +3,7 @@ package teamScanner.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +14,11 @@ import teamScanner.dto.MiniEventDTO;
 import teamScanner.model.*;
 import teamScanner.repository.CommentRepository;
 import teamScanner.repository.EventRepository;
+import teamScanner.repository.SearchSpecification;
 import teamScanner.repository.UserRepository;
 import teamScanner.service.UserService;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -61,6 +61,7 @@ public class EventController {
         event.setCreated(new Date());
         event.setStatus(Status.ACTIVE);
         event.setUpdated(new Date());
+        event.setDateEvent(new Date());
         events.add(event);
 
         user.setEvents(events);
@@ -147,6 +148,30 @@ public class EventController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         List<EventDTO> collect = banned.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
         return new ResponseEntity<>(collect, HttpStatus.OK);
+    }
+    @PostMapping(value = "sort_events")
+    public ResponseEntity<List<EventDTO>> getSortedEvents(@RequestBody EventDTO eventDTO) {
+        Event event = new Event();
+        Map<String, Object> map = new HashMap<>();
+        if (eventDTO.getName() != null)
+            map.put("name", eventDTO.getName());
+        if (eventDTO.getCategory() != null) {
+            String category = eventDTO.getCategory().toLowerCase();
+            if (category.contains("футбол"))
+                map.put("category", Category.FOOTBALL);
+            if (category.contains("волейбол"))
+                map.put("category", Category.VOLLEYBALL);
+            if (category.contains("баскетбол"))
+                map.put("category", Category.BASKETBALL);
+        }
+        if (eventDTO.getAddress() != null)
+            map.put("address", eventDTO.getAddress());
+        if (eventDTO.getDateEvent() != null)
+            map.put("dateEvent", eventDTO.getDateEvent());
+
+        SearchSpecification search = new SearchSpecification(map);
+        List<EventDTO> all = eventRepository.findAll(Specification.where(search)).stream().map(EventDTO::fromEvent).collect(Collectors.toList());
+        return new ResponseEntity<>(all, HttpStatus.OK);
     }
 
 }

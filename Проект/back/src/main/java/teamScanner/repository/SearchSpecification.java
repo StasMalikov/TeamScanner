@@ -51,7 +51,12 @@ public class SearchSpecification implements Specification<Event> {
 //                predicates.add(criteriaBuilder.in(root.get(entry.getKey())).value(entry.getValue()));
                 predicates.add(criteriaBuilder.equal(root.get(entry.getKey()), entry.getValue().toString()));
             }
-
+            if (entry.getKey().equals("dateEvent")) {
+//                predicates.add(criteriaBuilder.like(
+//                        criteriaBuilder.lower(root.get(entry.getKey())), "%" + entry.getValue().toString().toLowerCase()));
+//                predicates.add(criteriaBuilder.in(root.get(entry.getKey())).value(entry.getValue()));
+                predicates.add(criteriaBuilder.equal(root.get(entry.getKey()), entry.getValue().toString()));
+            }
 
         }
 

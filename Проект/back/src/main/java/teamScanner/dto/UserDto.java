@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import teamScanner.model.User;
 
+import java.util.Date;
+
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -11,8 +13,9 @@ public class UserDto {
     private Long id;
     private String login;
     private String password;
+    private String oldPass;
     private String city;
-    private int age;
+    private Date age;
 //    private String email;
 
     public User toUser(){
