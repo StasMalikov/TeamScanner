@@ -19,6 +19,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
+import { CreateEventComponent } from './cabinet/create-event/create-event.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {MatIconModule} from '@angular/material/icon';
     RegisterPageComponent,
     SubscriptionsComponent,
     EventsComponent,
-    UserDataComponent
+    UserDataComponent,
+    CreateEventComponent
   ],
     imports: [
       BrowserModule,
@@ -43,7 +45,7 @@ import {MatIconModule} from '@angular/material/icon';
       MatFormFieldModule,
       MatInputModule,
       MatSelectModule,
-      MatIconModule
+      MatIconModule,
     ],
   providers: [],
   bootstrap: [AppComponent]

@@ -11,12 +11,15 @@
     <li class="nav-item">
       <a class="nav-link mycabinetnavlinks active" href="/cabinet/user_data">Мои данные</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link mycabinetnavlinks" href="/cabinet/create_event">Создание события</a>
+    </li>
   </ul>
 
   <div class="row" style="margin-top: 15px">
-    <div class="col-3"></div>
+    <div class="col-1"></div>
 
-    <div class="col-6">
+    <div class="col-9">
       <mat-card>
         <div class="button">
         <mat-card-title>Изменение пользовательской информации</mat-card-title>
@@ -24,7 +27,7 @@
 
         <div class="row">
           <div class="col-6">
-
+              <div class="button">
               <mat-form-field class="example-full-width" style="min-width: 250px">
                 <mat-label>Имя</mat-label>
                 <input matInput placeholder="Введите имя" value="" >
@@ -71,11 +74,11 @@
             <br>
 
               <button mat-raised-button color="primary">Сохранить изменения</button>
-
+              </div>
           </div>
 
           <div class="col-6" style="margin-top: 15px">
-
+<div class="button">
             <mat-form-field  style="min-width: 300px">
               <mat-label>Укажите старый пароль</mat-label>
               <input matInput [type]="hide1 ? 'password' : 'text'">
@@ -102,7 +105,7 @@
 
             <br>
               <button mat-raised-button color="primary">Изменить пароль</button>
-
+</div>
 
           </div>
         </div>
@@ -110,6 +113,6 @@
       </mat-card>
     </div>
 
-    <div class="col-3"></div>
+    <div class="col-1"></div>
   </div>
 </div>

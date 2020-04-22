@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./subscriptions.component.css']
 })
 export class SubscriptionsComponent implements OnInit {
-
   constructor() { }
 
   ngOnInit() {
