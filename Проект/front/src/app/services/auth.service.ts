@@ -14,9 +14,15 @@ export class AuthService {
   constructor(private router: Router, private http: HttpClient) { }
 
   signIn(user: SignInUser) {
-    localStorage.setItem('login', user.login);
-    localStorage.setItem('auth_token', 'dsfdsf');
-    this.router.navigate(['']);
+    this.http.post( environment.apiUrl + '/api/v1/auth/login' , user)
+      .subscribe((resp: AuthUser) => {
+        localStorage.setItem('auth_token', resp.token);
+        localStorage.setItem('login', resp.login);
+        localStorage.setItem('roles', resp.roles.toString());
+        this.router.navigate(['']);
+      }, error => {
+        alert('Неверный логин или пароль');
+      });
   }
 
   logout() {

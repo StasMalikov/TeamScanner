@@ -24,8 +24,6 @@ export class RegisterPageComponent implements OnInit {
     age: new Date()
   };
 
-
-
   city: City[] = [
     {value: 'Москва', viewValue: 'Москва'},
     {value: 'Санкт-Петербург', viewValue: 'Санкт-Петербург'},
@@ -70,7 +68,7 @@ export class RegisterPageComponent implements OnInit {
       alert('Пароли не совпадают');
       return 0;
     }
-    
+
     this.registerUser.age = new Date(this.date.value);
     this.registerUser.city = this.selectedCity;
     this.auth.register(this.registerUser);

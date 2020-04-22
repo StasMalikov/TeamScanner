@@ -19,6 +19,16 @@ hide = true;
   ngOnInit() {}
 
   signIn() {
+    if (this.authUser.login.length < 6) {
+      alert('Длина логина должна быть больше 6 символов');
+      return 0;
+    }
+
+    if (this.authUser.password.length < 6) {
+      alert('Длина пароля должна быть больше 6 символов');
+      return 0;
+    }
+
     this.auth.signIn(this.authUser);
   }
 }
