@@ -3,25 +3,36 @@
       <div class="col-4"></div>
 
       <div class="col-4">
+        <mat-card>
 
-        <div class="button">
-        <h2>Вход</h2>
-        </div>
-
-        <form>
-          <div class="form-group">
-            <input type="text" class="form-control" [(ngModel)]="authUser.login" name="login" aria-describedby="emailHelp" placeholder="Логин">
+          <div class="button">
+            <h3>Вход</h3>
           </div>
-          <div class="form-group">
-            <input type="password" class="form-control" [(ngModel)]="authUser.password" name="password" placeholder="Пароль">
+          <br>
+
+          <div class="button">
+            <mat-form-field style="min-width: 300px">
+              <mat-label>Логин</mat-label>
+              <input matInput [(ngModel)]="authUser.login" name="login" aria-describedby="emailHelp" placeholder="Логин">
+            </mat-form-field>
+          </div>
+
+          <div class="button">
+          <mat-form-field style="min-width: 300px">
+            <mat-label>Пароль</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
           </div>
 
           <div class="button" style="margin-bottom: 5px">
-            <a style="color: white" class="btn btn-primary" (click)="signIn()">Войти</a>&nbsp;
-            <a style="color: white" href="/register" class="btn btn-primary">Зарегистрироваться</a>
+            <button mat-raised-button color="primary" (click)="signIn()">Войти</button>&nbsp;&nbsp;
+            <a mat-raised-button href="/register">Зарегистрироваться</a>
           </div>
+        </mat-card>
 
-        </form>
       </div>
 
       <div class="col-4"></div>

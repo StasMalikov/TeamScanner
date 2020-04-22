@@ -1,10 +1,12 @@
+.mycabinetnavlinks {
+  font-size: 110%; /* Размер шрифта в процентах */
+  color: black;
+}
+
 .section > div {
   display: inline-block;
 }
 
-.button {
-  text-align: center;
-}
 .button {
   text-align: center;
 }
@@ -25,3 +27,4 @@ input.example-right-align::-webkit-inner-spin-button {
 input.example-right-align {
   -moz-appearance: textfield;
 }
+

@@ -1,0 +1,118 @@
+<div class="container-fluid" style="margin-top: 5px">
+
+  <ul class="nav nav-tabs">
+    <h2>Личный кабинет</h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <li class="nav-item">
+      <a class="nav-link mycabinetnavlinks" href="/cabinet/subscriptions">Мои подписки</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link mycabinetnavlinks" href="/cabinet/events">Мои события</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link mycabinetnavlinks active" href="/cabinet/user_data">Мои данные</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link mycabinetnavlinks" href="/cabinet/create_event">Создание события</a>
+    </li>
+  </ul>
+
+  <div class="row" style="margin-top: 15px">
+    <div class="col-1"></div>
+
+    <div class="col-9">
+      <mat-card>
+        <div class="button">
+        <mat-card-title>Изменение пользовательской информации</mat-card-title>
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+              <div class="button">
+              <mat-form-field class="example-full-width" style="min-width: 250px">
+                <mat-label>Имя</mat-label>
+                <input matInput placeholder="Введите имя" value="" >
+              </mat-form-field>
+            <br>
+
+
+              <mat-form-field class="example-full-width" style="min-width: 250px">
+                <mat-label>Фамилия</mat-label>
+                <input matInput placeholder="Введите фамилию" value="">
+              </mat-form-field>
+            <br>
+
+
+              <mat-form-field class="example-full-width" style="min-width: 250px">
+                <mat-label>Логин</mat-label>
+                <input matInput value="Логин" readonly>
+              </mat-form-field>
+            <br>
+
+
+              <mat-form-field class="example-full-width" style="min-width: 250px">
+                <mat-label>Почта</mat-label>
+                <input matInput placeholder="Введите email" value="" type="email">
+              </mat-form-field>
+            <br>
+
+
+              <mat-form-field style="min-width: 250px">
+                <mat-label>Населённый пункт</mat-label>
+                <mat-select [(ngModel)]="selectedCity" name="city">
+                  <mat-option *ngFor="let c of city" [value]="c.value">
+                    {{c.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            <br>
+
+
+              <mat-form-field class="example-full-width" style="min-width: 250px">
+                <mat-label>Дата рождения</mat-label>
+                <input matInput placeholder="Укажите дату рождения" value="" type="datetime-local">
+              </mat-form-field>
+            <br>
+
+              <button mat-raised-button color="primary">Сохранить изменения</button>
+              </div>
+          </div>
+
+          <div class="col-6" style="margin-top: 15px">
+<div class="button">
+            <mat-form-field  style="min-width: 300px">
+              <mat-label>Укажите старый пароль</mat-label>
+              <input matInput [type]="hide1 ? 'password' : 'text'">
+              <button mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">
+                <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+
+            <mat-form-field  style="min-width: 300px">
+              <mat-label>Укажите новый пароль</mat-label>
+              <input matInput [type]="hide2 ? 'password' : 'text'">
+              <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2">
+                <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+
+            <mat-form-field  style="min-width: 300px">
+              <mat-label>Подтвердите новый пароль</mat-label>
+              <input matInput [type]="hide3 ? 'password' : 'text'">
+              <button mat-icon-button matSuffix (click)="hide3 = !hide3" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide3">
+                <mat-icon>{{hide3 ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+
+            <br>
+              <button mat-raised-button color="primary">Изменить пароль</button>
+</div>
+
+          </div>
+        </div>
+
+      </mat-card>
+    </div>
+
+    <div class="col-1"></div>
+  </div>
+</div>

@@ -8,6 +8,19 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import {FormsModule} from '@angular/forms';
+import { HttpClientModule} from '@angular/common/http';
+import { SubscriptionsComponent } from './cabinet/subscriptions/subscriptions.component';
+import { EventsComponent } from './cabinet/events/events.component';
+import { UserDataComponent } from './cabinet/user-data/user-data.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatIconModule} from '@angular/material/icon';
+import { CreateEventComponent } from './cabinet/create-event/create-event.component';
+
 
 @NgModule({
   declarations: [
@@ -15,12 +28,24 @@ import {FormsModule} from '@angular/forms';
     HeaderComponent,
     HomepageComponent,
     LoginPageComponent,
-    RegisterPageComponent
+    RegisterPageComponent,
+    SubscriptionsComponent,
+    EventsComponent,
+    UserDataComponent,
+    CreateEventComponent
   ],
     imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule
+      BrowserModule,
+      AppRoutingModule,
+      FormsModule,
+      HttpClientModule,
+      BrowserAnimationsModule,
+      MatButtonModule,
+      MatCardModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatSelectModule,
+      MatIconModule,
     ],
   providers: [],
   bootstrap: [AppComponent]

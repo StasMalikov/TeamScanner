@@ -1,5 +1,5 @@
 import {Component, OnInit } from '@angular/core';
-import {AuthUser} from '../models/authUser';
+import {SignInUser} from '../models/signInUser';
 import {AuthService} from '../services/auth.service';
 
 @Component({
@@ -9,11 +9,11 @@ import {AuthService} from '../services/auth.service';
 })
 export class LoginPageComponent implements OnInit {
 
-  authUser: AuthUser = {
+  authUser: SignInUser = {
     login: '',
     password: ''
   };
-
+hide = true;
   constructor(private auth: AuthService) { }
 
   ngOnInit() {}

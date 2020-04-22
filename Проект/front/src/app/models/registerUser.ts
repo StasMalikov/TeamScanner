@@ -1,6 +1,9 @@
 export class RegisterUser {
   login: string;
   password: string;
-  firstName: string;
-  lastName: string;
+  city: string;
+  age: string;
+  //firstName: string;
+  //lastName: string;
+
 }
