@@ -10,14 +10,17 @@
 
       <form>
         <div class="form-group">
-          <input type="text" class="form-control" [(ngModel)]="registerUser.firstName" name="firstName" aria-describedby="emailHelp" placeholder="Имя">
-        </div>
-        <div class="form-group">
-          <input type="text" class="form-control" [(ngModel)]="registerUser.lastName" name="lastName" aria-describedby="emailHelp" placeholder="Фамилия">
-        </div>
-        <div class="form-group">
           <input type="text" class="form-control" [(ngModel)]="registerUser.login" name="login" aria-describedby="emailHelp" placeholder="Логин">
         </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" [(ngModel)]="registerUser.city" name="city" aria-describedby="emailHelp" placeholder="Город">
+        </div>
+
+        <div class="form-group">
+          <input type="number" class="form-control" [(ngModel)]="registerUser.age" name="age" aria-describedby="emailHelp" placeholder="Возраст">
+        </div>
+
         <div class="form-group">
           <input type="password" class="form-control" [(ngModel)]="registerUser.password" name="password" placeholder="Пароль">
         </div>
@@ -27,7 +30,7 @@
         </div>
 
         <div class="button" style="margin-bottom: 5px">
-          <a style="color: white" href="/register" class="btn btn-primary" (click)="register()">Зарегистрироваться</a>&nbsp;
+          <a style="color: white" class="btn btn-primary" (click)="register()">Зарегистрироваться</a>&nbsp;
           <a style="color: white" href="/login" class="btn btn-primary" >Войти</a>&nbsp;
         </div>
 

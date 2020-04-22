@@ -8,6 +8,11 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import {FormsModule} from '@angular/forms';
+import { HttpClientModule} from '@angular/common/http';
+import { SubscriptionsComponent } from './cabinet/subscriptions/subscriptions.component';
+import { EventsComponent } from './cabinet/events/events.component';
+import { UserDataComponent } from './cabinet/user-data/user-data.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -15,12 +20,17 @@ import {FormsModule} from '@angular/forms';
     HeaderComponent,
     HomepageComponent,
     LoginPageComponent,
-    RegisterPageComponent
+    RegisterPageComponent,
+    SubscriptionsComponent,
+    EventsComponent,
+    UserDataComponent
   ],
     imports: [
         BrowserModule,
         AppRoutingModule,
-        FormsModule
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
     ],
   providers: [],
   bootstrap: [AppComponent]

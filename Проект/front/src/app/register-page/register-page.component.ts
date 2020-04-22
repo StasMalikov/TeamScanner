@@ -12,8 +12,8 @@ export class RegisterPageComponent implements OnInit {
   registerUser: RegisterUser = {
     login: '',
     password: '',
-    firstName: '',
-    lastName: ''
+    city: '',
+    age: 0
   };
 
   confirmPassword: string;

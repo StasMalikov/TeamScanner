@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
-import {AuthUser} from '../models/authUser';
+import {SignInUser} from '../models/signInUser';
 import { Router } from '@angular/router';
 import {RegisterUser} from '../models/registerUser';
+import { environment} from '../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {AuthUser} from '../models/authUser';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
-  signIn(user: AuthUser) {
+  signIn(user: SignInUser) {
     localStorage.setItem('login', user.login);
     localStorage.setItem('auth_token', 'dsfdsf');
     this.router.navigate(['']);
@@ -30,9 +33,11 @@ export class AuthService {
   }
 
   register(user: RegisterUser) {
-    localStorage.setItem('login', user.login);
-    localStorage.setItem('auth_token', 'dsfdsf');
-    this.router.navigate(['']);
-    //код регистрации
+    this.http.post( environment.apiUrl + '/api/v1/auth/registration' , user)
+      .subscribe((resp: AuthUser) => {
+        localStorage.setItem('auth_token', resp.token);
+        localStorage.setItem('login', resp.username);
+        //this.router.navigate(['']).then(r => '');
+      });
   }
 }
