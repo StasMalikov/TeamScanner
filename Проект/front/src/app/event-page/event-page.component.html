@@ -1,0 +1,42 @@
+<div class="container-fluid" style="margin-top: 5px">
+  <mat-card>
+
+    <div class="button">
+      <h4>Название события&nbsp;&nbsp;&nbsp;
+        <button mat-stroked-button *ngIf="!subscribe" color="primary" (click)="subscribeOn()">Подписаться</button>
+        <button mat-stroked-button *ngIf="subscribe" color="warn" (click)="subscribeOn()">Отписаться</button>
+      </h4>
+    </div>
+
+    <br>
+    <table>
+      <tr>
+        <td><b>Дата и время:&nbsp;</b></td>
+        <td>12.12.12 12:30&nbsp;&nbsp;&nbsp;</td>
+        <td><b>Категория:&nbsp;</b></td>
+        <td>Футбол&nbsp;&nbsp;&nbsp;</td>
+        <td><b>Участники:&nbsp;</b></td>
+        <td>20/25</td>
+      </tr>
+    </table>
+
+    <br>
+    <table>
+      <tr>
+        <td><b>Адрес:&nbsp;</b></td>
+        <td>г.Воронеж ул.Шишкова 100</td>
+      </tr>
+<br>
+      <tr>
+        <td valign="top"><b>Описание:&nbsp;</b></td>
+        <td valign="top">много текста много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста </td>
+      </tr>
+    </table>
+<br>
+    <div class="button">
+      <b>Комментарии:</b>
+    </div>
+  </mat-card>
+</div>
+
+

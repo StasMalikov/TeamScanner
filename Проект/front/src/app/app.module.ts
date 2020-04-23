@@ -22,6 +22,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { CreateEventComponent } from './cabinet/create-event/create-event.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { EventPageComponent } from './event-page/event-page.component';
 
 
 
@@ -35,7 +36,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     SubscriptionsComponent,
     EventsComponent,
     UserDataComponent,
-    CreateEventComponent
+    CreateEventComponent,
+    EventPageComponent
   ],
   imports: [
     BrowserModule,

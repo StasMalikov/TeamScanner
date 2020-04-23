@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import teamScanner.dto.AdminUserDto;
 import teamScanner.dto.EventDTO;
@@ -35,6 +36,7 @@ public class EventController {
         this.eventRepository = eventRepository;
     }
 
+    @Transactional
     @PostMapping(value = "add_event")
     public ResponseEntity<String> addEvent(@RequestBody EventDTO eventDTO) {
         User user = userService.findById(eventDTO.getCreator_id());
@@ -61,7 +63,7 @@ public class EventController {
         event.setCreated(new Date());
         event.setStatus(Status.ACTIVE);
         event.setUpdated(new Date());
-        event.setDateEvent(new Date());
+        event.setDateEvent(eventDTO.getDateEvent());
         events.add(event);
 
         user.setEvents(events);

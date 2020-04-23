@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {CreateEventClass} from '../../models/CreateEventClass';
+import {CreateEventClass} from '../../models/event/CreateEventClass';
 import {environment} from '../../../environments/environment';
 import {FullUser} from '../../models/user/FullUser';
 import {AuthService} from '../../services/auth.service';
@@ -18,9 +18,9 @@ interface Category {
 })
 export class CreateEventComponent implements OnInit {
   categories: Category[] = [
-    {value: '0', viewValue: 'Футбол'},
-    {value: '1', viewValue: 'Волейбол'},
-    {value: '2', viewValue: 'Баскетбол'}
+    {value: 'Футбол', viewValue: 'Футбол'},
+    {value: 'Волейбол', viewValue: 'Волейбол'},
+    {value: 'Баскетбол', viewValue: 'Баскетбол'}
   ];
   selectedCategory: string;
   date = new FormControl();
