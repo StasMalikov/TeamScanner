@@ -1,6 +1,8 @@
 <div class="container-fluid" style="margin-top: 5px">
   <mat-card>
-
+<div class="row">
+  <div class="col-1"></div>
+  <div class="col-10">
     <div class="button">
       <h4>Название события&nbsp;&nbsp;&nbsp;
         <button mat-stroked-button *ngIf="!subscribe" color="primary" (click)="subscribeOn()">Подписаться</button>
@@ -26,16 +28,43 @@
         <td><b>Адрес:&nbsp;</b></td>
         <td>г.Воронеж ул.Шишкова 100</td>
       </tr>
-<br>
+      <br>
       <tr>
         <td valign="top"><b>Описание:&nbsp;</b></td>
         <td valign="top">много текста много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста </td>
       </tr>
     </table>
-<br>
+    <br>
     <div class="button">
       <b>Комментарии:</b>
     </div>
+
+    <table class="table">
+      <tbody>
+      <tr>
+        <td>Иван:</td>
+        <td>текст комментария</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Петр:</td>
+        <td>текст комментария</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Вы:</td>
+        <td>
+          <input type="text" class="form-control" aria-describedby="emailHelp">
+        </td>
+        <td>
+          <button mat-stroked-button color="primary">Отправить</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-1"></div>
+</div>
   </mat-card>
 </div>
 
