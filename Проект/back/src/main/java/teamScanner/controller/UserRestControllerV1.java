@@ -41,6 +41,7 @@ public class UserRestControllerV1 {
         if (user == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
+
         if(!userService.matchesPassword(userService.encodePassword(userDto.getOldPass()),user.getPassword()))
             return new ResponseEntity<>( HttpStatus.NOT_ACCEPTABLE);
 
