@@ -48,6 +48,8 @@ export class UserDataComponent implements OnInit {
     })
       .subscribe((resp: FullUser) => {
         this.fullUser = resp;
+        this.fullUser.age = new Date(resp.age);
+        this.date = new FormControl(new Date(resp.age));
         this.city.push({value: this.city.length.toString(), viewValue: this.fullUser.city});
         this.selectedCityValue = this.city.length.toString();
       }, error => {
