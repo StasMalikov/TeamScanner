@@ -1,8 +1,8 @@
 <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
-      <div class="col-4"></div>
+      <div class="col-3"></div>
 
-      <div class="col-4">
+      <div class="col-6">
         <mat-card>
 
           <div class="button">
@@ -11,16 +11,16 @@
           <br>
 
           <div class="button">
-            <mat-form-field style="min-width: 300px">
+            <mat-form-field style="min-width: 250px">
               <mat-label>Логин</mat-label>
-              <input matInput [(ngModel)]="authUser.login" name="login" aria-describedby="emailHelp" placeholder="Логин">
+              <input matInput [(ngModel)]="authUser.login" name="login" aria-describedby="emailHelp">
             </mat-form-field>
           </div>
 
           <div class="button">
-          <mat-form-field style="min-width: 300px">
+          <mat-form-field style="min-width: 250px">
             <mat-label>Пароль</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'">
+            <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="authUser.password">
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
@@ -35,7 +35,7 @@
 
       </div>
 
-      <div class="col-4"></div>
+      <div class="col-3"></div>
     </div>
 
 </div>

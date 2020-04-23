@@ -16,5 +16,40 @@
     </li>
   </ul>
 
+  <div class="row" style="margin-top: 15px">
+    <div class="col-1"></div>
+
+    <div class="col-9">
+      <mat-card>
+
+        <h5>1. Название события</h5>
+        <mat-form-field class="example-full-width" style="min-width: 250px">
+          <input matInput placeholder="Введите название" value="" >
+        </mat-form-field>
+
+        <h5>2. Описание события</h5>
+        <mat-form-field style="min-width: 250px">
+          <mat-label>Описание</mat-label>
+          <textarea matInput></textarea>
+        </mat-form-field>
+
+        <h5>3. Выбор категории</h5>
+        <mat-form-field style="min-width: 250px">
+        <mat-label>Категория события</mat-label>
+        <mat-select [(ngModel)]="selectedCategory" name="city">
+          <mat-option *ngFor="let c of categories" [value]="c.value">
+            {{c.viewValue}}
+          </mat-option>
+        </mat-select>
+        </mat-form-field>
+
+      </mat-card>
+    </div>
+
+
+    <div class="col-1"></div>
+
+  </div>
+
 </div>
 
