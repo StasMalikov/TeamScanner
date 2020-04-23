@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import {SignInUser} from '../models/signInUser';
+import {SignInUser} from '../models/user/signInUser';
 import { Router } from '@angular/router';
-import {RegisterUser} from '../models/registerUser';
+import {RegisterUser} from '../models/user/registerUser';
 import { environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {AuthUser} from '../models/authUser';
+import {AuthUser} from '../models/user/authUser';
+import {FullUser} from '../models/user/FullUser';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class AuthService {
         localStorage.setItem('auth_token', resp.token);
         localStorage.setItem('login', resp.login);
         localStorage.setItem('roles', resp.roles.toString());
+        localStorage.setItem('id', resp.id);
         this.router.navigate(['']);
       }, error => {
         alert('Неверный логин или пароль');
@@ -29,7 +31,7 @@ export class AuthService {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('login');
     localStorage.removeItem('roles');
-
+    localStorage.removeItem('id');
   }
 
   public get logIn(): boolean {
@@ -40,15 +42,21 @@ export class AuthService {
     return localStorage.getItem('login');
   }
 
+  public get id(): string {
+    return localStorage.getItem('id');
+  }
+
   register(user: RegisterUser) {
     this.http.post( environment.apiUrl + '/api/v1/auth/registration' , user)
       .subscribe((resp: AuthUser) => {
           localStorage.setItem('auth_token', resp.token);
           localStorage.setItem('login', resp.login);
           localStorage.setItem('roles', resp.roles.toString());
+          localStorage.setItem('id', resp.id);
           this.router.navigate(['']);
       }, error => {
         alert('Пользователь с таким логином уже существует');
       });
   }
+
 }

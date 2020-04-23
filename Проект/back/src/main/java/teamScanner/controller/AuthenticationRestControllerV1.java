@@ -61,6 +61,7 @@ public class AuthenticationRestControllerV1 {
             response.put("login", username);
             response.put("token", token);
             response.put("roles", user.getRolesStr());
+            response.put("id", user.getId());
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -91,7 +92,7 @@ public class AuthenticationRestControllerV1 {
 
         user = userService.register(user);//шифруется тут
 
-        userRepository.save(user);
+        User saved =  userRepository.save(user);
 
         String token = jwtTokenProvider.createToken(login, user.getRoles());
 
@@ -99,6 +100,7 @@ public class AuthenticationRestControllerV1 {
         response.put("login", login);
         response.put("token", token);
         response.put("roles", user.getRolesStr());
+        response.put("id", saved.getId());
 
         return ResponseEntity.ok(response);
 //        } catch (AuthenticationException e) {

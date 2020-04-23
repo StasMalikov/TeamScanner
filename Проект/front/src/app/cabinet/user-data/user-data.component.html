@@ -28,52 +28,40 @@
         <div class="row">
           <div class="col-6">
               <div class="button">
-              <mat-form-field class="example-full-width" style="min-width: 250px">
-                <mat-label>Имя</mat-label>
-                <input matInput placeholder="Введите имя" value="" >
-              </mat-form-field>
-            <br>
-
-
-              <mat-form-field class="example-full-width" style="min-width: 250px">
-                <mat-label>Фамилия</mat-label>
-                <input matInput placeholder="Введите фамилию" value="">
-              </mat-form-field>
-            <br>
-
 
               <mat-form-field class="example-full-width" style="min-width: 250px">
                 <mat-label>Логин</mat-label>
-                <input matInput value="Логин" readonly>
+                <input matInput [(ngModel)]="fullUser.login" readonly>
               </mat-form-field>
             <br>
 
+                <mat-form-field style="min-width: 250px">
+                  <mat-label>Населённый пункт</mat-label>
+                  <mat-select [(value)]="selectedCityValue">
+                    <mat-option *ngFor="let c of city" value="{{c.value}}">{{c.viewValue}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+            <br>
 
-              <mat-form-field class="example-full-width" style="min-width: 250px">
-                <mat-label>Почта</mat-label>
-                <input matInput placeholder="Введите email" value="" type="email">
-              </mat-form-field>
+                <mat-form-field style="min-width: 250px">
+                  <mat-label>Дата рождения</mat-label>
+                  <input matInput [matDatepicker]="picker1" [formControl]="date">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            <br>
+
+            <mat-form-field  style="min-width: 250px">
+              <mat-label>Укажите пароль</mat-label>
+              <input matInput [type]="hide1 ? 'password' : 'text'">
+              <button mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">
+                <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
             <br>
 
 
-              <mat-form-field style="min-width: 250px">
-                <mat-label>Населённый пункт</mat-label>
-                <mat-select [(ngModel)]="selectedCity" name="city">
-                  <mat-option *ngFor="let c of city" [value]="c.value">
-                    {{c.viewValue}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            <br>
-
-
-              <mat-form-field class="example-full-width" style="min-width: 250px">
-                <mat-label>Дата рождения</mat-label>
-                <input matInput placeholder="Укажите дату рождения" value="" type="datetime-local">
-              </mat-form-field>
-            <br>
-
-              <button mat-raised-button color="primary">Сохранить изменения</button>
+              <button mat-raised-button color="primary" (click)="saveChanges()">Сохранить изменения</button>
               </div>
           </div>
 
