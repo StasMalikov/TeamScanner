@@ -36,7 +36,7 @@ public class EventController {
     }
 
     @PostMapping(value = "add_event")
-    public ResponseEntity<AdminUserDto> addEvent(@RequestBody EventDTO eventDTO) {
+    public ResponseEntity<String> addEvent(@RequestBody EventDTO eventDTO) {
         User user = userService.findById(eventDTO.getCreator_id());
         if (user == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -69,8 +69,8 @@ public class EventController {
         eventRepository.save(event);
         userRepository.save(user);
 
-        AdminUserDto result = AdminUserDto.fromUser(user);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        //AdminUserDto result = AdminUserDto.fromUser(user);
+        return new ResponseEntity<>("", HttpStatus.OK);
     }
 
     @PostMapping(value = "rem_event")

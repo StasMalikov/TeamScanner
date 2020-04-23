@@ -42,7 +42,7 @@ public class UserRestControllerV1 {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
 
-        if(!userService.matchesPassword(userService.encodePassword(userDto.getOldPass()),user.getPassword()))
+        if(!userService.matchesPassword(userDto.getOldPass(),user.getPassword()))
             return new ResponseEntity<>( HttpStatus.NOT_ACCEPTABLE);
 
         if (userDto.getLogin() != null)
