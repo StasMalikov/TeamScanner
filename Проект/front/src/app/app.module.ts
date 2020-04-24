@@ -23,6 +23,7 @@ import { CreateEventComponent } from './cabinet/create-event/create-event.compon
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { EventPageComponent } from './event-page/event-page.component';
+import { EventSearchComponent } from './event-search/event-search.component';
 
 
 
@@ -37,7 +38,8 @@ import { EventPageComponent } from './event-page/event-page.component';
     EventsComponent,
     UserDataComponent,
     CreateEventComponent,
-    EventPageComponent
+    EventPageComponent,
+    EventSearchComponent
   ],
   imports: [
     BrowserModule,

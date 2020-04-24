@@ -8,6 +8,7 @@ import {EventsComponent} from './cabinet/events/events.component';
 import {UserDataComponent} from './cabinet/user-data/user-data.component';
 import {CreateEventComponent} from './cabinet/create-event/create-event.component';
 import {EventPageComponent} from './event-page/event-page.component';
+import {EventSearchComponent} from './event-search/event-search.component';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'cabinet/user_data', component: UserDataComponent},
   {path: 'cabinet/create_event', component: CreateEventComponent},
   {path: 'event', component: EventPageComponent },
+  {path: 'event_search', component: EventSearchComponent },
 
 ];
 

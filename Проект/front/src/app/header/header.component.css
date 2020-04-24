@@ -8,3 +8,11 @@
   font-size: 140%; /* Размер шрифта в процентах */
   color: white;
 }
+
+.section > div {
+  display: inline-block;
+}
+
+.button {
+  text-align: center;
+}
