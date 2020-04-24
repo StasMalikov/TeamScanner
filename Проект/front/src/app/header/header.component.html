@@ -7,7 +7,7 @@
     <a class="nav-link active mynavlinks" href="/event_search">Поиск событий</a>
     <a class="nav-link mynavlinks" href="/cabinet">Личный кабинет</a>
     <a class="nav-link mynavlinks" href="/moderation">Модерация</a>
-    <a class="nav-link mynavlinks" href="#">Администрирование</a>
+    <a class="nav-link mynavlinks" href="/administration">Администрирование</a>
     <a *ngIf="!auth.logIn" class="nav-link mynavlinks" href="/login">Вход</a>
     <a *ngIf="auth.logIn" class="nav-link mynavlinks" >{{auth.username}}</a>
     <a href="" *ngIf="auth.logIn" class="nav-link mynavlinks" (click)="auth.logout()">Выход</a>

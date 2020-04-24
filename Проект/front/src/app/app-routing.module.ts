@@ -10,6 +10,7 @@ import {CreateEventComponent} from './cabinet/create-event/create-event.componen
 import {EventPageComponent} from './event-page/event-page.component';
 import {EventSearchComponent} from './event-search/event-search.component';
 import {ModerPageComponent} from './moder-page/moder-page.component';
+import {AdminPageComponent} from './admin-page/admin-page.component';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent },
@@ -23,7 +24,7 @@ const routes: Routes = [
   {path: 'event', component: EventPageComponent },
   {path: 'event_search', component: EventSearchComponent },
   {path: 'moderation', component: ModerPageComponent },
-
+  {path: 'administration', component: AdminPageComponent },
 ];
 
 @NgModule({

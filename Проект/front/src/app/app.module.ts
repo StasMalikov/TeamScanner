@@ -26,6 +26,7 @@ import { EventPageComponent } from './event-page/event-page.component';
 import { EventSearchComponent } from './event-search/event-search.component';
 import { ModerPageComponent } from './moder-page/moder-page.component';
 import {MatTabsModule} from '@angular/material/tabs';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     CreateEventComponent,
     EventPageComponent,
     EventSearchComponent,
-    ModerPageComponent
+    ModerPageComponent,
+    AdminPageComponent
   ],
   imports: [
     BrowserModule,
