@@ -8,19 +8,18 @@
           <div class="button">
             <h3>Вход</h3>
           </div>
-          <br>
 
           <div class="button">
-            <mat-form-field style="min-width: 300px">
+            <mat-form-field style="min-width: 70%">
               <mat-label>Логин</mat-label>
-              <input matInput [(ngModel)]="authUser.login" name="login" aria-describedby="emailHelp" placeholder="Логин">
+              <input matInput [(ngModel)]="authUser.login" name="login" aria-describedby="emailHelp">
             </mat-form-field>
           </div>
 
           <div class="button">
-          <mat-form-field style="min-width: 300px">
+          <mat-form-field style="min-width: 70%">
             <mat-label>Пароль</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'">
+            <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="authUser.password">
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>

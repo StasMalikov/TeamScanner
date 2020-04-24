@@ -9,14 +9,14 @@
       </div>
 
         <div class="button">
-          <mat-form-field style="min-width: 300px">
+          <mat-form-field style="min-width: 70%">
             <mat-label>Логин</mat-label>
-            <input matInput [(ngModel)]="registerUser.login" name="login" aria-describedby="emailHelp" placeholder="Логин">
+            <input matInput [(ngModel)]="registerUser.login" name="login" aria-describedby="emailHelp" >
           </mat-form-field>
         </div>
 
         <div class="button">
-        <mat-form-field style="min-width: 300px">
+        <mat-form-field style="min-width: 70%">
           <mat-label>Населённый пункт</mat-label>
           <mat-select [(ngModel)]="selectedCity" name="city">
             <mat-option *ngFor="let c of city" [value]="c.value">
@@ -27,14 +27,16 @@
         </div>
 
         <div class="button">
-        <mat-form-field class="example-full-width" style="min-width: 300px">
-          <mat-label>Дата рождения</mat-label>
-          <input matInput placeholder="Укажите дату рождения" value="" type="datetime-local" [(ngModel)]="registerUser.age" name="age">
-        </mat-form-field>
+          <mat-form-field style="min-width: 70%">
+            <mat-label>Дата рождения</mat-label>
+            <input matInput [matDatepicker]="picker1" [formControl]="date">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
         </div>
 
         <div class="button">
-          <mat-form-field  style="min-width: 300px">
+          <mat-form-field  style="min-width: 70%">
             <mat-label>Пароль</mat-label>
             <input matInput [type]="hide1 ? 'password' : 'text'" [(ngModel)]="registerUser.password" name="password">
             <button mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">
@@ -44,9 +46,9 @@
         </div>
 
         <div class="button">
-          <mat-form-field  style="min-width: 300px">
+          <mat-form-field  style="min-width: 70%">
             <mat-label>Пароль</mat-label>
-            <input matInput [type]="hide2 ? 'password' : 'text'" [(ngModel)]="confirmPassword" name="confirmPassword">
+            <input matInput [type]="hide2 ? 'password' : 'text'" [(ngModel)]="confirmPassword" name="confirmPassword" >
             <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2">
               <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
