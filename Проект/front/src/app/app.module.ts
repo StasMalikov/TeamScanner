@@ -24,7 +24,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { EventPageComponent } from './event-page/event-page.component';
 import { EventSearchComponent } from './event-search/event-search.component';
-
+import { ModerPageComponent } from './moder-page/moder-page.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { EventSearchComponent } from './event-search/event-search.component';
     UserDataComponent,
     CreateEventComponent,
     EventPageComponent,
-    EventSearchComponent
+    EventSearchComponent,
+    ModerPageComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +58,7 @@ import { EventSearchComponent } from './event-search/event-search.component';
     MatDatepickerModule,
     ReactiveFormsModule,
     MatNativeDateModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
