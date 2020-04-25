@@ -74,7 +74,7 @@ public class AuthenticationRestControllerV1 {
         String login = requestDto.getLogin();
 
         if (userRepository.findByLogin(login) != null) {
-            return new ResponseEntity<>(HttpStatus.FOUND);
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
 //                throw new UsernameNotFoundException("User with username: " + login + " already");
         }
 

@@ -22,7 +22,11 @@ import {MatIconModule} from '@angular/material/icon';
 import { CreateEventComponent } from './cabinet/create-event/create-event.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { EventPageComponent } from './event-page/event-page.component';
+import { EventSearchComponent } from './event-search/event-search.component';
+import { ModerPageComponent } from './moder-page/moder-page.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 
 
 @NgModule({
@@ -35,7 +39,11 @@ import { MatNativeDateModule } from '@angular/material/core';
     SubscriptionsComponent,
     EventsComponent,
     UserDataComponent,
-    CreateEventComponent
+    CreateEventComponent,
+    EventPageComponent,
+    EventSearchComponent,
+    ModerPageComponent,
+    AdminPageComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +60,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDatepickerModule,
     ReactiveFormsModule,
     MatNativeDateModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

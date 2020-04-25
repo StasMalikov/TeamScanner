@@ -17,9 +17,9 @@
   </ul>
 
   <div class="row" style="margin-top: 15px">
-    <div class="col-1"></div>
+    <div class="col-2"></div>
 
-    <div class="col-9">
+    <div class="col-7">
       <mat-card>
         <div class="button">
         <mat-card-title>Изменение пользовательской информации</mat-card-title>
@@ -27,17 +27,17 @@
 
         <div class="row">
           <div class="col-6">
-              <div class="button">
 
-              <mat-form-field class="example-full-width" style="min-width: 250px">
+
+              <mat-form-field class="example-full-width" style="min-width: 70%">
                 <mat-label>Логин</mat-label>
                 <input matInput [(ngModel)]="fullUser.login" readonly>
               </mat-form-field>
             <br>
 
-                <mat-label style="font-size: 90%">Текущий населённый пункт: {{fullUser.city}}</mat-label>
+                <mat-label style="font-size: 90%; min-width: 70%">Текущий населённый пункт: {{fullUser.city}}</mat-label>
                 <br>
-                <mat-form-field style="min-width: 250px">
+                <mat-form-field style="min-width: 70%">
                   <mat-label>Выберите новый населённый пункт</mat-label>
                   <mat-select [(ngModel)]="selectedCity" name="city">
                     <mat-option *ngFor="let c of city" [value]="c.value">
@@ -47,7 +47,7 @@
                 </mat-form-field>
             <br>
 
-                <mat-form-field style="min-width: 250px">
+                <mat-form-field style="min-width: 70%">
                   <mat-label>Дата рождения</mat-label>
                   <input matInput [matDatepicker]="picker1" [formControl]="date">
                   <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -55,7 +55,7 @@
                 </mat-form-field>
             <br>
 
-            <mat-form-field  style="min-width: 250px">
+            <mat-form-field  style="min-width: 70%">
               <mat-label>Укажите пароль</mat-label>
               <input matInput [type]="hide1 ? 'password' : 'text'" [(ngModel)]="fullUser.oldPass" >
               <button mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">
@@ -66,30 +66,31 @@
 
 
               <button mat-raised-button color="primary" (click)="saveChanges()">Сохранить изменения</button>
-              </div>
+
           </div>
 
           <div class="col-6" style="margin-top: 15px">
-<div class="button">
-            <mat-form-field  style="min-width: 300px">
+            <mat-form-field  style="min-width: 70%">
               <mat-label>Укажите старый пароль</mat-label>
-              <input matInput [type]="hide1 ? 'password' : 'text'" [(ngModel)]="fullUser.oldPass">
+              <input matInput [type]="hide1 ? 'password' : 'text'" [(ngModel)]="oldPswd">
               <button mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">
                 <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
               </button>
             </mat-form-field>
+  <br>
 
-            <mat-form-field  style="min-width: 300px">
+            <mat-form-field  style="min-width: 70%">
               <mat-label>Укажите новый пароль</mat-label>
-              <input matInput [type]="hide2 ? 'password' : 'text'" [(ngModel)]="fullUser.password">
+              <input matInput [type]="hide2 ? 'password' : 'text'" [(ngModel)]="newPswd">
               <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2">
                 <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
               </button>
             </mat-form-field>
 
-            <mat-form-field  style="min-width: 300px">
+  <br>
+            <mat-form-field  style="min-width: 70%">
               <mat-label>Подтвердите новый пароль</mat-label>
-              <input matInput [type]="hide3 ? 'password' : 'text'">
+              <input matInput [type]="hide3 ? 'password' : 'text'" [(ngModel)]="confirmNewPswd">
               <button mat-icon-button matSuffix (click)="hide3 = !hide3" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide3">
                 <mat-icon>{{hide3 ? 'visibility_off' : 'visibility'}}</mat-icon>
               </button>
@@ -97,7 +98,7 @@
 
             <br>
               <button mat-raised-button color="primary" (click)="updatePWSD()">Изменить пароль</button>
-</div>
+
 
           </div>
         </div>
@@ -105,6 +106,6 @@
       </mat-card>
     </div>
 
-    <div class="col-1"></div>
+    <div class="col-2"></div>
   </div>
 </div>

@@ -39,6 +39,9 @@ export class UserDataComponent implements OnInit {
   hide2 = true;
   hide3 = true;
   selectedCity = '';
+  oldPswd = '';
+  newPswd = '';
+  confirmNewPswd = '';
 
   constructor(private auth: AuthService, private http: HttpClient) {}
 
@@ -66,21 +69,31 @@ export class UserDataComponent implements OnInit {
         this.fullUser = resp;
         this.fullUser.age = new Date(resp.age);
         this.date = new FormControl(new Date(resp.age));
+        alert('Пользователькие данные успешно изменены');
       }, error => {
         alert('Упс, ошибка');
       });
   }
 
   updatePWSD() {
+    if (this.newPswd === this.confirmNewPswd) {
+    this.fullUser.oldPass = this.oldPswd;
+    this.fullUser.password = this.newPswd;
     this.http.post( environment.apiUrl + '/api/v1/users/change_user' , this.fullUser , {
-      headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
-    })
-      .subscribe((resp: FullUser) => {
-        this.fullUser = resp;
-        this.fullUser.age = new Date(resp.age);
-        this.date = new FormControl(new Date(resp.age));
-      }, error => {
-        alert('Упс, ошибка');
-      });
+        headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
+      })
+        .subscribe((resp: FullUser) => {
+          this.fullUser = resp;
+          this.fullUser.age = new Date(resp.age);
+          this.date = new FormControl(new Date(resp.age));
+          alert('Пароль успешно изменён');
+        }, error => {
+          alert('Упс, ошибка');
+        });
+
+    } else {
+      alert('Пароли не совпадают');
+    }
+
   }
 }
