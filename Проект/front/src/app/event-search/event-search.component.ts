@@ -18,6 +18,7 @@ export class EventSearchComponent implements OnInit {
   date = new FormControl();
   categorySelected = '';
   citySelected = '';
+  length = 0;
 
   city: City[] = [
     {value: 'Москва', viewValue: 'Москва'},
@@ -39,14 +40,17 @@ export class EventSearchComponent implements OnInit {
     this.getEvents();
   }
 
-
-
   getEvents() {
     this.http.post( environment.apiUrl + '/api/v1/events/get_events' , '', {
       headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
     })
       .subscribe((resp: FullEvent[]) => {
         this.events = resp;
+        if (typeof this.events === undefined) {
+          this.length = 0;
+        } else {
+          this.length = this.events.length;
+        }
       }, error => {
         alert('Упс, ошибка');
       });
@@ -70,6 +74,11 @@ export class EventSearchComponent implements OnInit {
       })
         .subscribe((resp: FullEvent[]) => {
           this.events = resp;
+          if (typeof this.events === undefined) {
+            this.length = 0;
+          } else {
+            this.length = this.events.length;
+          }
         }, error => {
           alert('Упс, ошибка');
         });
@@ -92,6 +101,11 @@ export class EventSearchComponent implements OnInit {
       })
         .subscribe((resp: FullEvent[]) => {
           this.events = resp;
+          if (typeof this.events === undefined) {
+            this.length = 0;
+          } else {
+            this.length = this.events.length;
+          }
         }, error => {
           alert('Упс, ошибка');
         });

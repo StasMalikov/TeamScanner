@@ -36,12 +36,16 @@
       </mat-form-field>
       &nbsp;
 
-      <button mat-raised-button color="primary" (click)="getSorted()">Отсортировать</button>
-
+      <button mat-raised-button color="primary" (click)="getSorted()">Отсортировать</button>&nbsp;&nbsp;
+      <button mat-raised-button color="primary" (click)="getEvents()">Показать всё подряд</button>
     </div>
   </div>
 
-  <div class="row row-cols-1 row-cols-md-2">
+  <div class="alert alert-success" role="alert" *ngIf="length == 0" style="text-align: center">
+    Не нашлось ни одного события! Попробуйте указать другие параметры сортировки
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-3">
 
     <div class="col mb-3" *ngFor="let e of events; index as i">
       <div class="card">
