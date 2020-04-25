@@ -8,9 +8,10 @@
     <div class="col-10">
       <mat-form-field>
         <mat-label>Категория</mat-label>
-        <mat-select>
-          <mat-option>Футбол</mat-option>
-          <mat-option>Баскетбол</mat-option>
+        <mat-select [(ngModel)]="categorySelected" name="category">
+          <mat-option *ngFor="let c of categories" [value]="c.value">
+            {{c.viewValue}}
+          </mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -18,49 +19,36 @@
 
       <mat-form-field>
         <mat-label>Город</mat-label>
-        <mat-select>
-          <mat-option>Москва</mat-option>
-          <mat-option>Воронеж</mat-option>
+        <mat-select [(ngModel)]="citySelected" name="city">
+          <mat-option *ngFor="let c of city" [value]="c.value">
+            {{c.viewValue}}
+          </mat-option>
         </mat-select>
       </mat-form-field>
 
       &nbsp;
 
       <mat-form-field>
-        <mat-label>Дата</mat-label>
-        <mat-select>
-          <mat-option>Раньше</mat-option>
-          <mat-option>Позже</mat-option>
-        </mat-select>
+        <mat-label>Дата события</mat-label>
+        <input matInput [matDatepicker]="picker1" [formControl]="date">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
       </mat-form-field>
       &nbsp;
 
-      <button mat-raised-button color="primary">Отсортировать</button>
+      <button mat-raised-button color="primary" (click)="getSorted()">Отсортировать</button>
 
     </div>
   </div>
 
   <div class="row row-cols-1 row-cols-md-2">
 
-    <div class="col mb-3">
+    <div class="col mb-3" *ngFor="let e of events; index as i">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Название события</h5>
-          <p class="card-text">Категория: футбол</p>
-          <p class="card-text">много букав много букав много букав много букав много букав</p>
-
-          <button mat-stroked-button color="primary">Подписаться</button>&nbsp;
-          <button mat-stroked-button>Подробнее</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="col mb-3">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Название события</h5>
-          <p class="card-text">Категория: футбол</p>
-          <p class="card-text">много букав много букав много букав много букав много букав</p>
+          <h5 class="card-title">{{e.name}}</h5>
+          <p class="card-text">Категория: {{e.category}}</p>
+          <p class="card-text">{{e.description}}</p>
 
           <button mat-stroked-button color="primary">Подписаться</button>&nbsp;
           <button mat-stroked-button>Подробнее</button>

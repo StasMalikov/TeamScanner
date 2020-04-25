@@ -5,11 +5,7 @@ import {environment} from '../../../environments/environment';
 import {FullUser} from '../../models/user/FullUser';
 import {AuthService} from '../../services/auth.service';
 import {HttpClient} from '@angular/common/http';
-
-interface Category {
-  value: string;
-  viewValue: string;
-}
+import {Category} from '../../models/Category';
 
 @Component({
   selector: 'app-create-event',
@@ -37,8 +33,7 @@ export class CreateEventComponent implements OnInit {
 
   constructor(private auth: AuthService, private http: HttpClient) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   createEventAction() {
     console.log(this.time);

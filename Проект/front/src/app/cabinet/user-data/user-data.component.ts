@@ -4,11 +4,7 @@ import {FullUser} from '../../models/user/FullUser';
 import {AuthService} from '../../services/auth.service';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-
-interface City {
-  value: string;
-  viewValue: string;
-}
+import {City} from '../../models/City';
 
 @Component({
   selector: 'app-user-data',
