@@ -19,6 +19,9 @@ public class Event extends BaseEntity {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "city")
+    private String city;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "category")
     private Category category;
@@ -27,13 +30,15 @@ public class Event extends BaseEntity {
     private String address;
 
     @Column(name = "creator_id")
-    private Long creator_id;
+    private Long creatorId;
 
     @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY)
     private List<User> participants;
 
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
     private List<Comment> comments;
+
+
 
     @Override
     public String toString() {
@@ -42,7 +47,7 @@ public class Event extends BaseEntity {
                 ", description='" + description + '\'' +
                 ", category=" + category +
                 ", address='" + address + '\'' +
-                ", creator_id=" + creator_id +
+                ", creator_id=" + creatorId +
                 '}';
     }
 }

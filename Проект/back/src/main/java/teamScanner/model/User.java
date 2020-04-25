@@ -54,4 +54,14 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "creator", fetch = FetchType.LAZY)
     private List<Comment> comments;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                ", city='" + city + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

@@ -25,13 +25,13 @@ import java.util.stream.Collectors;
 public class AdminRestControllerV1 {
     private final UserService userService;
     private final UserRepository userRepository;
-    private final EventRepository eventRepository;
+//    private final EventRepository eventRepository;
 
     @Autowired
-    public AdminRestControllerV1(UserService userService, UserRepository userRepository, EventRepository eventRepository) {
+    public AdminRestControllerV1(UserService userService, UserRepository userRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
-        this.eventRepository = eventRepository;
+//        this.eventRepository = eventRepository;
     }
 
     @PostMapping(value = "set_role")

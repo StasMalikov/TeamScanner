@@ -28,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_ENDPOINT = "/api/v1/auth/**";
     private static final String USER_ENDPOINT = "/api/v1/users/**";
     private static final String EVENT_ENDPOINT = "/api/v1/events/**";
+    private static final String COMMENT_ENDPOINT = "/api/v1/events/**";
 
 
     @Autowired

@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import teamScanner.model.Role;
 
@@ -45,7 +46,6 @@ public class JwtTokenProvider {
     }
 
     public String createToken(String username, List<Role> roles) {
-
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("roles", getRoleNames(roles));
 
