@@ -17,6 +17,7 @@ import teamScanner.repository.CommentRepository;
 import teamScanner.repository.EventRepository;
 import teamScanner.repository.SearchSpecification;
 import teamScanner.repository.UserRepository;
+import teamScanner.service.EntityManagerService;
 import teamScanner.service.UserService;
 
 import java.util.*;
@@ -55,7 +56,7 @@ public class EventController {
             event.setCategory(Category.BASKETBALL);
 
         event.setAddress(eventDTO.getAddress());
-        event.setCreator_id(eventDTO.getCreator_id());
+        event.setCreatorId(eventDTO.getCreator_id());
         List<User> users = new ArrayList<>();
         users.add(user);
         event.setParticipants(users);
@@ -102,6 +103,7 @@ public class EventController {
         userRepository.save(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @PostMapping(value = "change_event")
     public ResponseEntity<AdminUserDto> changeEvent(@RequestBody EventDTO eventDTO) {
         Event event = eventRepository.findById(eventDTO.getEventID()).get();
@@ -123,7 +125,7 @@ public class EventController {
         if (eventDTO.getAddress() != null)
             event.setAddress(eventDTO.getAddress());
         if (eventDTO.getCreator_id() != null && eventDTO.getCreator_id() > 0)
-            event.setCreator_id(eventDTO.getCreator_id());
+            event.setCreatorId(eventDTO.getCreator_id());
 
         eventRepository.save(event);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -140,8 +142,36 @@ public class EventController {
     @Transactional
     @PostMapping(value = "get_events")
     public ResponseEntity<List<EventDTO>> getEvent() {
-        List<EventDTO> collect = eventRepository.findAll().stream().map(EventDTO::fromEvent).collect(Collectors.toList());
-        return new ResponseEntity<>(collect, HttpStatus.OK);
+        List<Event> collect = eventRepository.findAll();
+        List<EventDTO> collect1 = collect.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
+        return new ResponseEntity<>(collect1, HttpStatus.OK);
+    }
+
+    @Transactional
+    @GetMapping(value = "get_creator_events/{id}")
+    public ResponseEntity<List<EventDTO>> getCreatorEvent(@PathVariable(value = "id") Long id) {
+        List<Event> collect = eventRepository.findByCreatorId(id);
+        List<EventDTO> collect1 = collect.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
+
+        return new ResponseEntity<>(collect1, HttpStatus.OK);
+    }
+
+    @Autowired
+    EntityManagerService entityManagerService;
+
+    @Transactional
+    @GetMapping(value = "get_events_where_user_exist/{id}")
+    public ResponseEntity<List<EventDTO>> getUserExistEvent(@PathVariable(value = "id") Long id) {
+        List<Long> idEventsWhereUserExist = entityManagerService.getIdEventsWhereUserExist(id);
+        List<Event> collect = new ArrayList<>();
+        for (Long integer : idEventsWhereUserExist) {
+            Event event = eventRepository.findById(integer).get();
+            if (event != null)
+                collect.add(event);
+        }
+        List<EventDTO> collect1 = collect.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
+
+        return new ResponseEntity<>(collect1, HttpStatus.OK);
     }
 
     @PostMapping(value = "eventsByName")
@@ -152,6 +182,8 @@ public class EventController {
         List<EventDTO> collect = banned.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
         return new ResponseEntity<>(collect, HttpStatus.OK);
     }
+
+    @Transactional
     @PostMapping(value = "sort_events")
     public ResponseEntity<List<EventDTO>> getSortedEvents(@RequestBody EventDTO eventDTO) {
         Event event = new Event();
@@ -171,10 +203,14 @@ public class EventController {
             map.put("address", eventDTO.getAddress());
         if (eventDTO.getDateEvent() != null)
             map.put("dateEvent", eventDTO.getDateEvent());
+        if (eventDTO.getCity() != null)
+            map.put("city", eventDTO.getCity());
 
         SearchSpecification search = new SearchSpecification(map);
-        List<EventDTO> all = eventRepository.findAll(Specification.where(search)).stream().map(EventDTO::fromEvent).collect(Collectors.toList());
-        return new ResponseEntity<>(all, HttpStatus.OK);
+
+        List<Event> all = eventRepository.findAll(Specification.where(search));
+        List<EventDTO> collect = all.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
+        return new ResponseEntity<>(collect, HttpStatus.OK);
     }
 
 }

@@ -12,6 +12,7 @@ public class EventDTO {
     private String description;
     private String category;
     private String address;
+    private String city;
     private Long creator_id;
     private Date dateEvent;
     private int participantsCount;
@@ -21,10 +22,11 @@ public class EventDTO {
         eventDTO.setEventID(event.getId());
         eventDTO.setName(event.getName());
         eventDTO.setDescription(event.getDescription());
-        eventDTO.setCategory(event.getCategory().name());
+        eventDTO.setCategory(event.getCategory().toString());
         eventDTO.setAddress(event.getAddress());
-        eventDTO.setCreator_id(event.getCreator_id());
+        eventDTO.setCreator_id(event.getCreatorId());
         eventDTO.setDateEvent(event.getDateEvent());
+        eventDTO.setCity(event.getCity());
         eventDTO.setParticipantsCount(event.getParticipants().size());
         return eventDTO;
     }

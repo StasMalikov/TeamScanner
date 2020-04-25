@@ -1,6 +1,7 @@
 package teamScanner.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import teamScanner.model.Role;
@@ -8,8 +9,10 @@ import teamScanner.model.Status;
 import teamScanner.model.User;
 import teamScanner.repository.RoleRepository;
 import teamScanner.repository.UserRepository;
+import teamScanner.service.Mapper;
 import teamScanner.service.UserService;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +24,15 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+
+    @Value("${spring.datasource.url}")
+    String DATABASE_URL;
+
+    @Value("${spring.datasource.username}")
+    String DATABASE_USER;
+
+    @Value("${spring.datasource.password}")
+    String DATABASE_PASS;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
@@ -114,4 +126,5 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
 //        log.info("IN delete - user with id: {} successfully deleted");
     }
+
 }
