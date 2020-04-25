@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {RegisterUser} from '../models/user/registerUser';
 import {AuthService} from '../services/auth.service';
 import {FormControl} from '@angular/forms';
-
-interface City {
-  value: string;
-  viewValue: string;
-}
+import {City} from '../models/City';
 
 @Component({
   selector: 'app-register-page',

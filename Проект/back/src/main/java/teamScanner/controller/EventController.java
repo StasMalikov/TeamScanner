@@ -137,6 +137,7 @@ public class EventController {
         return map;
     }
 
+    @Transactional
     @PostMapping(value = "get_events")
     public ResponseEntity<List<EventDTO>> getEvent() {
         List<EventDTO> collect = eventRepository.findAll().stream().map(EventDTO::fromEvent).collect(Collectors.toList());
