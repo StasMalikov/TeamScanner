@@ -9,6 +9,15 @@ import teamScanner.model.*;
 import teamScanner.repository.UserRepository;
 import teamScanner.service.UserService;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 
 @RestController
 @RequestMapping(value = "/api/v1/users/")
@@ -42,8 +51,8 @@ public class UserRestControllerV1 {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
 
-        if(!userService.matchesPassword(userDto.getOldPass(),user.getPassword()))
-            return new ResponseEntity<>( HttpStatus.NOT_ACCEPTABLE);
+        if (!userService.matchesPassword(userDto.getOldPass(), user.getPassword()))
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 
         if (userDto.getLogin() != null)
             user.setLogin(userDto.getLogin());
@@ -58,6 +67,12 @@ public class UserRestControllerV1 {
 
         AdminUserDto result = AdminUserDto.fromUser(user);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "cites")
+    public ResponseEntity<List<String>> getCity() throws IOException {
+        List<String> lines = Files.lines(Paths.get("src\\main\\resources\\city.txt")).sorted().collect(Collectors.toList());
+        return new ResponseEntity<>(lines, HttpStatus.OK);
     }
 
 //    @PostMapping(value = "add_event")
