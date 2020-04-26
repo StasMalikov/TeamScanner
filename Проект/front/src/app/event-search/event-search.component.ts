@@ -7,6 +7,9 @@ import {FormControl} from '@angular/forms';
 import {Category} from '../models/Category';
 import {SortEventData} from '../models/event/SortEventData';
 import {SortEvent} from '../models/event/SortEvent';
+import {EventService} from '../services/event-service';
+import {Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-event-search',
@@ -27,7 +30,8 @@ export class EventSearchComponent implements OnInit {
     {value: 'Баскетбол', viewValue: 'Баскетбол'}
   ];
 
-  constructor(private auth: AuthService, private http: HttpClient) { }
+  constructor(private auth: AuthService, private http: HttpClient,
+              private eventService: EventService, private router: Router) { }
 
   ngOnInit() {
     this.getEvents();
@@ -35,13 +39,18 @@ export class EventSearchComponent implements OnInit {
   }
 
   getCities() {
-    this.http.post( environment.apiUrl + '/api/v1/users/cites','')
+    this.http.post( environment.apiUrl + '/api/v1/users/cites', '')
       .subscribe((resp: string[]) => {
         this.allCities = resp;
 
       }, error => {
         alert('Упс, ошибка');
       });
+  }
+
+  detailedEvent(e: FullEvent) {
+    this.eventService.setEvent(e);
+    this.router.navigate(['event']);
   }
 
   getEvents() {
