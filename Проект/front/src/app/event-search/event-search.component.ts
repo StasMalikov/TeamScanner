@@ -7,6 +7,8 @@ import {FormControl} from '@angular/forms';
 import {City} from '../models/City';
 import {Category} from '../models/Category';
 import {FullEventData} from '../models/event/FullEventData';
+import {SortEventData} from '../models/event/SortEventData';
+import {SortEvent} from '../models/event/SortEvent';
 
 @Component({
   selector: 'app-event-search',
@@ -17,9 +19,9 @@ export class EventSearchComponent implements OnInit {
   events: FullEvent[];
   date = new FormControl();
   categorySelected = '';
-  citySelected = '';
   length = 0;
 
+  citySelected = '';
   city: City[] = [
     {value: 'Москва', viewValue: 'Москва'},
     {value: 'Санкт-Петербург', viewValue: 'Санкт-Петербург'},
@@ -58,15 +60,10 @@ export class EventSearchComponent implements OnInit {
 
   getSorted() {
     if (new Date(this.date.value).getDate() === new Date(new FormControl().value).getDate()) {
-      const body: FullEventData = {
-        eventID: 0,
-        name: '',
-        description: '',
+      const body: SortEventData = {
         category: this.categorySelected,
-        address: this.citySelected,
-        creator_id: 0,
         dateEvent: '',
-        participantsCount: 0
+        city: this.citySelected
       };
 
       this.http.post( environment.apiUrl + '/api/v1/events/sort_events' , body, {
@@ -85,15 +82,10 @@ export class EventSearchComponent implements OnInit {
 
 
     } else {
-      const body: FullEvent = {
-        eventID: 0,
-        name: '',
-        description: '',
+      const body: SortEvent = {
         category: this.categorySelected,
-        address: this.citySelected,
-        creator_id: 0,
         dateEvent: new Date(this.date.value),
-        participantsCount: 0
+        city: this.citySelected
       };
 
       this.http.post( environment.apiUrl + '/api/v1/events/sort_events' , body, {

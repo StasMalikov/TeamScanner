@@ -74,6 +74,18 @@
 
             <br>
 
+            <h5>8. Город события</h5>
+            <mat-form-field style="min-width: 70%">
+              <mat-label>Город</mat-label>
+              <mat-select [(ngModel)]="citySelected" name="city">
+                <mat-option *ngFor="let c of city" [value]="c.value">
+                  {{c.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <br>
+
             <button mat-raised-button color="primary" (click)="createEventAction()">Создать событие</button>
           </div>
 
