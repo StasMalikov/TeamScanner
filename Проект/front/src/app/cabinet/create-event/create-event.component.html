@@ -77,9 +77,9 @@
             <h5>8. Город события</h5>
             <mat-form-field style="min-width: 70%">
               <mat-label>Город</mat-label>
-              <mat-select [(ngModel)]="citySelected" name="city">
-                <mat-option *ngFor="let c of city" [value]="c.value">
-                  {{c.viewValue}}
+              <mat-select name="city">
+                <mat-option *ngFor="let state of allCities; index as i" [value]="state" (onSelectionChange)="selectCity(allCities[i])">
+                  {{state}}
                 </mat-option>
               </mat-select>
             </mat-form-field>

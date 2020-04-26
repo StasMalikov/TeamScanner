@@ -4,9 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {FullEvent} from '../models/event/FullEvent';
 import {FormControl} from '@angular/forms';
-import {City} from '../models/City';
 import {Category} from '../models/Category';
-import {FullEventData} from '../models/event/FullEventData';
 import {SortEventData} from '../models/event/SortEventData';
 import {SortEvent} from '../models/event/SortEvent';
 
@@ -20,15 +18,8 @@ export class EventSearchComponent implements OnInit {
   date = new FormControl();
   categorySelected = '';
   length = 0;
-
-  citySelected = '';
-  city: City[] = [
-    {value: 'Москва', viewValue: 'Москва'},
-    {value: 'Санкт-Петербург', viewValue: 'Санкт-Петербург'},
-    {value: 'Казань', viewValue: 'Казань'},
-    {value: 'Нижний Новгород', viewValue: 'Нижний Новгород'},
-    {value: 'Екатеринбург', viewValue: 'Екатеринбург'}
-  ];
+  allCities: string[] = [];
+  selectedCityVar = '';
 
   categories: Category[] = [
     {value: 'Футбол', viewValue: 'Футбол'},
@@ -40,6 +31,17 @@ export class EventSearchComponent implements OnInit {
 
   ngOnInit() {
     this.getEvents();
+    this.getCities();
+  }
+
+  getCities() {
+    this.http.post( environment.apiUrl + '/api/v1/users/cites','')
+      .subscribe((resp: string[]) => {
+        this.allCities = resp;
+
+      }, error => {
+        alert('Упс, ошибка');
+      });
   }
 
   getEvents() {
@@ -58,12 +60,16 @@ export class EventSearchComponent implements OnInit {
       });
   }
 
+  selectCity(input: string) {
+    this.selectedCityVar = input;
+  }
+
   getSorted() {
     if (new Date(this.date.value).getDate() === new Date(new FormControl().value).getDate()) {
       const body: SortEventData = {
         category: this.categorySelected,
         dateEvent: '',
-        city: this.citySelected
+        city: this.selectedCityVar
       };
 
       this.http.post( environment.apiUrl + '/api/v1/events/sort_events' , body, {
@@ -85,7 +91,7 @@ export class EventSearchComponent implements OnInit {
       const body: SortEvent = {
         category: this.categorySelected,
         dateEvent: new Date(this.date.value),
-        city: this.citySelected
+        city: this.selectedCityVar
       };
 
       this.http.post( environment.apiUrl + '/api/v1/events/sort_events' , body, {

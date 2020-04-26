@@ -35,14 +35,13 @@
               </mat-form-field>
             <br>
 
-                <mat-label style="font-size: 90%; min-width: 70%">Текущий населённый пункт: {{fullUser.city}}</mat-label>
-                <br>
                 <mat-form-field style="min-width: 70%">
                   <mat-label>Выберите новый населённый пункт</mat-label>
-                  <mat-select [(ngModel)]="selectedCity" name="city">
-                    <mat-option *ngFor="let c of city" [value]="c.value">
-                      {{c.viewValue}}
+                  <mat-select name="city" [(value)]="fullUser.city">
+                    <mat-option *ngFor="let state of allCities; index as i" [value]="state" (onSelectionChange)="selectCity(allCities[i])">
+                      {{state}}
                     </mat-option>
+
                   </mat-select>
                 </mat-form-field>
             <br>

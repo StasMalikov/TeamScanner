@@ -18,9 +18,9 @@
         <div class="button">
         <mat-form-field style="min-width: 70%">
           <mat-label>Населённый пункт</mat-label>
-          <mat-select [(ngModel)]="selectedCity" name="city">
-            <mat-option *ngFor="let c of city" [value]="c.value">
-              {{c.viewValue}}
+          <mat-select name="city">
+            <mat-option *ngFor="let state of allCities; index as i" [value]="state" (onSelectionChange)="selectCity(allCities[i])">
+              {{state}}
             </mat-option>
           </mat-select>
         </mat-form-field>
