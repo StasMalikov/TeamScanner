@@ -61,7 +61,7 @@
 
             <h5>6. Дата события</h5>
             <mat-form-field style="min-width: 70%">
-              <mat-label>Дата рождения</mat-label>
+              <mat-label>Дата события</mat-label>
               <input matInput [matDatepicker]="picker1" [formControl]="date">
               <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
               <mat-datepicker #picker1></mat-datepicker>
@@ -70,6 +70,18 @@
             <h5>7. Время события</h5>
             <mat-form-field class="example-full-width" style="min-width: 70%">
               <input matInput value="" type="time" [(ngModel)]="time" name="time">
+            </mat-form-field>
+
+            <br>
+
+            <h5>8. Город события</h5>
+            <mat-form-field style="min-width: 70%">
+              <mat-label>Город</mat-label>
+              <mat-select name="city">
+                <mat-option *ngFor="let state of allCities; index as i" [value]="state" (onSelectionChange)="selectCity(allCities[i])">
+                  {{state}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
 
             <br>

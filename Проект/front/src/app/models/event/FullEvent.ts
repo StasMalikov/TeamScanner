@@ -8,4 +8,5 @@ export class FullEvent {
     creator_id: number;
     dateEvent: Date;
     participantsCount: number;
+    city: string;
 }

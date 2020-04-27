@@ -4,7 +4,6 @@ import {FullUser} from '../../models/user/FullUser';
 import {AuthService} from '../../services/auth.service';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {City} from '../../models/City';
 
 @Component({
   selector: 'app-user-data',
@@ -16,28 +15,21 @@ export class UserDataComponent implements OnInit {
 
   fullUser: FullUser = {
     id: 0,
-  login: '',
-  password: '',
-  oldPass: '',
-  city: '',
-  age: new Date(),
+    login: '',
+    password: '',
+    oldPass: '',
+    city: '',
+    age: new Date(),
   };
-
-  city: City[] = [
-    {value: 'Москва', viewValue: 'Москва'},
-    {value: 'Санкт-Петербург', viewValue: 'Санкт-Петербург'},
-    {value: 'Казань', viewValue: 'Казань'},
-    {value: 'Нижний Новгород', viewValue: 'Нижний Новгород'},
-    {value: 'Екатеринбург', viewValue: 'Екатеринбург'}
-  ];
 
   hide1 = true;
   hide2 = true;
   hide3 = true;
-  selectedCity = '';
   oldPswd = '';
   newPswd = '';
   confirmNewPswd = '';
+  allCities: string[] = [];
+
 
   constructor(private auth: AuthService, private http: HttpClient) {}
 
@@ -53,11 +45,26 @@ export class UserDataComponent implements OnInit {
       }, error => {
         alert('Упс, ошибка');
       });
+
+    this.getCities();
+  }
+
+  selectCity(input: string) {
+    this.fullUser.city = input;
+  }
+
+  getCities() {
+    this.http.post( environment.apiUrl + '/api/v1/users/cites','')
+      .subscribe((resp: string[]) => {
+        this.allCities = resp;
+
+      }, error => {
+        alert('Упс, ошибка');
+      });
   }
 
   saveChanges() {
     this.fullUser.age = new Date(this.date.value);
-    this.fullUser.city = this.selectedCity;
     this.http.post( environment.apiUrl + '/api/v1/users/change_user' , this.fullUser , {
         headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
     })

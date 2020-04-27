@@ -4,7 +4,7 @@
   <div class="col-1"></div>
   <div class="col-10">
     <div class="button">
-      <h4>Название события&nbsp;&nbsp;&nbsp;
+      <h4>{{event.name}}&nbsp;&nbsp;&nbsp;
         <button mat-stroked-button *ngIf="!subscribe" color="primary" (click)="subscribeOn()">Подписаться</button>
         <button mat-stroked-button *ngIf="subscribe" color="warn" (click)="subscribeOn()">Отписаться</button>
       </h4>
@@ -14,11 +14,12 @@
     <table>
       <tr>
         <td><b>Дата и время:&nbsp;</b></td>
-        <td>12.12.12 12:30&nbsp;&nbsp;&nbsp;</td>
+        <td>{{event.dateEvent | date: 'dd.MM.yyyy'}} {{event.dateEvent.getHours()}}:{{event.dateEvent.getMinutes()}}&nbsp;&nbsp;&nbsp;</td>
+<!--        <td>{{event.dateEvent | date: 'dd.MM.yyyy h:m': '0000': 'ru'}}&nbsp;&nbsp;&nbsp;</td>-->
         <td><b>Категория:&nbsp;</b></td>
-        <td>Футбол&nbsp;&nbsp;&nbsp;</td>
+        <td>{{event.category}}&nbsp;&nbsp;&nbsp;</td>
         <td><b>Участники:&nbsp;</b></td>
-        <td>20/25</td>
+        <td>{{event.participantsCount}}</td>
       </tr>
     </table>
 
@@ -26,12 +27,12 @@
     <table>
       <tr>
         <td><b>Адрес:&nbsp;</b></td>
-        <td>г.Воронеж ул.Шишкова 100</td>
+        <td>{{event.address}}</td>
       </tr>
       <br>
       <tr>
         <td valign="top"><b>Описание:&nbsp;</b></td>
-        <td valign="top">много текста много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста </td>
+        <td valign="top">{{event.description}}</td>
       </tr>
     </table>
     <br>

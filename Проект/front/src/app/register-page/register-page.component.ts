@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {RegisterUser} from '../models/user/registerUser';
 import {AuthService} from '../services/auth.service';
 import {FormControl} from '@angular/forms';
-import {City} from '../models/City';
+import {environment} from '../../environments/environment';
+import {FullEvent} from '../models/event/FullEvent';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-register-page',
@@ -20,22 +22,28 @@ export class RegisterPageComponent implements OnInit {
     age: new Date()
   };
 
-  city: City[] = [
-    {value: 'Москва', viewValue: 'Москва'},
-    {value: 'Санкт-Петербург', viewValue: 'Санкт-Петербург'},
-    {value: 'Казань', viewValue: 'Казань'},
-    {value: 'Нижний Новгород', viewValue: 'Нижний Новгород'},
-    {value: 'Екатеринбург', viewValue: 'Екатеринбург'}
-  ];
-  selectedCity = '';
   hide1 = true;
   hide2 = true;
 
+  allCities: string[] = [];
   confirmPassword = '';
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private http: HttpClient) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getCities();
+  }
+
+  getCities() {
+    this.http.post( environment.apiUrl + '/api/v1/users/cites','')
+      .subscribe((resp: string[]) => {
+          this.allCities = resp;
+
+      }, error => {
+        alert('Упс, ошибка');
+      });
+  }
+
 
   register() {
     if (this.registerUser.login.length < 6) {
@@ -43,7 +51,7 @@ export class RegisterPageComponent implements OnInit {
       return 0;
     }
 
-    if (this.selectedCity === '') {
+    if (this.registerUser.city === '') {
       alert('Укажите ваш населённый пункт');
       return 0;
     }
@@ -66,8 +74,10 @@ export class RegisterPageComponent implements OnInit {
     }
 
     this.registerUser.age = new Date(this.date.value);
-    this.registerUser.city = this.selectedCity;
     this.auth.register(this.registerUser);
   }
 
+  selectCity(input: string) {
+    this.registerUser.city = input;
+  }
 }

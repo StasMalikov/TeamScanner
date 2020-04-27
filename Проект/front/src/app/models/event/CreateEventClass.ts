@@ -7,4 +7,5 @@ export class CreateEventClass {
     creator_id: number;
     dateEvent: Date;
     participantsCount: number;
+    city: string;
 }

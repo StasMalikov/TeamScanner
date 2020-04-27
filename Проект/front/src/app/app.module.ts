@@ -27,6 +27,7 @@ import { EventSearchComponent } from './event-search/event-search.component';
 import { ModerPageComponent } from './moder-page/moder-page.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { AdminPageComponent } from './admin-page/admin-page.component';
+import { CookieService} from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -62,7 +63,9 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
     MatNativeDateModule,
     MatTabsModule,
   ],
-  providers: [],
+  providers: [
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

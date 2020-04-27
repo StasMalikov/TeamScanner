@@ -67,6 +67,7 @@ public class EventController {
         event.setCity(eventDTO.getCity());
         event.setDateEvent(eventDTO.getDateEvent());
         events.add(event);
+        event.setCity(eventDTO.getCity());
 
         user.setEvents(events);
 

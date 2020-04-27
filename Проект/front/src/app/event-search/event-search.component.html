@@ -19,9 +19,9 @@
 
       <mat-form-field>
         <mat-label>Город</mat-label>
-        <mat-select [(ngModel)]="citySelected" name="city">
-          <mat-option *ngFor="let c of city" [value]="c.value">
-            {{c.viewValue}}
+        <mat-select name="city">
+          <mat-option *ngFor="let state of allCities; index as i" [value]="state" (onSelectionChange)="selectCity(allCities[i])">
+            {{state}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -36,12 +36,16 @@
       </mat-form-field>
       &nbsp;
 
-      <button mat-raised-button color="primary" (click)="getSorted()">Отсортировать</button>
-
+      <button mat-raised-button color="primary" (click)="getSorted()">Отсортировать</button>&nbsp;&nbsp;
+      <button mat-raised-button color="primary" (click)="getEvents()">Показать всё подряд</button>
     </div>
   </div>
 
-  <div class="row row-cols-1 row-cols-md-2">
+  <div class="alert alert-success" role="alert" *ngIf="length == 0" style="text-align: center">
+    Не нашлось ни одного события! Попробуйте указать другие параметры сортировки
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-3">
 
     <div class="col mb-3" *ngFor="let e of events; index as i">
       <div class="card">
@@ -50,8 +54,7 @@
           <p class="card-text">Категория: {{e.category}}</p>
           <p class="card-text">{{e.description}}</p>
 
-          <button mat-stroked-button color="primary">Подписаться</button>&nbsp;
-          <button mat-stroked-button>Подробнее</button>
+          <button mat-stroked-button color="primary" (click)="detailedEvent(events[i])">Посмотреть подробнее</button>
         </div>
       </div>
     </div>
