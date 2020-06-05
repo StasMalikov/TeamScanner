@@ -6,7 +6,7 @@
     <div class="button">
       <h4>{{event.name}}&nbsp;&nbsp;&nbsp;
         <button mat-stroked-button *ngIf="!subscribe" color="primary" (click)="subscribeOn()">Подписаться</button>
-        <button mat-stroked-button *ngIf="subscribe" color="warn" (click)="subscribeOn()">Отписаться</button>
+        <button mat-stroked-button *ngIf="subscribe" color="warn" (click)="subscribeOff()">Отписаться</button>
       </h4>
     </div>
 

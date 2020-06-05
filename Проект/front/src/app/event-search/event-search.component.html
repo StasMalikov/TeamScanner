@@ -19,8 +19,8 @@
 
       <mat-form-field>
         <mat-label>Город</mat-label>
-        <mat-select name="city">
-          <mat-option *ngFor="let state of allCities; index as i" [value]="state" (onSelectionChange)="selectCity(allCities[i])">
+        <mat-select name="city" [(ngModel)]="selectedCityVar">
+          <mat-option *ngFor="let state of allCities; index as i" [value]="state">
             {{state}}
           </mat-option>
         </mat-select>
@@ -37,7 +37,8 @@
       &nbsp;
 
       <button mat-raised-button color="primary" (click)="getSorted()">Отсортировать</button>&nbsp;&nbsp;
-      <button mat-raised-button color="primary" (click)="getEvents()">Показать всё подряд</button>
+      <button mat-raised-button color="primary" (click)="getEvents()">Показать всё подряд</button>&nbsp;&nbsp;
+      <button mat-raised-button color="primary" (click)="resetFilters()">Сбросить фильтры</button>&nbsp;&nbsp;
     </div>
   </div>
 

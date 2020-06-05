@@ -69,10 +69,6 @@ export class EventSearchComponent implements OnInit {
       });
   }
 
-  selectCity(input: string) {
-    this.selectedCityVar = input;
-  }
-
   getSorted() {
     if (new Date(this.date.value).getDate() === new Date(new FormControl().value).getDate()) {
       const body: SortEventData = {
@@ -117,5 +113,11 @@ export class EventSearchComponent implements OnInit {
           alert('Упс, ошибка');
         });
     }
+  }
+
+  resetFilters() {
+    this.date = new FormControl();
+    this.categorySelected = '';
+    this.selectedCityVar = '';
   }
 }
