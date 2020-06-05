@@ -15,7 +15,8 @@ export class CreateEventComponent implements OnInit {
   categories: Category[] = [
     {value: 'Футбол', viewValue: 'Футбол'},
     {value: 'Волейбол', viewValue: 'Волейбол'},
-    {value: 'Баскетбол', viewValue: 'Баскетбол'}
+    {value: 'Баскетбол', viewValue: 'Баскетбол'},
+    {value: 'Хоккей', viewValue: 'Хоккей'}
   ];
 
   selectedCategory: string;
