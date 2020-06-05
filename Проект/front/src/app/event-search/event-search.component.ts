@@ -54,9 +54,7 @@ export class EventSearchComponent implements OnInit {
   }
 
   getEvents() {
-    this.http.post( environment.apiUrl + '/api/v1/events/get_events' , '', {
-      headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
-    })
+    this.http.post( environment.apiUrl + '/api/v1/events/get_events' , '')
       .subscribe((resp: FullEvent[]) => {
         this.events = resp;
         if (typeof this.events === undefined) {

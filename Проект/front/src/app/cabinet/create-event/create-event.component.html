@@ -54,12 +54,7 @@
 
           <div class="col-6">
 
-            <h5>5. Ожидаемое количество участников</h5>
-            <mat-form-field class="example-full-width" style="min-width: 70%">
-              <input matInput type="number" min="1" placeholder="Укажите количество" [(ngModel)]="cEvent.participantsCount" name="participantsCount">
-            </mat-form-field>
-
-            <h5>6. Дата события</h5>
+            <h5>5. Дата события</h5>
             <mat-form-field style="min-width: 70%">
               <mat-label>Дата события</mat-label>
               <input matInput [matDatepicker]="picker1" [formControl]="date">
@@ -67,14 +62,14 @@
               <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
 
-            <h5>7. Время события</h5>
+            <h5>6. Время события</h5>
             <mat-form-field class="example-full-width" style="min-width: 70%">
               <input matInput value="" type="time" [(ngModel)]="time" name="time">
             </mat-form-field>
 
             <br>
 
-            <h5>8. Город события</h5>
+            <h5>7. Город события</h5>
             <mat-form-field style="min-width: 70%">
               <mat-label>Город</mat-label>
               <mat-select name="city">

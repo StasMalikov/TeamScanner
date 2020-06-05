@@ -34,9 +34,7 @@ export class EventsComponent implements OnInit {
   }
 
   getEvents() {
-    this.http.get( environment.apiUrl + '/api/v1/events/get_creator_events/' + this.auth.id ,  {
-      headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
-    })
+    this.http.get( environment.apiUrl + '/api/v1/events/get_creator_events/' + this.auth.id)
       .subscribe((resp: FullEvent[]) => {
         this.events = resp;
         if (typeof this.events === undefined) {

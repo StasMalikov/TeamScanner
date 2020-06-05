@@ -117,17 +117,23 @@ public class EventController {
 
         String category = eventDTO.getCategory();
         if (category != null) {
-            if (category.contains("футбол"))
+            if (category.contains("Футбол"))
                 event.setCategory(Category.FOOTBALL);
-            if (category.contains("волейбол"))
+            if (category.contains("Волейбол"))
                 event.setCategory(Category.VOLLEYBALL);
-            if (category.contains("баскетбол"))
+            if (category.contains("Баскетбол"))
                 event.setCategory(Category.BASKETBALL);
         }
         if (eventDTO.getAddress() != null)
             event.setAddress(eventDTO.getAddress());
         if (eventDTO.getCreator_id() != null && eventDTO.getCreator_id() > 0)
             event.setCreatorId(eventDTO.getCreator_id());
+
+        if (eventDTO.getDateEvent() != null)
+            event.setDateEvent(eventDTO.getDateEvent());
+
+        if (eventDTO.getCity() != null)
+            event.setCity(eventDTO.getCity());
 
         eventRepository.save(event);
         return new ResponseEntity<>(HttpStatus.OK);

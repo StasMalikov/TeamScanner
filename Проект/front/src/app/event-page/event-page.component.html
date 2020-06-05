@@ -5,8 +5,8 @@
   <div class="col-10">
     <div class="button">
       <h4>{{event.name}}&nbsp;&nbsp;&nbsp;
-        <button mat-stroked-button *ngIf="!subscribe" color="primary" (click)="subscribeOn()">Подписаться</button>
-        <button mat-stroked-button *ngIf="subscribe" color="warn" (click)="subscribeOff()">Отписаться</button>
+          <button mat-stroked-button *ngIf="!subscribe && !isCreator()" color="primary" (click)="subscribeOn()">Подписаться</button>
+          <button mat-stroked-button *ngIf="subscribe && !isCreator()" color="warn" (click)="subscribeOff()">Отписаться</button>
       </h4>
     </div>
 
@@ -14,7 +14,7 @@
     <table>
       <tr>
         <td><b>Дата и время:&nbsp;</b></td>
-        <td>{{event.dateEvent | date: 'dd.MM.yyyy'}} {{event.dateEvent.getHours()}}:{{event.dateEvent.getMinutes()}}&nbsp;&nbsp;&nbsp;</td>
+        <td>{{event.dateEvent | date: 'dd.MM.yyyy'}} {{getTime(event)}}&nbsp;&nbsp;&nbsp;</td>
 <!--        <td>{{event.dateEvent | date: 'dd.MM.yyyy h:m': '0000': 'ru'}}&nbsp;&nbsp;&nbsp;</td>-->
         <td><b>Категория:&nbsp;</b></td>
         <td>{{event.category}}&nbsp;&nbsp;&nbsp;</td>

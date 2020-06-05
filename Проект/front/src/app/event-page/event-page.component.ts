@@ -77,4 +77,27 @@ export class EventPageComponent implements OnInit {
         alert('Упс, ошибка');
       });
   }
+
+  getTime(e: FullEvent): string {
+    let time = '';
+    if (e.dateEvent.getHours() < 10) {
+      time = '0' + e.dateEvent.getHours();
+    } else {
+      time = '' + e.dateEvent.getHours();
+    }
+    time += ':';
+    if (e.dateEvent.getMinutes() < 10) {
+      time += '0' + e.dateEvent.getMinutes();
+    } else {
+      time += '' + e.dateEvent.getMinutes();
+    }
+    return time;
+  }
+
+  isCreator(): boolean {
+    if (this.event.creator_id === Number(this.auth.id)) {
+      return true;
+    }
+    return false;
+  }
 }
