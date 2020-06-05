@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_ENDPOINT = "/api/v1/auth/**";
     private static final String USER_ENDPOINT = "/api/v1/users/**";
     private static final String EVENT_ENDPOINT = "/api/v1/events/**";
-    private static final String COMMENT_ENDPOINT = "/api/v1/events/**";
+    private static final String COMMENT_ENDPOINT = "/api/v1/comments/**";
 
 
     @Autowired
@@ -93,6 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
                 .antMatchers(USER_ENDPOINT).permitAll()
                 .antMatchers(EVENT_ENDPOINT).permitAll()
+                .antMatchers(COMMENT_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .antMatchers(MODER_ENDPOINT).hasRole("MODER")
                 .anyRequest().authenticated()

@@ -16,5 +16,10 @@ public enum Category {
         public String toString() {
             return "Волейбол";
         }
+    }, HOCKEY{
+        @Override
+        public String toString() {
+            return "";
+        }
     }
 }

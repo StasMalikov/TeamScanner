@@ -54,6 +54,8 @@ public class EventController {
             event.setCategory(Category.VOLLEYBALL);
         if (category.contains("баскетбол"))
             event.setCategory(Category.BASKETBALL);
+        if (category.toLowerCase().contains("хоккей"))
+            event.setCategory(Category.HOCKEY);
 
         event.setAddress(eventDTO.getAddress());
         event.setCreatorId(eventDTO.getCreator_id());
@@ -87,6 +89,7 @@ public class EventController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional
     @PostMapping(value = "subscribe")
     public ResponseEntity<AdminUserDto> subscribeOnEvent(@RequestBody MiniEventDTO subscribeEventDTO) {
         User user = userRepository.findByLogin(subscribeEventDTO.getUserName());
@@ -98,6 +101,7 @@ public class EventController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional
     @PostMapping(value = "unsubscribe")
     public ResponseEntity<AdminUserDto> unsubscribeOnEvent(@RequestBody MiniEventDTO unsubscribeEventDTO) {
         User user = userRepository.findByLogin(unsubscribeEventDTO.getUserName());
@@ -123,6 +127,8 @@ public class EventController {
                 event.setCategory(Category.VOLLEYBALL);
             if (category.contains("Баскетбол"))
                 event.setCategory(Category.BASKETBALL);
+            if (category.toLowerCase().contains("хоккей"))
+                event.setCategory(Category.HOCKEY);
         }
         if (eventDTO.getAddress() != null)
             event.setAddress(eventDTO.getAddress());
@@ -196,9 +202,9 @@ public class EventController {
     public ResponseEntity<List<EventDTO>> getSortedEvents(@RequestBody EventDTO eventDTO) {
         Event event = new Event();
         Map<String, Object> map = new HashMap<>();
-        if (eventDTO.getName() != null)
+        if (eventDTO.getName() != null && eventDTO.getName() != "")
             map.put("name", eventDTO.getName());
-        if (eventDTO.getCategory() != null) {
+        if (eventDTO.getCategory() != null && eventDTO.getCategory() != "") {
             String category = eventDTO.getCategory().toLowerCase();
             if (category.contains("футбол"))
                 map.put("category", Category.FOOTBALL);
@@ -206,17 +212,35 @@ public class EventController {
                 map.put("category", Category.VOLLEYBALL);
             if (category.contains("баскетбол"))
                 map.put("category", Category.BASKETBALL);
+            if (category.toLowerCase().contains("хоккей"))
+                map.put("category", Category.HOCKEY);
         }
-        if (eventDTO.getAddress() != null)
+        if (eventDTO.getAddress() != null && eventDTO.getAddress() != "")
             map.put("address", eventDTO.getAddress());
-        if (eventDTO.getDateEvent() != null)
-            map.put("dateEvent", eventDTO.getDateEvent());
-        if (eventDTO.getCity() != null)
+
+        if (eventDTO.getCity() != null && eventDTO.getCity() != "")
             map.put("city", eventDTO.getCity());
 
         SearchSpecification search = new SearchSpecification(map);
 
         List<Event> all = eventRepository.findAll(Specification.where(search));
+
+//        int year = eventDTO.getDateEvent().getYear();
+//        int month = eventDTO.getDateEvent().getMonth();
+//        int day = eventDTO.getDateEvent().getDay();
+
+        if (eventDTO.getDateEvent() != null) {
+            String now = eventDTO.getDateEvent().getYear() + " " + eventDTO.getDateEvent().getMonth() + " " + eventDTO.getDateEvent().getDay();
+            List<Event> allD = new ArrayList<>();
+            all.forEach(p -> {
+                String nowP = p.getDateEvent().getYear() + " " + p.getDateEvent().getMonth() + " " + p.getDateEvent().getDay();
+                if (now.equals(nowP))
+                    allD.add(p);
+            });
+            List<EventDTO> collect = allD.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
+            return new ResponseEntity<>(collect, HttpStatus.OK);
+        }
+//            map.put("dateEvent", eventDTO.getDateEvent());
         List<EventDTO> collect = all.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
         return new ResponseEntity<>(collect, HttpStatus.OK);
     }

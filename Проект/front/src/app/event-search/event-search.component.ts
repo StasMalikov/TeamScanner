@@ -75,9 +75,7 @@ export class EventSearchComponent implements OnInit {
         city: this.selectedCityVar
       };
 
-      this.http.post( environment.apiUrl + '/api/v1/events/sort_events' , body, {
-        headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
-      })
+      this.http.post( environment.apiUrl + '/api/v1/events/sort_events' , body)
         .subscribe((resp: FullEvent[]) => {
           this.events = resp;
           if (typeof this.events === undefined) {
@@ -97,9 +95,7 @@ export class EventSearchComponent implements OnInit {
         city: this.selectedCityVar
       };
 
-      this.http.post( environment.apiUrl + '/api/v1/events/sort_events' , body, {
-        headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
-      })
+      this.http.post( environment.apiUrl + '/api/v1/events/sort_events' , body)
         .subscribe((resp: FullEvent[]) => {
           this.events = resp;
           if (typeof this.events === undefined) {
