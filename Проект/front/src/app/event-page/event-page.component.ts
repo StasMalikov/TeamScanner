@@ -4,8 +4,10 @@ import {FullEvent} from '../models/event/FullEvent';
 import {FormControl} from '@angular/forms';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
+// @ts-ignore
 import {MiniEvent} from '../models/event/MiniEvent';
 import {AuthService} from '../services/auth.service';
+import {CommentNew} from '../models/comment/CommentNew';
 
 @Component({
   selector: 'app-event-page',
@@ -19,6 +21,7 @@ export class EventPageComponent implements OnInit {
   event: FullEvent;
   subscribe = false;
   date = new FormControl(new Date());
+  commentText = '';
 
   ngOnInit() {
     this.event = this.eventService.getEvent;
@@ -30,7 +33,9 @@ export class EventPageComponent implements OnInit {
       eventID: this.eventService.eventId
     };
 
-    this.http.post( environment.apiUrl + '/api/v1/events/subscribe', body)
+    this.http.post( environment.apiUrl + '/api/v1/events/subscribe', body, {
+      headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
+    })
       .subscribe((resp: string[]) => {
         this.subscribe = !this.subscribe;
       }, error => {
@@ -44,7 +49,9 @@ export class EventPageComponent implements OnInit {
       eventID: this.eventService.eventId
     };
 
-    this.http.post( environment.apiUrl + '/api/v1/events/unsubscribe', body)
+    this.http.post( environment.apiUrl + '/api/v1/events/unsubscribe', body, {
+      headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
+    })
       .subscribe((resp: string[]) => {
         this.subscribe = !this.subscribe;
       }, error => {
@@ -53,4 +60,21 @@ export class EventPageComponent implements OnInit {
 
   }
 
+  addComment() {
+    const body: CommentNew = {
+      userName: this.auth.username,
+      comment: this.commentText,
+      commentID: 0,
+      eventID: this.eventService.eventId
+    };
+
+    this.http.post( environment.apiUrl + '/api/v1/comments/add_comment', body, {
+      headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
+    })
+      .subscribe((resp: string[]) => {
+        alert('комментарий добавлен');
+      }, error => {
+        alert('Упс, ошибка');
+      });
+  }
 }

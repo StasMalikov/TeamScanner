@@ -55,10 +55,10 @@
       <tr>
         <td>Вы:</td>
         <td>
-          <input type="text" class="form-control" aria-describedby="emailHelp">
+          <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Текст комментария" [(ngModel)]="commentText" name="commentText">
         </td>
         <td>
-          <button mat-stroked-button color="primary">Отправить</button>
+          <button mat-stroked-button color="primary" (click)="addComment()">Добавить комментарий</button>
         </td>
       </tr>
       </tbody>
