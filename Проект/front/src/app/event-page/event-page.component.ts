@@ -25,7 +25,7 @@ export class EventPageComponent implements OnInit {
   commentText = '';
   comments: CommentAll[];
   length = 0;
-
+  notification = false;
 
   ngOnInit() {
     this.event = this.eventService.getEvent;
@@ -35,53 +35,65 @@ export class EventPageComponent implements OnInit {
 
   checkSubscribe() {
 
-    const body: MiniEvent = {
-      userName: this.auth.username,
-      eventID: this.eventService.eventId
-    };
+    if(this.auth.username != null) {
+      const body: MiniEvent = {
+        userName: this.auth.username,
+        eventID: this.eventService.eventId
+      };
 
-    this.http.post( environment.apiUrl + '/api/v1/events/get_subscribe', body, {
-      headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
-    })
-      .subscribe((resp: string[]) => {
-        console.log(resp);
-        //this.subscribe = !this.subscribe;
-      }, error => {
-        alert('Упс, ошибка');
-      });
+      this.http.post( environment.apiUrl + '/api/v1/events/get_subscribe', body, {
+        headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
+      })
+        .subscribe((resp: string[]) => {
+          console.log(resp);
+          //this.subscribe = !this.subscribe;
+        }, error => {
+          alert('Упс, ошибка');
+        });
+    } else {
+      console.log('not registred');
+    }
+
   }
 
   subscribeOn() {
-    const body: MiniEvent = {
-      userName: this.auth.username,
-      eventID: this.eventService.eventId
-    };
+    if (this.auth.username != null) {
+      const body: MiniEvent = {
+        userName: this.auth.username,
+        eventID: this.eventService.eventId
+      };
 
-    this.http.post( environment.apiUrl + '/api/v1/events/subscribe', body, {
-      headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
-    })
-      .subscribe((resp: string[]) => {
-        this.subscribe = !this.subscribe;
-      }, error => {
-        alert('Упс, ошибка');
-      });
+      this.http.post( environment.apiUrl + '/api/v1/events/subscribe', body, {
+        headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
+      })
+        .subscribe((resp: string[]) => {
+          this.subscribe = !this.subscribe;
+        }, error => {
+          alert('Упс, ошибка');
+        });
+    } else {
+      this.notification = true;
+    }
   }
 
   subscribeOff() {
-    const body: MiniEvent = {
-      userName: this.auth.username,
-      eventID: this.eventService.eventId
-    };
+    if (this.auth.username != null) {
+      const body: MiniEvent = {
+        userName: this.auth.username,
+        eventID: this.eventService.eventId
+      };
 
-    this.http.post( environment.apiUrl + '/api/v1/events/unsubscribe', body, {
-      headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
-    })
-      .subscribe((resp: string[]) => {
-        this.subscribe = !this.subscribe;
-      }, error => {
-        alert('Упс, ошибка');
-      });
-
+      this.http.post( environment.apiUrl + '/api/v1/events/unsubscribe', body, {
+        headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
+      })
+        .subscribe((resp: string[]) => {
+          this.subscribe = !this.subscribe;
+        }, error => {
+          alert('Упс, ошибка');
+        });
+    } else {
+      this.notification = true;
+    }
   }
 
   getComments() {
@@ -100,22 +112,26 @@ export class EventPageComponent implements OnInit {
 
 
   addComment() {
-    const body: CommentNew = {
-      userName: this.auth.username,
-      comment: this.commentText,
-      commentID: 0,
-      eventID: this.eventService.eventId
-    };
+    if(this.auth.username != null) {
+      const body: CommentNew = {
+        userName: this.auth.username,
+        comment: this.commentText,
+        commentID: 0,
+        eventID: this.eventService.eventId
+      };
 
-    this.http.post( environment.apiUrl + '/api/v1/comments/add_comment', body, {
-      headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
-    })
-      .subscribe((resp: string[]) => {
-        this.commentText = '';
-        this.getComments();
-      }, error => {
-        alert('Упс, ошибка');
-      });
+      this.http.post( environment.apiUrl + '/api/v1/comments/add_comment', body, {
+        headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
+      })
+        .subscribe((resp: string[]) => {
+          this.commentText = '';
+          this.getComments();
+        }, error => {
+          alert('Упс, ошибка');
+        });
+    } else {
+      this.notification = true;
+    }
   }
 
   getTime(e: FullEvent): string {
