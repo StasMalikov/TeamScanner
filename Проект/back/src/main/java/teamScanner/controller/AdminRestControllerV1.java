@@ -1,22 +1,18 @@
 package teamScanner.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import teamScanner.dto.*;
 import teamScanner.model.*;
-import teamScanner.repository.EventRepository;
-import teamScanner.repository.SearchSpecification;
+import teamScanner.repository.RoleRepository;
 import teamScanner.repository.UserRepository;
 import teamScanner.service.UserService;
 
-import java.sql.Struct;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -25,23 +21,42 @@ import java.util.stream.Collectors;
 public class AdminRestControllerV1 {
     private final UserService userService;
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 //    private final EventRepository eventRepository;
 
     @Autowired
-    public AdminRestControllerV1(UserService userService, UserRepository userRepository) {
+    public AdminRestControllerV1(UserService userService, UserRepository userRepository, RoleRepository roleRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
 //        this.eventRepository = eventRepository;
+        this.roleRepository = roleRepository;
+    }
+
+    @Transactional
+    @PostMapping(value = "get_all_moders")
+    public ResponseEntity<List<AdminUserDto>> getModers() {
+        List<User> moders = new ArrayList<>();
+        Role mod = roleRepository.findByName("ROLE_MODER");
+        Role adm = roleRepository.findByName("ROLE_ADMIN");
+        userRepository.findAll().forEach(p -> {
+
+            if (p.getRoles().contains(mod) && !p.getRoles().contains(adm)) {
+                moders.add(p);
+            }
+        });
+        List<AdminUserDto> collect1 = moders.stream().map(AdminUserDto::fromUser).collect(Collectors.toList());
+        return new ResponseEntity<>(collect1, HttpStatus.OK);
     }
 
     @PostMapping(value = "get_all_users")
-    public ResponseEntity< List<AdminUserDto>> getUsers() {
+    public ResponseEntity<List<AdminUserDto>> getUsers() {
 //        List<User> all = userRepository.findAll();
         List<AdminUserDto> collect1 = userRepository.findAll().stream().map(AdminUserDto::fromUser).collect(Collectors.toList());
         return new ResponseEntity<>(collect1, HttpStatus.OK);
     }
+
     @PostMapping(value = "get_user_by_name")
-    public ResponseEntity< AdminUserDto> getUserByName(@RequestBody StringDTO stringDTO) {
+    public ResponseEntity<AdminUserDto> getUserByName(@RequestBody StringDTO stringDTO) {
         User byLogin = userRepository.findByLogin(stringDTO.getInfo());
         AdminUserDto adminUserDto = AdminUserDto.fromUser(byLogin);
         return new ResponseEntity<>(adminUserDto, HttpStatus.OK);
