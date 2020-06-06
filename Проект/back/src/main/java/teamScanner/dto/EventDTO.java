@@ -15,14 +15,14 @@ import java.util.Date;
 @Data
 @Service
 public class EventDTO {
-    @Value("${spring.datasource.url}")
-    String DATABASE_URL;
-
-    @Value("${spring.datasource.username}")
-    String DATABASE_USER;
-
-    @Value("${spring.datasource.password}")
-    String DATABASE_PASS;
+//    @Value("${spring.datasource.url}")
+//    String DATABASE_URL;
+//
+//    @Value("${spring.datasource.username}")
+//    String DATABASE_USER;
+//
+//    @Value("${spring.datasource.password}")
+//    String DATABASE_PASS;
 //    private static EntityManagerService ems;
 //    @Autowired
 //    public static EntityManagerService ems;
