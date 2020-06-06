@@ -67,6 +67,9 @@ export class AdminPageComponent implements OnInit {
         } else {
           this.moderatorCount = this.moderators.length;
         }
+
+        this.visibleSearchModerator = false;
+        this.notFoundModerator = false;
       }, error => {
         alert('Упс, ошибка');
       });
@@ -122,6 +125,27 @@ export class AdminPageComponent implements OnInit {
       .subscribe((resp: any) => {
         this.getUsers();
         this.getModerators();
+      }, error => {
+        alert('Упс, ошибка');
+      });
+  }
+
+  findModerator() {
+    const body: FindUser = {
+      info: this.moderatorName
+    };
+
+    this.http.post( environment.apiUrl + '/api/v1/admin/get_user_by_name', body, {
+      headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
+    })
+      .subscribe((resp: StatusUser) => {
+        if (resp !== undefined && resp !== null) {
+          this.moderatorFound = resp;
+          this.visibleSearchModerator = true;
+        } else {
+          this.visibleSearchModerator = false;
+          this.notFoundModerator = true;
+        }
       }, error => {
         alert('Упс, ошибка');
       });
