@@ -44,9 +44,8 @@ export class EventPageComponent implements OnInit {
       this.http.post( environment.apiUrl + '/api/v1/events/get_subscribe', body, {
         headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
       })
-        .subscribe((resp: string[]) => {
-          console.log(resp);
-          //this.subscribe = !this.subscribe;
+        .subscribe((resp: boolean) => {
+          this.subscribe = resp;
         }, error => {
           alert('Упс, ошибка');
         });

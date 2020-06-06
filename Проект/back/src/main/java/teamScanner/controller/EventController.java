@@ -40,14 +40,14 @@ public class EventController {
 //    public ResponseEntity<List<EventDTO>> getSubscribe(@PathVariable(value = "id") Long id) {
     @Transactional
     @PostMapping(value = "get_subscribe")
-    public ResponseEntity<BoolAnswer> getSubscribe(@RequestBody MiniEventDTO subscribeEventDTO) {
+    public ResponseEntity<String> getSubscribe(@RequestBody MiniEventDTO subscribeEventDTO) {
         Event event = new Event();
         if (eventRepository.existsById(subscribeEventDTO.getEventID())) {
             event = eventRepository.findById(subscribeEventDTO.getEventID()).get();
         } else return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         List<User> participants = event.getParticipants();
         boolean contains = participants.contains(userRepository.findByLogin(subscribeEventDTO.getUserName()));
-        return new ResponseEntity<>(new BoolAnswer(contains), HttpStatus.OK);
+        return new ResponseEntity<>(String.valueOf(contains), HttpStatus.OK);
     }
 
     @Transactional
