@@ -6,6 +6,8 @@ import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {EventService} from '../services/event-service';
 import {Router} from '@angular/router';
+import {EventStatus} from '../models/event/EventStatus';
+import {UserStatus} from '../models/user/UserStatus';
 
 @Component({
   selector: 'app-moder-page',
@@ -82,6 +84,35 @@ export class ModerPageComponent implements OnInit {
   }
 
   unlockEvent(fullEvent: FullEvent) {
-    
+    const body: EventStatus = {
+      eventID: fullEvent.eventID,
+      status: 'ACTIVE'
+    };
+
+    this.http.post( environment.apiUrl + '/api/v1/moder/set_eventStatus', body, {
+      headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
+    })
+      .subscribe((resp: any) => {
+        this.getBannedEvents();
+      }, error => {
+        alert('Упс, ошибка');
+      });
   }
+
+  unlockUser(user: StatusUser) {
+    const body: UserStatus = {
+      userName: user.login,
+      status: 'ACTIVE'
+    };
+
+    this.http.post( environment.apiUrl + '/api/v1/moder/set_userStatus', body, {
+      headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
+    })
+      .subscribe((resp: any) => {
+        this.getBannedUsers();
+      }, error => {
+        alert('Упс, ошибка');
+      });
+  }
+
 }

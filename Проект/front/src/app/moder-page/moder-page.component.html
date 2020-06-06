@@ -58,7 +58,7 @@
         <tr *ngFor="let user of bannedUsers; index as i">
           <td>{{user.login}}</td>
           <td>
-            <button mat-stroked-button color="primary">Разблокировать</button>
+            <button mat-stroked-button color="primary" (click)="unlockUser(bannedUsers[i])">Разблокировать</button>
           </td>
         </tr>
         </tbody>

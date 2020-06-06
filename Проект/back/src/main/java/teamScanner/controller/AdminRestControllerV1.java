@@ -32,6 +32,7 @@ public class AdminRestControllerV1 {
         this.roleRepository = roleRepository;
     }
 
+    @Transactional
     @PostMapping(value = "get_moder_by_login")
     public ResponseEntity<AdminUserDto> getModerByLogin(@RequestBody StringDTO stringDTO) {
         ResponseEntity<List<AdminUserDto>> moders = getModers();
