@@ -18,7 +18,7 @@ public class EntityManagerService {
     @Value("${spring.datasource.password}")
     String DATABASE_PASS;
 
-//    private static EntityManagerService instance;
+    //    private static EntityManagerService instance;
 //
 //    public static EntityManagerService getInstance() {
 //        if (instance == null) {
@@ -37,7 +37,7 @@ public class EntityManagerService {
     private Mapper<Long> maxUserIdMapper = resultSet -> resultSet.getLong("id");
 
     public List<Long> getIdEventsWhereUserExist(Long id) {
-        String query = "select id from events join user_event ue on events.id = ue.event_id where user_id = 50 and creator_id<>50;";
+        String query = "select id from events join user_event ue on events.id = ue.event_id where user_id = " + id + " and creator_id<>" + id + ";";
         return executeQuery(query, maxUserIdMapper);
     }
 
