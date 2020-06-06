@@ -3,9 +3,12 @@ package teamScanner.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 @Service
 public class EntityManagerService {
@@ -18,22 +21,6 @@ public class EntityManagerService {
     @Value("${spring.datasource.password}")
     String DATABASE_PASS;
 
-    //    private static EntityManagerService instance;
-//
-//    public static EntityManagerService getInstance() {
-//        if (instance == null) {
-//            instance = new EntityManagerService();
-//        }
-//        return instance;
-//    }
-//
-//    private EntityManagerService() {
-//        try {
-//            Class.forName("org.postgresql.Driver");
-//        } catch (ClassNotFoundException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
     private Mapper<Long> maxUserIdMapper = resultSet -> resultSet.getLong("id");
     private Mapper<String> userNameMapper = resultSet -> resultSet.getString("login");
 
@@ -43,6 +30,17 @@ public class EntityManagerService {
     }
 
     public String getLoginById(Long id) {
+        try (
+                FileInputStream fis = new FileInputStream("src\\main\\resources\\application.properties");
+        ) {
+            Properties property = new Properties();
+            property.load(fis);
+            DATABASE_URL = property.getProperty("spring.datasource.url");
+            DATABASE_USER = property.getProperty("spring.datasource.username");
+            DATABASE_PASS = property.getProperty("spring.datasource.password");
+        } catch (IOException e) {
+            System.err.println("ОШИБКА: Файл свойств отсуствует!");
+        }
         String query = "select login from users where id = " + id + ";";
         List<String> strings = executeQuery(query, userNameMapper);
         if (strings != null && strings.size() > 0)

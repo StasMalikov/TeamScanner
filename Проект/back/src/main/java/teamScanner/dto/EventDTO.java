@@ -15,19 +15,6 @@ import java.util.Date;
 @Data
 @Service
 public class EventDTO {
-//    @Value("${spring.datasource.url}")
-//    String DATABASE_URL;
-//
-//    @Value("${spring.datasource.username}")
-//    String DATABASE_USER;
-//
-//    @Value("${spring.datasource.password}")
-//    String DATABASE_PASS;
-//    private static EntityManagerService ems;
-//    @Autowired
-//    public static EntityManagerService ems;
-
-    //    private static UserRepository userService;
     private Long eventID;
     private String name;
     private String nameCreator;
@@ -40,8 +27,8 @@ public class EventDTO {
     private int participantsCount;
 
     public static EventDTO fromEvent(Event event) {
-        EntityManagerService ems = new EntityManagerService();
         EventDTO eventDTO = new EventDTO();
+        EntityManagerService ems = new EntityManagerService();
         eventDTO.setEventID(event.getId());
         eventDTO.setName(event.getName());
         eventDTO.setNameCreator(ems.getLoginById(event.getCreatorId()));
