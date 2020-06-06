@@ -48,15 +48,30 @@
     <mat-tab label="Снятие модераторов">
       <mat-form-field class="example-full-width" style="margin-right: 5px">
         <mat-label>Поиск</mat-label>
-        <input matInput>
+        <input matInput [(ngModel)]="moderatorName" name="moderatorName">
       </mat-form-field>
-      <button mat-raised-button color="primary">Найти</button>
+      <button mat-raised-button color="primary" (click)="findModerator()">Найти</button>
       <br>
 
       <mat-card style="max-width: 750px">
         <div class="alert alert-success" role="alert" *ngIf="moderatorCount == 0" style="text-align: center">
           Нет пользователей с правами модератора
         </div>
+
+        <div class="alert alert-success" role="alert" *ngIf="notFoundModerator" style="text-align: center">
+          Модератора с таким логином не нашлось. Попробуйте ввести другой логин.
+        </div>
+
+        <table class="table" *ngIf="visibleSearchModerator">
+          <tbody>
+          <tr>
+            <td>{{moderatorFound.login}}</td>
+            <td>
+              <button mat-stroked-button color="primary" (click)="addModerator(moderatorFound)">Сделать модератором</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
 
         <table class="table">
           <tbody>
