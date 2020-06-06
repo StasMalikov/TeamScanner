@@ -10,14 +10,17 @@
       <button mat-raised-button color="primary" (click)="findUsers()">Найти</button>
       <br>
 
-      <mat-card>
+      <mat-card style="max-width: 750px">
+        <div class="alert alert-success" role="alert" *ngIf="usersCount == 0" style="text-align: center">
+          Нет пользователей, которые могут получить права модератора
+        </div>
+
         <table class="table">
           <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Пользователь 1</td>
+          <tr *ngFor="let user of users; index as i">
+            <td>{{user.login}}</td>
             <td>
-              <button mat-stroked-button color="primary">Сделать модератором</button>
+              <button mat-stroked-button color="primary" (click)="addModerator(users[i])" >Сделать модератором</button>
             </td>
           </tr>
           </tbody>
@@ -35,14 +38,17 @@
       <button mat-raised-button color="primary">Найти</button>
       <br>
 
-      <mat-card>
+      <mat-card style="max-width: 750px">
+        <div class="alert alert-success" role="alert" *ngIf="moderatorCount == 0" style="text-align: center">
+          Нет пользователей с правами модератора
+        </div>
+
         <table class="table">
           <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Пользователь 1</td>
+          <tr *ngFor="let moderator of moderators; index as i">
+            <td>{{moderator.login}}</td>
             <td>
-              <button mat-stroked-button color="primary">Снять модераторские полномочия</button>
+              <button mat-stroked-button color="primary" (click)="removeModerator(moderators[i])">Снять модераторские полномочия</button>
             </td>
           </tr>
           </tbody>
