@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String USER_ENDPOINT = "/api/v1/users/**";
     private static final String EVENT_ENDPOINT = "/api/v1/events/**";
     private static final String COMMENT_ENDPOINT = "/api/v1/comments/**";
-    //    private static final String SWAGGER_ENDPOINT = "/v2/**";
+    private static final String SWAGGER_API_DOCS_ENDPOINT = "/v2/**";
     private static final String SWAGGER_ENDPOINT = "/swagger-ui.html";
 //https://localhost:8443/v2/api-docs
 
@@ -103,6 +103,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(EVENT_ENDPOINT).permitAll()
                 .antMatchers(COMMENT_ENDPOINT).permitAll()
                 .antMatchers(SWAGGER_ENDPOINT).permitAll()
+                .antMatchers(SWAGGER_API_DOCS_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .antMatchers(MODER_ENDPOINT).hasRole("MODER")
                 .anyRequest().authenticated()
