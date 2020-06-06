@@ -21,10 +21,13 @@
     <div class="col-9">
 
       <mat-card>
+        <div class="alert alert-success" role="alert" *ngIf="length == 0" style="text-align: center">
+          Вы пока не подписались ни на одно событие! Подпишитесь на первое <a href="/event_search">здесь</a>
+        </div>
+
         <table class="table">
           <thead>
           <tr>
-            <th scope="col"></th>
             <th scope="col">Название</th>
             <th scope="col">Дата</th>
             <th scope="col">Участники</th>
@@ -32,14 +35,13 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Пятничный футбол</td>
-            <td>12,02,20 14-00</td>
-            <td>20/25</td>
+          <tr *ngFor="let e of events; index as i">
+            <td>{{events[i].name}}</td>
+            <td>{{events[i].dateEvent | date: 'dd.MM.yyyy'}}</td>
+            <!--            <td>{{events[i].dateEvent | date: 'dd.MM.yyyy'}} {{events[i].dateEvent.getHours()}}:{{events[i].dateEvent.getMinutes()}}</td>-->
+            <td>{{events[i].participantsCount}}</td>
             <td>
-              <button mat-stroked-button color="primary">Подробнее</button>&nbsp;&nbsp;
-              <button mat-stroked-button color="warn">Отписаться</button>
+              <button mat-stroked-button color="primary" (click)="detailedEvent(events[i])">Подробнее</button>&nbsp;&nbsp;
             </td>
           </tr>
 
