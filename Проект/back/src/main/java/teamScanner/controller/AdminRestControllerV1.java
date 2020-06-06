@@ -48,10 +48,19 @@ public class AdminRestControllerV1 {
         return new ResponseEntity<>(collect1, HttpStatus.OK);
     }
 
+    @Transactional
     @PostMapping(value = "get_all_users")
     public ResponseEntity<List<AdminUserDto>> getUsers() {
+        List<User> users = new ArrayList<>();
+        Role mod = roleRepository.findByName("ROLE_MODER");
+        Role adm = roleRepository.findByName("ROLE_ADMIN");
+        userRepository.findAll().forEach(p -> {
+            if (!p.getRoles().contains(mod) && !p.getRoles().contains(adm)) {
+                users.add(p);
+            }
+        });
 //        List<User> all = userRepository.findAll();
-        List<AdminUserDto> collect1 = userRepository.findAll().stream().map(AdminUserDto::fromUser).collect(Collectors.toList());
+        List<AdminUserDto> collect1 = users.stream().map(AdminUserDto::fromUser).collect(Collectors.toList());
         return new ResponseEntity<>(collect1, HttpStatus.OK);
     }
 
