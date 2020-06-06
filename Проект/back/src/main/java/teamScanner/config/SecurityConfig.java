@@ -96,7 +96,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(USER_ENDPOINT).permitAll()
                 .antMatchers(EVENT_ENDPOINT).permitAll()
                 .antMatchers(COMMENT_ENDPOINT).permitAll()
-                .antMatchers(SWAGGER_ENDPOINT).permitAll()
+//                .antMatchers(SWAGGER_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .antMatchers(MODER_ENDPOINT).hasRole("MODER")
                 .anyRequest().authenticated()
