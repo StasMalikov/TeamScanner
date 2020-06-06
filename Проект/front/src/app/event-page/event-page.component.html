@@ -42,16 +42,13 @@
 
     <table class="table">
       <tbody>
-      <tr>
-        <td>Иван:</td>
-        <td>текст комментария</td>
+
+      <tr *ngFor="let c of comments">
+        <td>{{c.userName}}:</td>
+        <td>{{c.comment}}</td>
         <td></td>
       </tr>
-      <tr>
-        <td>Петр:</td>
-        <td>текст комментария</td>
-        <td></td>
-      </tr>
+      
       <tr>
         <td>Вы:</td>
         <td>
