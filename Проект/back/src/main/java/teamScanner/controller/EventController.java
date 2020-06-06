@@ -32,6 +32,7 @@ public class EventController {
         this.userService = userService;
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
+
     }
 
 
@@ -210,7 +211,7 @@ public class EventController {
 
         return new ResponseEntity<>(collect1, HttpStatus.OK);
     }
-
+    @Transactional
     @PostMapping(value = "eventsByName")
     public ResponseEntity<List<EventDTO>> getEventsByName(@RequestBody FindByNameDto nameDto) {
         List<Event> banned = eventRepository.findByName(nameDto.getName());

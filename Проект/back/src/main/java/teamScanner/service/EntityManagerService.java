@@ -35,10 +35,19 @@ public class EntityManagerService {
 //        }
 //    }
     private Mapper<Long> maxUserIdMapper = resultSet -> resultSet.getLong("id");
+    private Mapper<String> userNameMapper = resultSet -> resultSet.getString("login");
 
     public List<Long> getIdEventsWhereUserExist(Long id) {
         String query = "select id from events join user_event ue on events.id = ue.event_id where user_id = " + id + " and creator_id<>" + id + ";";
         return executeQuery(query, maxUserIdMapper);
+    }
+
+    public String getLoginById(Long id) {
+        String query = "select login from users where id = " + id + ";";
+        List<String> strings = executeQuery(query, userNameMapper);
+        if (strings != null && strings.size() > 0)
+            return strings.get(0);
+        else return null;
     }
 
     private <R> List<R> executeQuery(String query, Mapper<R> mapper) {

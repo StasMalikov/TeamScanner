@@ -13,6 +13,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByLogin(String name);
 
+
     List<User> findByStatus(Status status);
 
     @Query("SELECT p FROM User p order by p.created desc")

@@ -43,64 +43,6 @@ public class ModerController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-//    @GetMapping(value = "set_moder/{id}")
-//    public ResponseEntity<AdminUserDto> setModerRole(@PathVariable(name = "id") Long id) {
-//        User user = userService.findById(id);
-//        if (user == null)
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//
-//        user = userService.setUserRole(user, "ROLE_MODER");
-//        userRepository.save(user);
-//        AdminUserDto result = AdminUserDto.fromUser(user);
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
-//
-//    @GetMapping(value = "set_admin/{id}")
-//    public ResponseEntity<AdminUserDto> setAdminRole(@PathVariable(name = "id") Long id) {
-//        User user = userService.findById(id);
-//        if (user == null)
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//
-//        user = userService.setUserRole(user, "ROLE_ADMIN");
-//        userRepository.save(user);
-//        AdminUserDto result = AdminUserDto.fromUser(user);
-//
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
-//
-//    @GetMapping(value = "remove_admin/{id}")
-//    public ResponseEntity<AdminUserDto> removeAdminRole(@PathVariable(name = "id") Long id) {
-//        User user = userService.findById(id);
-//        if (user == null)
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//
-//        user = userService.removeUserRole(user, "ROLE_ADMIN");
-//        userRepository.save(user);
-//        AdminUserDto result = AdminUserDto.fromUser(user);
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
-//
-//    @GetMapping(value = "remove_moder/{id}")
-//    public ResponseEntity<AdminUserDto> removeModerRole(@PathVariable(name = "id") Long id) {
-//        User user = userService.findById(id);
-//        if (user == null)
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        user = userService.removeUserRole(user, "ROLE_MODER");
-//        userRepository.save(user);
-//        AdminUserDto result = AdminUserDto.fromUser(user);
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
-
-//    //пока не написал
-//    @GetMapping(value = "set_status/{id}")
-//    public ResponseEntity<AdminUserDto> setStatus(@PathVariable(name = "id") Long id) {
-//        User user = userService.findById(id);
-//        if (user == null)
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        AdminUserDto result = AdminUserDto.fromUser(user);
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
-
     private void setStatus(BaseEntity entity, String status) {
         String strSt = status.toLowerCase();
         if (strSt.contains("active"))
@@ -171,15 +113,32 @@ public class ModerController {
         return new ResponseEntity<>(AdminUserDto.fromUser(byLogin), HttpStatus.OK);
     }
 
-//    @PostMapping(value = "eventsByName")
-//    public ResponseEntity<List<EventDTO>> getEventsByName(@RequestBody FindByNameDto nameDto) {
-//        List<Event> banned = eventRepository.findByName(nameDto.getName());
-//        if (banned.size() < 1)
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        List<EventDTO> collect = banned.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
-//        return new ResponseEntity<>(collect, HttpStatus.OK);
-//    }
+    @PostMapping(value = "eventsByName")
+    public ResponseEntity<List<EventDTO>> getEventsByName(@RequestBody FindByNameDto nameDto) {
+        List<Event> banned = eventRepository.findByName(nameDto.getName());
+        if (banned.size() < 1)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        List<EventDTO> collect = banned.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
+        return new ResponseEntity<>(collect, HttpStatus.OK);
+    }
 
+    @PostMapping(value = "get_ban_users")
+    public ResponseEntity<List<AdminUserDto>> getBanUsers() {
+        List<User> byStatus = userRepository.findByStatus(Status.BANNED);
+        if (byStatus.size() > 0) {
+            List<AdminUserDto> collect = byStatus.stream().map(AdminUserDto::fromUser).collect(Collectors.toList());
+            return new ResponseEntity<>(collect, HttpStatus.OK);
+        } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping(value = "get_ban_events")
+    public ResponseEntity<List<EventDTO>> getBanEvents() {
+        List<Event> byStatus = eventRepository.findByStatus(Status.BANNED);
+        if (byStatus.size() > 0) {
+            List<EventDTO> collect = byStatus.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
+            return new ResponseEntity<>(collect, HttpStatus.OK);
+        } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
     @GetMapping("/pageable_users/{page}")
     @ResponseBody

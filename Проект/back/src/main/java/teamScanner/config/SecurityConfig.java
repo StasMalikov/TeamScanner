@@ -29,7 +29,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String USER_ENDPOINT = "/api/v1/users/**";
     private static final String EVENT_ENDPOINT = "/api/v1/events/**";
     private static final String COMMENT_ENDPOINT = "/api/v1/comments/**";
-
+//    private static final String SWAGGER_ENDPOINT = "/v2/**";
+    private static final String SWAGGER_ENDPOINT = "/**";
+//https://localhost:8443/v2/api-docs
 
     @Autowired
     public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
@@ -94,6 +96,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(USER_ENDPOINT).permitAll()
                 .antMatchers(EVENT_ENDPOINT).permitAll()
                 .antMatchers(COMMENT_ENDPOINT).permitAll()
+                .antMatchers(SWAGGER_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .antMatchers(MODER_ENDPOINT).hasRole("MODER")
                 .anyRequest().authenticated()
