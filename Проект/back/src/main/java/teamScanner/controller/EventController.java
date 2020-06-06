@@ -79,12 +79,21 @@ public class EventController {
         //AdminUserDto result = AdminUserDto.fromUser(user);
         return new ResponseEntity<>("", HttpStatus.OK);
     }
-
+    @Transactional
     @PostMapping(value = "rem_event")
     public ResponseEntity<AdminUserDto> removeEvent(@RequestBody MiniEventDTO deleteEventDTO) {
-        if (eventRepository.existsById(deleteEventDTO.getEventID()))
+        if (eventRepository.existsById(deleteEventDTO.getEventID())) {
+            Event event = eventRepository.findById(deleteEventDTO.getEventID()).get();
+            List<User> participants = event.getParticipants();
+            for (User participant : participants) {
+                List<Event> events = participant.getEvents();
+                events.remove(event);
+                participant.setEvents(events);
+                userRepository.save(participant);
+            }
+            event.setParticipants(null);
             eventRepository.deleteById(deleteEventDTO.getEventID());
-        else
+        } else
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -200,7 +209,6 @@ public class EventController {
     @Transactional
     @PostMapping(value = "sort_events")
     public ResponseEntity<List<EventDTO>> getSortedEvents(@RequestBody EventDTO eventDTO) {
-        Event event = new Event();
         Map<String, Object> map = new HashMap<>();
         if (eventDTO.getName() != null && eventDTO.getName() != "")
             map.put("name", eventDTO.getName());
@@ -225,9 +233,6 @@ public class EventController {
 
         List<Event> all = eventRepository.findAll(Specification.where(search));
 
-//        int year = eventDTO.getDateEvent().getYear();
-//        int month = eventDTO.getDateEvent().getMonth();
-//        int day = eventDTO.getDateEvent().getDay();
 
         if (eventDTO.getDateEvent() != null) {
             String now = eventDTO.getDateEvent().getYear() + " " + eventDTO.getDateEvent().getMonth() + " " + eventDTO.getDateEvent().getDay();
@@ -240,7 +245,6 @@ public class EventController {
             List<EventDTO> collect = allD.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
             return new ResponseEntity<>(collect, HttpStatus.OK);
         }
-//            map.put("dateEvent", eventDTO.getDateEvent());
         List<EventDTO> collect = all.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
         return new ResponseEntity<>(collect, HttpStatus.OK);
     }
