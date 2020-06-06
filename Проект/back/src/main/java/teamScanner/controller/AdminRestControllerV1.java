@@ -64,6 +64,20 @@ public class AdminRestControllerV1 {
         return new ResponseEntity<>(collect1, HttpStatus.OK);
     }
 
+    @Transactional
+    @PostMapping(value = "get_all_admins")
+    public ResponseEntity<List<AdminUserDto>> getAdmins() {
+        List<User> users = new ArrayList<>();
+        Role adm = roleRepository.findByName("ROLE_ADMIN");
+        userRepository.findAll().forEach(p -> {
+            if (p.getRoles().contains(adm)) {
+                users.add(p);
+            }
+        });
+        List<AdminUserDto> collect1 = users.stream().map(AdminUserDto::fromUser).collect(Collectors.toList());
+        return new ResponseEntity<>(collect1, HttpStatus.OK);
+    }
+
     @PostMapping(value = "get_user_by_name")
     public ResponseEntity<AdminUserDto> getUserByName(@RequestBody StringDTO stringDTO) {
         User byLogin = userRepository.findByLogin(stringDTO.getInfo());
