@@ -31,28 +31,25 @@ public class AdminRestControllerV1 {
 //        this.eventRepository = eventRepository;
         this.roleRepository = roleRepository;
     }
-
     @Transactional
     @PostMapping(value = "get_moder_by_login")
     public ResponseEntity<AdminUserDto> getModerByLogin(@RequestBody StringDTO stringDTO) {
-        ResponseEntity<List<AdminUserDto>> moders = getModers();
-//        AdminUserDto adminUserDto;
-        List<AdminUserDto> body = moders.getBody();
-        for (AdminUserDto userDto : body) {
-            if(userDto.getLogin().equals(stringDTO.getInfo())) {
-                return new ResponseEntity<>(userDto, HttpStatus.OK);
-//                adminUserDto = userDto;
+        List<User> moders = new ArrayList<>();
+        Role mod = roleRepository.findByName("ROLE_MODER");
+        Role adm = roleRepository.findByName("ROLE_ADMIN");
+        List<User> all = userRepository.findAll();
+        all.forEach(p -> {
+
+            if (p.getRoles().contains(mod) && !p.getRoles().contains(adm)) {
+                moders.add(p);
             }
+        });
+        List<AdminUserDto> collect1 = moders.stream().map(AdminUserDto::fromUser).collect(Collectors.toList());
+        for (AdminUserDto userDto : collect1) {
+            if (userDto.getLogin().equals(stringDTO.getInfo()))
+                return new ResponseEntity<>(userDto, HttpStatus.OK);
         }
-//       if(adminUserDto == null)return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        User byLogin = userRepository.findByLogin(stringDTO.getInfo());
-////        AdminUserDto adminUserDto = AdminUserDto.fromUser(byLogin);
-////        return new ResponseEntity<>(adminUserDto, HttpStatus.OK);
-//
-//        if (byLogin != null)
-//            return new ResponseEntity<>(adminUserDto, HttpStatus.OK);
-//        else
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Transactional
@@ -110,11 +107,16 @@ public class AdminRestControllerV1 {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping(value = "get_user_by_name")
-    public ResponseEntity<AdminUserDto> getUserByName(@RequestBody StringDTO stringDTO) {
+    @Transactional
+    @PostMapping(value = "get_user_by_login")
+    public ResponseEntity<AdminUserDto> getUserByLogin(@RequestBody StringDTO stringDTO) {
         User byLogin = userRepository.findByLogin(stringDTO.getInfo());
-        AdminUserDto adminUserDto = AdminUserDto.fromUser(byLogin);
 //        return new ResponseEntity<>(adminUserDto, HttpStatus.OK);
+        Role mdr = roleRepository.findByName("ROLE_MODER");
+        Role adm = roleRepository.findByName("ROLE_ADMIN");
+        if (byLogin.getRoles().contains(mdr) || byLogin.getRoles().contains(adm))
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        AdminUserDto adminUserDto = AdminUserDto.fromUser(byLogin);
 
         if (byLogin != null)
             return new ResponseEntity<>(adminUserDto, HttpStatus.OK);

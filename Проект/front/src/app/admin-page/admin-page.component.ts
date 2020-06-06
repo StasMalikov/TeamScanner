@@ -80,7 +80,7 @@ export class AdminPageComponent implements OnInit {
       info: this.userName
     };
 
-    this.http.post( environment.apiUrl + '/api/v1/admin/get_user_by_name', body, {
+    this.http.post( environment.apiUrl + '/api/v1/admin/get_user_by_login', body, {
       headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
     })
       .subscribe((resp: StatusUser) => {
