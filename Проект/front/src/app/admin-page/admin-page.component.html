@@ -5,9 +5,9 @@
 
       <mat-form-field class="example-full-width" style="margin-right: 5px">
         <mat-label>Поиск</mat-label>
-        <input matInput>
+        <input matInput [(ngModel)]="userName" name="userName">
       </mat-form-field>
-      <button mat-raised-button color="primary">Найти</button>
+      <button mat-raised-button color="primary" (click)="findUsers()">Найти</button>
       <br>
 
       <mat-card>

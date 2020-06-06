@@ -20,6 +20,7 @@ export class EventService {
       participantsCount: Number(this.cookie.get('event_participantsCount')),
       city: this.cookie.get('event_city'),
       creator_id: Number(this.cookie.get('event_creator_id')),
+      nameCreator: this.cookie.get('nameCreator'),
     };
     return e;
   }
@@ -39,5 +40,6 @@ export class EventService {
     this.cookie.set('event_participantsCount', String(e.participantsCount));
     this.cookie.set('event_city', e.city);
     this.cookie.set('event_creator_id', String(e.creator_id));
+    this.cookie.set('nameCreator', e.nameCreator);
   }
 }

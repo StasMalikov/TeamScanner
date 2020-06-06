@@ -140,6 +140,19 @@ public class ModerController {
         } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @PostMapping(value = "get_all_users")
+    public ResponseEntity< List<AdminUserDto>> getUsers() {
+//        List<User> all = userRepository.findAll();
+        List<AdminUserDto> collect1 = userRepository.findAll().stream().map(AdminUserDto::fromUser).collect(Collectors.toList());
+        return new ResponseEntity<>(collect1, HttpStatus.OK);
+    }
+    @PostMapping(value = "get_user_by_name")
+    public ResponseEntity< AdminUserDto> getUserByName(@RequestBody StringDTO stringDTO) {
+        User byLogin = userRepository.findByLogin(stringDTO.getInfo());
+        AdminUserDto adminUserDto = AdminUserDto.fromUser(byLogin);
+        return new ResponseEntity<>(adminUserDto, HttpStatus.OK);
+    }
+
     @GetMapping("/pageable_users/{page}")
     @ResponseBody
     public Page<AdminUserDto> getPageableUsers(@PathVariable(value = "page") int page) {
