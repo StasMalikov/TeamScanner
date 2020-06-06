@@ -6,13 +6,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import teamScanner.dto.*;
-import teamScanner.model.BaseEntity;
-import teamScanner.model.Event;
-import teamScanner.model.Status;
-import teamScanner.model.User;
+import teamScanner.model.*;
 import teamScanner.repository.EventRepository;
+import teamScanner.repository.RoleRepository;
 import teamScanner.repository.UserRepository;
 import teamScanner.service.UserService;
 
@@ -25,12 +24,14 @@ public class ModerController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
+    private final RoleRepository roleRepository;
 
     @Autowired
-    public ModerController(UserService userService, UserRepository userRepository, EventRepository eventRepository) {
+    public ModerController(UserService userService, UserRepository userRepository, EventRepository eventRepository, RoleRepository roleRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
+        this.roleRepository = roleRepository;
     }
 
 
@@ -95,21 +96,34 @@ public class ModerController {
     public ResponseEntity<List<AdminUserDto>> getBanListUsers() {
         List<User> banned = userRepository.findByStatus(Status.BANNED);
         List<AdminUserDto> collect = banned.stream().map(AdminUserDto::fromUser).collect(Collectors.toList());
-        return new ResponseEntity<>(collect, HttpStatus.OK);
+        if (collect.size() > 0)
+            return new ResponseEntity<>(collect, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping(value = "ban_listEvents")
     public ResponseEntity<List<EventDTO>> getBanListEvents() {
         List<Event> banned = eventRepository.findByStatus(Status.BANNED);
         List<EventDTO> collect = banned.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
-        return new ResponseEntity<>(collect, HttpStatus.OK);
+        if (collect.size() > 0)
+            return new ResponseEntity<>(collect, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @Transactional
     @PostMapping(value = "usersByName")
     public ResponseEntity<AdminUserDto> getUsersByName(@RequestBody FindByNameDto nameDto) {
         User byLogin = userRepository.findByLogin(nameDto.getName());
         if (byLogin == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        Role mod = roleRepository.findByName("ROLE_MODER");
+        Role adm = roleRepository.findByName("ROLE_ADMIN");
+        if (!byLogin.getRoles().contains(mod) && !byLogin.getRoles().contains(adm))
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
         return new ResponseEntity<>(AdminUserDto.fromUser(byLogin), HttpStatus.OK);
     }
 
@@ -141,15 +155,22 @@ public class ModerController {
     }
 
     @PostMapping(value = "get_all_users")
-    public ResponseEntity< List<AdminUserDto>> getUsers() {
+    public ResponseEntity<List<AdminUserDto>> getUsers() {
 //        List<User> all = userRepository.findAll();
         List<AdminUserDto> collect1 = userRepository.findAll().stream().map(AdminUserDto::fromUser).collect(Collectors.toList());
-        return new ResponseEntity<>(collect1, HttpStatus.OK);
+        if (collect1 != null && collect1.size() > 0)
+            return new ResponseEntity<>(collect1, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
     @PostMapping(value = "get_user_by_name")
-    public ResponseEntity< AdminUserDto> getUserByName(@RequestBody StringDTO stringDTO) {
+    public ResponseEntity<AdminUserDto> getUserByName(@RequestBody StringDTO stringDTO) {
         User byLogin = userRepository.findByLogin(stringDTO.getInfo());
+        if (byLogin == null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
         AdminUserDto adminUserDto = AdminUserDto.fromUser(byLogin);
+//        return new ResponseEntity<>(adminUserDto, HttpStatus.OK);
         return new ResponseEntity<>(adminUserDto, HttpStatus.OK);
     }
 
