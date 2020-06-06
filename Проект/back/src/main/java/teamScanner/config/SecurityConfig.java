@@ -1,5 +1,6 @@
 package teamScanner.config;
 
+import io.swagger.models.HttpMethod;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
@@ -14,8 +15,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.web.cors.CorsConfiguration;
 import teamScanner.security.jwt.JwtConfigurer;
 import teamScanner.security.jwt.JwtTokenProvider;
+
+import java.util.Arrays;
 
 
 @Configuration
@@ -29,8 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String USER_ENDPOINT = "/api/v1/users/**";
     private static final String EVENT_ENDPOINT = "/api/v1/events/**";
     private static final String COMMENT_ENDPOINT = "/api/v1/comments/**";
-//    private static final String SWAGGER_ENDPOINT = "/v2/**";
-    private static final String SWAGGER_ENDPOINT = "/**";
+    //    private static final String SWAGGER_ENDPOINT = "/v2/**";
+    private static final String SWAGGER_ENDPOINT = "/swagger-ui.html";
 //https://localhost:8443/v2/api-docs
 
     @Autowired
@@ -90,16 +94,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+
+
                 .authorizeRequests()
 
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
                 .antMatchers(USER_ENDPOINT).permitAll()
                 .antMatchers(EVENT_ENDPOINT).permitAll()
                 .antMatchers(COMMENT_ENDPOINT).permitAll()
-//                .antMatchers(SWAGGER_ENDPOINT).permitAll()
+                .antMatchers(SWAGGER_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .antMatchers(MODER_ENDPOINT).hasRole("MODER")
                 .anyRequest().authenticated()
+                .and()
+                .cors().configurationSource(
+                request -> {
+                    CorsConfiguration cors = new CorsConfiguration();
+                    cors.setAllowedMethods(
+                            Arrays.asList(
+                                    HttpMethod.GET.name(),
+                                    HttpMethod.POST.name()
+                            ));
+                    cors.applyPermitDefaultValues();
+                    return cors;
+                })
+
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
     }
