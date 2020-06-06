@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import teamScanner.dto.AdminUserDto;
-import teamScanner.dto.EventDTO;
-import teamScanner.dto.FindByNameDto;
-import teamScanner.dto.MiniEventDTO;
+import teamScanner.dto.*;
 import teamScanner.model.*;
 import teamScanner.repository.CommentRepository;
 import teamScanner.repository.EventRepository;
@@ -35,6 +32,22 @@ public class EventController {
         this.userService = userService;
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
+    }
+
+
+    //    @Transactional
+//    @GetMapping(value = "get_subscribe/{id}")
+//    public ResponseEntity<List<EventDTO>> getSubscribe(@PathVariable(value = "id") Long id) {
+    @Transactional
+    @PostMapping(value = "get_subscribe")
+    public ResponseEntity<BoolAnswer> getSubscribe(@RequestBody MiniEventDTO subscribeEventDTO) {
+        Event event = new Event();
+        if (eventRepository.existsById(subscribeEventDTO.getEventID())) {
+            event = eventRepository.findById(subscribeEventDTO.getEventID()).get();
+        } else return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        List<User> participants = event.getParticipants();
+        boolean contains = participants.contains(userRepository.findByLogin(subscribeEventDTO.getUserName()));
+        return new ResponseEntity<>(new BoolAnswer(contains), HttpStatus.OK);
     }
 
     @Transactional
@@ -79,6 +92,7 @@ public class EventController {
         //AdminUserDto result = AdminUserDto.fromUser(user);
         return new ResponseEntity<>("", HttpStatus.OK);
     }
+
     @Transactional
     @PostMapping(value = "rem_event")
     public ResponseEntity<AdminUserDto> removeEvent(@RequestBody MiniEventDTO deleteEventDTO) {
