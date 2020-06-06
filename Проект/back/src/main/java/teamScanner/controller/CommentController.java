@@ -80,7 +80,10 @@ public class CommentController {
 //                collect.add(event);
 //        }
 //        List<CommentDTO> collect1 = collect.stream().map(CommentDTO::fromComment).collect(Collectors.toList());
-        return new ResponseEntity<>(collect1, HttpStatus.OK);
+        if (collect1.size() > 0)
+            return new ResponseEntity<>(collect1, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 

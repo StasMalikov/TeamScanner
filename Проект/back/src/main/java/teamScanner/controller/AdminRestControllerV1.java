@@ -32,6 +32,28 @@ public class AdminRestControllerV1 {
         this.roleRepository = roleRepository;
     }
 
+    @PostMapping(value = "get_moder_by_login")
+    public ResponseEntity<AdminUserDto> getModerByLogin(@RequestBody StringDTO stringDTO) {
+        ResponseEntity<List<AdminUserDto>> moders = getModers();
+//        AdminUserDto adminUserDto;
+        List<AdminUserDto> body = moders.getBody();
+        for (AdminUserDto userDto : body) {
+            if(userDto.getLogin().equals(stringDTO.getInfo())) {
+                return new ResponseEntity<>(userDto, HttpStatus.OK);
+//                adminUserDto = userDto;
+            }
+        }
+//       if(adminUserDto == null)return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        User byLogin = userRepository.findByLogin(stringDTO.getInfo());
+////        AdminUserDto adminUserDto = AdminUserDto.fromUser(byLogin);
+////        return new ResponseEntity<>(adminUserDto, HttpStatus.OK);
+//
+//        if (byLogin != null)
+//            return new ResponseEntity<>(adminUserDto, HttpStatus.OK);
+//        else
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @Transactional
     @PostMapping(value = "get_all_moders")
     public ResponseEntity<List<AdminUserDto>> getModers() {
