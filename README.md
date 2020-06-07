@@ -1,4 +1,4 @@
-# [TeamScanner] (https://team-scanner.herokuapp.com/)
+# TeamScanner
 
 ## Описание
 
