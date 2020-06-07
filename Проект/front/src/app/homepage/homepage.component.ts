@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../services/auth.service';
+import {HttpClient} from '@angular/common/http';
+import {EventService} from '../services/event-service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
@@ -7,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomepageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private eventService: EventService, private router: Router) { }
 
   football: string;
   hockey: string;
@@ -19,6 +23,26 @@ export class HomepageComponent implements OnInit {
     this.hockey = 'assets/img/hockey.jpg';
     this.basketball = 'assets/img/basketball.jpg';
     this.volleyball = 'assets/img/volleyball.jpg';
+  }
+
+  footballSort(){
+  this.eventService.setEventSort('Футбол');
+  this.router.navigate(['event_search']);
+  }
+
+  hockeySort(){
+    this.eventService.setEventSort('Хоккей');
+    this.router.navigate(['event_search']);
+  }
+
+  basketballSort(){
+    this.eventService.setEventSort('Баскетбол');
+    this.router.navigate(['event_search']);
+  }
+
+  volleyballSort(){
+    this.eventService.setEventSort('Волейбол');
+    this.router.navigate(['event_search']);
   }
 
 }
