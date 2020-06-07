@@ -21,6 +21,7 @@ export class EventService {
       city: this.cookie.get('event_city'),
       creator_id: Number(this.cookie.get('event_creator_id')),
       nameCreator: this.cookie.get('nameCreator'),
+      status: this.cookie.get('status'),
     };
     return e;
   }
@@ -41,5 +42,6 @@ export class EventService {
     this.cookie.set('event_city', e.city);
     this.cookie.set('event_creator_id', String(e.creator_id));
     this.cookie.set('nameCreator', e.nameCreator);
+    this.cookie.set('status', e.status);
   }
 }

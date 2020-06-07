@@ -166,16 +166,17 @@ export class ModerPageComponent implements OnInit {
       headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
     })
       .subscribe((resp: StatusUser) => {
-        if (resp !== undefined && resp !== null) {
+        // if (resp !== undefined && resp !== null) {
           this.foundUser = resp;
           this.seeFoundUser = true;
           this.foundUserNotification = false;
-        } else {
-          this.seeFoundUser = false;
-          this.foundUserNotification = true;
-        }
+        // } else {
+        //   this.seeFoundUser = false;
+        //   this.foundUserNotification = true;
+        // }
       }, error => {
-        alert('Упс, ошибка');
+        this.seeFoundUser = false;
+        this.foundUserNotification = true;
       });
   }
 
@@ -189,13 +190,10 @@ export class ModerPageComponent implements OnInit {
     })
       .subscribe((resp: FullEvent[]) => {
         this.foundEvents = resp;
-        if (typeof this.foundEvents === undefined) {
-          this.foundEventsCount = 0;
-        } else {
-          this.foundEventsCount = this.foundEvents.length;
-        }
+        this.foundEventsCount = this.foundEvents.length;
       }, error => {
-        alert('Упс, ошибка');
+        this.foundEventsCount = this.foundEvents.length;
+        this.foundEventsCount = 0;
       });
   }
 
@@ -206,11 +204,11 @@ export class ModerPageComponent implements OnInit {
     return true;
   }
 
-  // public  isBannedEvent(event: FullEvent): boolean {
-  //   if (event. === 'ACTIVE') {
-  //     return false;
-  //   }
-  //   return true;
-  // }
+  public  isBannedEvent(event: FullEvent): boolean {
+    if (event.status === 'ACTIVE') {
+      return false;
+    }
+    return true;
+  }
 
 }

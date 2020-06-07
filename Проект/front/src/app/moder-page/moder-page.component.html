@@ -20,15 +20,41 @@
     <br>
 
     <mat-card>
-      <table class="table">
+
+      <div class="alert alert-success" role="alert" *ngIf="foundUserNotification" style="text-align: center">
+        Пользователя с таким логином не нашлось. Попробуйте ввести другой логин.
+      </div>
+
+      <table class="table" *ngIf="seeFoundUser">
         <tbody>
         <tr>
-          <td>Пользователь 1</td>
+          <td>{{foundUser.login}}</td>
           <td>
-            <button mat-stroked-button color="primary">Разблокировать</button>&nbsp;&nbsp;
-            <button mat-stroked-button color="warn">Заблокировать</button>
+            <button mat-stroked-button color="primary" *ngIf="isBannedUser(foundUser)" (click)="unlockUser(foundUser)">Разблокировать</button>&nbsp;&nbsp;
+            <button mat-stroked-button color="warn" *ngIf="!isBannedUser(foundUser)" (click)="lockUser(foundUser)">Заблокировать</button>
           </td>
         </tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-success" role="alert" *ngIf="foundEventsCount === 0" style="text-align: center">
+        Событий с таким названием не нашлось. Попробуйте ввести другое название события.
+      </div>
+
+      <table class="table">
+        <tbody>
+        <tr *ngFor="let event of foundEvents; index as i">
+          <td>{{event.name}}</td>
+          <td>{{event.nameCreator}}</td>
+          <td>{{event.dateEvent | date: 'dd.MM.yyyy'}} {{getTime(event)}}</td>
+          <td>{{event.participantsCount}}</td>
+          <td>
+            <button mat-stroked-button color="primary" (click)="detailedEvent(foundEvents[i])">Подробнее</button>&nbsp;&nbsp;
+            <button mat-stroked-button color="primary" *ngIf="isBannedEvent(foundEvents[i])" (click)="unlockEvent(foundEvents[i])">Разблокировать</button>&nbsp;&nbsp;
+            <button mat-stroked-button color="warn" *ngIf="!isBannedEvent(foundEvents[i])" (click)="lockEvent(foundEvents[i])">Заблокировать</button>
+          </td>
+        </tr>
+
         </tbody>
       </table>
 
