@@ -211,6 +211,18 @@ public class EventController {
 
         return new ResponseEntity<>(collect1, HttpStatus.OK);
     }
+
+    @Transactional
+    @GetMapping(value = "get_login_creator/{id}")
+    public ResponseEntity<AdminUserDto> getLoginCreator(@PathVariable(value = "id") Long eventId) {
+        if (eventRepository.existsById(eventId)) {
+            Event event = eventRepository.findById(eventId).get();
+            User user = userRepository.findById(event.getCreatorId()).get();
+            return new ResponseEntity<>(AdminUserDto.fromUser(user), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @Transactional
     @PostMapping(value = "eventsByName")
     public ResponseEntity<List<EventDTO>> getEventsByName(@RequestBody FindByNameDto nameDto) {
