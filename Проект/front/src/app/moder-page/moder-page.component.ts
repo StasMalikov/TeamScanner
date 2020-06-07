@@ -31,6 +31,7 @@ export class ModerPageComponent implements OnInit {
   eventName = '';
   foundEvents: FullEvent[];
   foundEventsCount = 0;
+  seeFoundEvents = false;
 
   constructor(private auth: AuthService, private http: HttpClient,
               private eventService: EventService, private router: Router) { }
@@ -41,7 +42,7 @@ export class ModerPageComponent implements OnInit {
   }
 
   getBannedUsers() {
-    this.http.post( environment.apiUrl + '/api/v1/moder/ban_listEvents', '', {
+    this.http.post( environment.apiUrl + '/api/v1/moder/ban_listUsers', '', {
       headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
     })
       .subscribe((resp: StatusUser[]) => {
@@ -49,7 +50,9 @@ export class ModerPageComponent implements OnInit {
         if (typeof this.bannedUsers === undefined) {
           this.bannedUsersCount = 0;
         } else {
-          this.bannedUsersCount = this.bannedUsers.length;
+          if (this.bannedUsers != null) {
+            this.bannedUsersCount = this.bannedUsers.length;
+          }
         }
       }, error => {
         alert('Упс, ошибка');
@@ -57,7 +60,7 @@ export class ModerPageComponent implements OnInit {
   }
 
   getBannedEvents() {
-    this.http.post( environment.apiUrl + '/api/v1/moder/ban_listUsers', '', {
+    this.http.post( environment.apiUrl + '/api/v1/moder/ban_listEvents', '', {
       headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
     })
       .subscribe((resp: FullEvent[]) => {
@@ -65,27 +68,13 @@ export class ModerPageComponent implements OnInit {
         if (typeof this.bannedEvents === undefined) {
           this.bannedEventsCount = 0;
         } else {
-          this.bannedEventsCount = this.bannedEvents.length;
+          if (this.bannedEvents != null) {
+            this.bannedEventsCount = this.bannedEvents.length;
+          }
         }
       }, error => {
         alert('Упс, ошибка');
       });
-  }
-
-  getTime(e: FullEvent): string {
-    let time = '';
-    if (e.dateEvent.getHours() < 10) {
-      time = '0' + e.dateEvent.getHours();
-    } else {
-      time = '' + e.dateEvent.getHours();
-    }
-    time += ':';
-    if (e.dateEvent.getMinutes() < 10) {
-      time += '0' + e.dateEvent.getMinutes();
-    } else {
-      time += '' + e.dateEvent.getMinutes();
-    }
-    return time;
   }
 
   detailedEvent(e: FullEvent) {
@@ -99,11 +88,15 @@ export class ModerPageComponent implements OnInit {
       status: 'ACTIVE'
     };
 
+    fullEvent.status = 'ACTIVE';
+
     this.http.post( environment.apiUrl + '/api/v1/moder/set_eventStatus', body, {
       headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
     })
       .subscribe((resp: any) => {
         this.getBannedEvents();
+        this.foundEventsCount = 0;
+        this.seeFoundEvents = false;
       }, error => {
         alert('Упс, ошибка');
       });
@@ -114,12 +107,15 @@ export class ModerPageComponent implements OnInit {
       eventID: fullEvent.eventID,
       status: 'BANNED'
     };
+    fullEvent.status = 'BANNED';
 
     this.http.post( environment.apiUrl + '/api/v1/moder/set_eventStatus', body, {
       headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
     })
       .subscribe((resp: any) => {
         this.getBannedEvents();
+        this.foundEventsCount = 0;
+        this.seeFoundEvents = false;
       }, error => {
         alert('Упс, ошибка');
       });
@@ -136,6 +132,8 @@ export class ModerPageComponent implements OnInit {
     })
       .subscribe((resp: any) => {
         this.getBannedUsers();
+        this.seeFoundUser = false;
+        this.foundUserNotification = false;
       }, error => {
         alert('Упс, ошибка');
       });
@@ -152,6 +150,8 @@ export class ModerPageComponent implements OnInit {
     })
       .subscribe((resp: any) => {
         this.getBannedUsers();
+        this.seeFoundUser = false;
+        this.foundUserNotification = false;
       }, error => {
         alert('Упс, ошибка');
       });
@@ -190,10 +190,13 @@ export class ModerPageComponent implements OnInit {
     })
       .subscribe((resp: FullEvent[]) => {
         this.foundEvents = resp;
-        this.foundEventsCount = this.foundEvents.length;
+        if (this.foundEvents != null) {
+          this.foundEventsCount = this.foundEvents.length;
+        }
+        this.seeFoundEvents = false;
       }, error => {
-        this.foundEventsCount = this.foundEvents.length;
         this.foundEventsCount = 0;
+        this.seeFoundEvents = true;
       });
   }
 
