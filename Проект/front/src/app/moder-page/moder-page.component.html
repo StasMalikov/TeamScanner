@@ -37,16 +37,15 @@
         </tbody>
       </table>
 
-      <div class="alert alert-success" role="alert" *ngIf="foundEventsCount === 0" style="text-align: center">
+      <div class="alert alert-success" role="alert" *ngIf="foundEventsCount === 0 && seeFoundEvents" style="text-align: center">
         Событий с таким названием не нашлось. Попробуйте ввести другое название события.
       </div>
 
-      <table class="table">
+      <table class="table" *ngIf="foundEventsCount > 0">
         <tbody>
         <tr *ngFor="let event of foundEvents; index as i">
           <td>{{event.name}}</td>
           <td>{{event.nameCreator}}</td>
-          <td>{{event.dateEvent | date: 'dd.MM.yyyy'}} {{getTime(event)}}</td>
           <td>{{event.participantsCount}}</td>
           <td>
             <button mat-stroked-button color="primary" (click)="detailedEvent(foundEvents[i])">Подробнее</button>&nbsp;&nbsp;
@@ -72,7 +71,7 @@
       <table class="table">
         <tbody>
         <tr *ngFor="let user of bannedUsers; index as i">
-          <td>{{user.login}}</td>
+          <td>{{bannedUsers[i].login}}</td>
           <td>
             <button mat-stroked-button color="primary" (click)="unlockUser(bannedUsers[i])">Разблокировать</button>
           </td>
@@ -95,7 +94,6 @@
       <tr>
         <th scope="col">Название</th>
         <th scope="col">Создатель</th>
-        <th scope="col">Дата</th>
         <th scope="col">Участники</th>
         <th scope="col"></th>
       </tr>
@@ -104,7 +102,6 @@
       <tr *ngFor="let event of bannedEvents; index as i">
         <td>{{event.name}}</td>
         <td>{{event.nameCreator}}</td>
-        <td>{{event.dateEvent | date: 'dd.MM.yyyy'}} {{getTime(event)}}</td>
         <td>{{event.participantsCount}}</td>
         <td>
           <button mat-stroked-button color="primary" (click)="detailedEvent(bannedEvents[i])">Подробнее</button>&nbsp;&nbsp;

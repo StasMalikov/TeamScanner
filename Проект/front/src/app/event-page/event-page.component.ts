@@ -102,7 +102,10 @@ export class EventPageComponent implements OnInit {
         if (typeof this.comments === undefined) {
           this.length = 0;
         } else {
-          this.length = this.comments.length;
+          if(this.comments != null) {
+            this.length = this.comments.length;
+          }
+
         }
       }, error => {
         alert('Упс, ошибка');
