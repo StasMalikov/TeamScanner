@@ -30,6 +30,18 @@ export class EventService {
     return Number(this.cookie.get('event_id'));
   }
 
+  setEventSort(sort: string) {
+    this.cookie.set('event_sort', sort);
+  }
+
+  getEventSort(): string {
+    return this.cookie.get('event_sort');
+  }
+
+  clearEventSort() {
+    this.cookie.delete('event_sort');
+  }
+
   setEvent(e: FullEvent ) {
     const a = new Date(e.dateEvent);
     this.cookie.set('event_id', String(e.eventID));

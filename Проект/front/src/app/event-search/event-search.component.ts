@@ -35,8 +35,21 @@ export class EventSearchComponent implements OnInit {
               private eventService: EventService, private router: Router) { }
 
   ngOnInit() {
-    this.getEvents();
     this.getCities();
+    if (! this.preSort()) {
+      this.getEvents();
+    }
+  }
+
+  preSort(): boolean {
+    const sort = this.eventService.getEventSort();
+    if (sort != null) {
+      this.categorySelected = sort;
+      this.eventService.clearEventSort();
+      this.getSorted();
+      return true;
+    }
+    return false;
   }
 
   getCities() {
