@@ -18,6 +18,7 @@ public class EventDTO {
     private Long eventID;
     private String name;
     private String nameCreator;
+    private String status;
     private String description;
     private String category;
     private String address;
@@ -32,6 +33,7 @@ public class EventDTO {
         eventDTO.setEventID(event.getId());
         eventDTO.setName(event.getName());
         eventDTO.setNameCreator(ems.getLoginById(event.getCreatorId()));
+        eventDTO.setStatus(event.getStatus().name());
         eventDTO.setDescription(event.getDescription());
         eventDTO.setCategory(event.getCategory().toString());
         eventDTO.setAddress(event.getAddress());
