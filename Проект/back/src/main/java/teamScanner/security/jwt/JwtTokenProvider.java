@@ -81,9 +81,9 @@ public class JwtTokenProvider {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
 
-            if (claims.getBody().getExpiration().before(new Date())) {// вроде как отвечает за протухание токена
-                return false;
-            }
+//            if (claims.getBody().getExpiration().before(new Date())) {// вроде как отвечает за протухание токена
+//                return false;
+//            }
 
             return true;
         } catch (JwtException | IllegalArgumentException e) {
