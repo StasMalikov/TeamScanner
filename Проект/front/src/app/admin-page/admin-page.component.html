@@ -53,7 +53,7 @@
       <button mat-raised-button color="primary" (click)="findModerator()">Найти</button>
       <br>
 
-      <mat-card style="max-width: 750px">
+      <mat-card style="max-width: 850px">
         <div class="alert alert-success" role="alert" *ngIf="moderatorCount == 0" style="text-align: center">
           Нет пользователей с правами модератора
         </div>
@@ -67,7 +67,7 @@
           <tr>
             <td>{{moderatorFound.login}}</td>
             <td>
-              <button mat-stroked-button color="primary" (click)="addModerator(moderatorFound)">Сделать модератором</button>
+              <button mat-stroked-button color="primary" (click)="removeModerator(moderatorFound)">Снять модераторские полномочия</button>
             </td>
           </tr>
           </tbody>

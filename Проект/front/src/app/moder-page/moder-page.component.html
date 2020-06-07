@@ -5,17 +5,17 @@
 
     <mat-form-field class="example-full-width" style="margin-right: 5px">
       <mat-label>Поиск пользователей</mat-label>
-      <input matInput>
+      <input matInput [(ngModel)]="userName" name="userName">
     </mat-form-field>
-    <button mat-raised-button color="primary" style="margin-right: 30px">Найти</button>
+    <button mat-raised-button color="primary" style="margin-right: 30px" (click)="findUser()">Найти</button>
 
 
 
     <mat-form-field class="example-full-width" style="margin-right: 5px">
       <mat-label>Поиск событий</mat-label>
-      <input matInput>
+      <input matInput [(ngModel)]="eventName" name="eventName">
     </mat-form-field>
-    <button mat-raised-button color="primary">Найти</button>
+    <button mat-raised-button color="primary" (click)="findEvent()">Найти</button>
 
     <br>
 
@@ -23,16 +23,6 @@
       <table class="table">
         <tbody>
         <tr>
-          <th scope="row">1</th>
-          <td>Пользователь 1</td>
-          <td>
-            <button mat-stroked-button color="primary">Разблокировать</button>&nbsp;&nbsp;
-            <button mat-stroked-button color="warn">Заблокировать</button>
-          </td>
-        </tr>
-
-        <tr>
-          <th scope="row">1</th>
           <td>Пользователь 1</td>
           <td>
             <button mat-stroked-button color="primary">Разблокировать</button>&nbsp;&nbsp;
