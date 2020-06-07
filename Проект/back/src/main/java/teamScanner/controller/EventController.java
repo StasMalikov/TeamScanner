@@ -181,7 +181,7 @@ public class EventController {
     @PostMapping(value = "get_events")
     public ResponseEntity<List<EventDTO>> getEvent() {
         List<Event> collect = eventRepository.findAll();
-        List<EventDTO> collect1 = collect.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
+        List<EventDTO> collect1 = collect.stream().filter(p -> p.getStatus() == Status.ACTIVE).map(EventDTO::fromEvent).collect(Collectors.toList());
         return new ResponseEntity<>(collect1, HttpStatus.OK);
     }
 
@@ -189,7 +189,7 @@ public class EventController {
     @GetMapping(value = "get_creator_events/{id}")
     public ResponseEntity<List<EventDTO>> getCreatorEvent(@PathVariable(value = "id") Long id) {
         List<Event> collect = eventRepository.findByCreatorId(id);
-        List<EventDTO> collect1 = collect.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
+        List<EventDTO> collect1 = collect.stream().filter(p -> p.getStatus() == Status.ACTIVE).map(EventDTO::fromEvent).collect(Collectors.toList());
 
         return new ResponseEntity<>(collect1, HttpStatus.OK);
     }
@@ -207,20 +207,9 @@ public class EventController {
             if (event != null)
                 collect.add(event);
         }
-        List<EventDTO> collect1 = collect.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
+        List<EventDTO> collect1 = collect.stream().filter(p -> p.getStatus() == Status.ACTIVE).map(EventDTO::fromEvent).collect(Collectors.toList());
 
         return new ResponseEntity<>(collect1, HttpStatus.OK);
-    }
-
-    @Transactional
-    @GetMapping(value = "get_login_creator/{id}")
-    public ResponseEntity<AdminUserDto> getLoginCreator(@PathVariable(value = "id") Long eventId) {
-        if (eventRepository.existsById(eventId)) {
-            Event event = eventRepository.findById(eventId).get();
-            User user = userRepository.findById(event.getCreatorId()).get();
-            return new ResponseEntity<>(AdminUserDto.fromUser(user), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @Transactional
@@ -272,7 +261,7 @@ public class EventController {
             List<EventDTO> collect = allD.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
             return new ResponseEntity<>(collect, HttpStatus.OK);
         }
-        List<EventDTO> collect = all.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
+        List<EventDTO> collect = all.stream().filter(p -> p.getStatus() == Status.ACTIVE).map(EventDTO::fromEvent).collect(Collectors.toList());
         return new ResponseEntity<>(collect, HttpStatus.OK);
     }
 
