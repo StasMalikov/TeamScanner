@@ -1,0 +1,4 @@
+export class MiniEvent {
+  userName: string;
+  eventID: number;
+}

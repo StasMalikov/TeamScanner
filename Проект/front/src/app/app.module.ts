@@ -28,6 +28,7 @@ import { ModerPageComponent } from './moder-page/moder-page.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { CookieService} from 'ngx-cookie-service';
+import { EditEventComponent } from './cabinet/edit-event/edit-event.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { CookieService} from 'ngx-cookie-service';
     EventPageComponent,
     EventSearchComponent,
     ModerPageComponent,
-    AdminPageComponent
+    AdminPageComponent,
+    EditEventComponent
   ],
   imports: [
     BrowserModule,

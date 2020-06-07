@@ -1,44 +1,59 @@
-<div class="container-fluid" style="margin-top: 5px">
+<div class="container-fluid" style="margin-top: 5px" *ngIf="auth.isModerator">
 
 <mat-tab-group>
   <mat-tab label="Поиск">
 
     <mat-form-field class="example-full-width" style="margin-right: 5px">
       <mat-label>Поиск пользователей</mat-label>
-      <input matInput>
+      <input matInput [(ngModel)]="userName" name="userName">
     </mat-form-field>
-    <button mat-raised-button color="primary" style="margin-right: 30px">Найти</button>
+    <button mat-raised-button color="primary" style="margin-right: 30px" (click)="findUser()">Найти</button>
 
 
 
     <mat-form-field class="example-full-width" style="margin-right: 5px">
       <mat-label>Поиск событий</mat-label>
-      <input matInput>
+      <input matInput [(ngModel)]="eventName" name="eventName">
     </mat-form-field>
-    <button mat-raised-button color="primary">Найти</button>
+    <button mat-raised-button color="primary" (click)="findEvent()">Найти</button>
 
     <br>
 
     <mat-card>
-      <table class="table">
+
+      <div class="alert alert-success" role="alert" *ngIf="foundUserNotification" style="text-align: center">
+        Пользователя с таким логином не нашлось. Попробуйте ввести другой логин.
+      </div>
+
+      <table class="table" *ngIf="seeFoundUser">
         <tbody>
         <tr>
-          <th scope="row">1</th>
-          <td>Пользователь 1</td>
+          <td>{{foundUser.login}}</td>
           <td>
-            <button mat-stroked-button color="primary">Разблокировать</button>&nbsp;&nbsp;
-            <button mat-stroked-button color="warn">Заблокировать</button>
+            <button mat-stroked-button color="primary" *ngIf="isBannedUser(foundUser)" (click)="unlockUser(foundUser)">Разблокировать</button>&nbsp;&nbsp;
+            <button mat-stroked-button color="warn" *ngIf="!isBannedUser(foundUser)" (click)="lockUser(foundUser)">Заблокировать</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-success" role="alert" *ngIf="foundEventsCount === 0 && seeFoundEvents" style="text-align: center">
+        Событий с таким названием не нашлось. Попробуйте ввести другое название события.
+      </div>
+
+      <table class="table" *ngIf="foundEventsCount > 0">
+        <tbody>
+        <tr *ngFor="let event of foundEvents; index as i">
+          <td>{{event.name}}</td>
+          <td>{{event.nameCreator}}</td>
+          <td>{{event.participantsCount}}</td>
+          <td>
+            <button mat-stroked-button color="primary" (click)="detailedEvent(foundEvents[i])">Подробнее</button>&nbsp;&nbsp;
+            <button mat-stroked-button color="primary" *ngIf="isBannedEvent(foundEvents[i])" (click)="unlockEvent(foundEvents[i])">Разблокировать</button>&nbsp;&nbsp;
+            <button mat-stroked-button color="warn" *ngIf="!isBannedEvent(foundEvents[i])" (click)="lockEvent(foundEvents[i])">Заблокировать</button>
           </td>
         </tr>
 
-        <tr>
-          <th scope="row">1</th>
-          <td>Пользователь 1</td>
-          <td>
-            <button mat-stroked-button color="primary">Разблокировать</button>&nbsp;&nbsp;
-            <button mat-stroked-button color="warn">Заблокировать</button>
-          </td>
-        </tr>
         </tbody>
       </table>
 
@@ -47,22 +62,18 @@
 
 
   <mat-tab label="Заблокированные пользователи">
-    <mat-card>
+    <mat-card style="max-width: 750px">
+
+      <div class="alert alert-success" role="alert" *ngIf="bannedUsersCount == 0" style="text-align: center">
+        Нет заблокированных пользователей.
+      </div>
+
       <table class="table">
         <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Пользователь 1</td>
+        <tr *ngFor="let user of bannedUsers; index as i">
+          <td>{{bannedUsers[i].login}}</td>
           <td>
-            <button mat-stroked-button color="primary">Разблокировать</button>
-          </td>
-        </tr>
-
-        <tr>
-          <th scope="row">1</th>
-          <td>Пользователь 1</td>
-          <td>
-            <button mat-stroked-button color="primary">Разблокировать</button>
+            <button mat-stroked-button color="primary" (click)="unlockUser(bannedUsers[i])">Разблокировать</button>
           </td>
         </tr>
         </tbody>
@@ -73,25 +84,28 @@
 
   <mat-tab label="Заблокированные события">
     <mat-card>
+
+      <div class="alert alert-success" role="alert" *ngIf="bannedEventsCount == 0" style="text-align: center">
+        Нет заблокированных событий.
+      </div>
+
     <table class="table">
       <thead>
       <tr>
-        <th scope="col"></th>
         <th scope="col">Название</th>
-        <th scope="col">Дата</th>
+        <th scope="col">Создатель</th>
         <th scope="col">Участники</th>
         <th scope="col"></th>
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Пятничный футбол</td>
-        <td>12,02,20 14-00</td>
-        <td>20/25</td>
+      <tr *ngFor="let event of bannedEvents; index as i">
+        <td>{{event.name}}</td>
+        <td>{{event.nameCreator}}</td>
+        <td>{{event.participantsCount}}</td>
         <td>
-          <button mat-stroked-button color="primary">Подробнее</button>&nbsp;&nbsp;
-          <button mat-stroked-button color="warn">Разблокировать</button>
+          <button mat-stroked-button color="primary" (click)="detailedEvent(bannedEvents[i])">Подробнее</button>&nbsp;&nbsp;
+          <button mat-stroked-button color="warn" (click)="unlockEvent(bannedEvents[i])">Разблокировать</button>
         </td>
       </tr>
 

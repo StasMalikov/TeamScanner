@@ -5,22 +5,22 @@ import {RegisterUser} from '../models/user/registerUser';
 import { environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {AuthUser} from '../models/user/authUser';
-import {FullUser} from '../models/user/FullUser';
+import {CookieService} from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient, private cookie: CookieService) { }
 
   signIn(user: SignInUser) {
     this.http.post( environment.apiUrl + '/api/v1/auth/login' , user)
       .subscribe((resp: AuthUser) => {
         localStorage.setItem('auth_token', resp.token);
         localStorage.setItem('login', resp.login);
-        localStorage.setItem('roles', resp.roles.toString());
         localStorage.setItem('id', resp.id);
+        this.cookie.set('roles', resp.roles.toString());
+
         this.router.navigate(['']);
       }, error => {
         alert('Неверный логин или пароль');
@@ -28,11 +28,48 @@ export class AuthService {
   }
 
   logout() {
+    this.cookie.deleteAll();
     localStorage.removeItem('auth_token');
     localStorage.removeItem('login');
-    localStorage.removeItem('roles');
     localStorage.removeItem('id');
   }
+
+  public get isUser(): boolean {
+    if(this.cookie.get('roles') !== null) {
+      const roles = this.cookie.get('roles').split(',');
+      for (let i = 0; i < roles.length; i++) {
+        if (roles[i] === 'ROLE_USER') {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  public get isModerator(): boolean {
+    if(this.cookie.get('roles') !== null) {
+      const roles = this.cookie.get('roles').split(',');
+      for (let i = 0; i < roles.length; i++) {
+        if (roles[i] === 'ROLE_MODER') {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  public get isAdministrator(): boolean {
+    if(this.cookie.get('roles') !== null) {
+      const roles = this.cookie.get('roles').split(',');
+      for (let i = 0; i < roles.length; i++) {
+        if (roles[i] === 'ROLE_ADMIN') {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
 
   public get logIn(): boolean {
     return (localStorage.getItem('auth_token') !== null);
@@ -51,8 +88,10 @@ export class AuthService {
       .subscribe((resp: AuthUser) => {
           localStorage.setItem('auth_token', resp.token);
           localStorage.setItem('login', resp.login);
-          localStorage.setItem('roles', resp.roles.toString());
           localStorage.setItem('id', resp.id);
+
+          this.cookie.set('roles', resp.roles.toString());
+
           this.router.navigate(['']);
       }, error => {
         alert('Пользователь с таким логином уже существует');

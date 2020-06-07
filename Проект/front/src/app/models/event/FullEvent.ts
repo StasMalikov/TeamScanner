@@ -9,4 +9,6 @@ export class FullEvent {
     dateEvent: Date;
     participantsCount: number;
     city: string;
+    nameCreator: string;
+    status: string;
 }

@@ -1,14 +1,24 @@
 package teamScanner.dto;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import teamScanner.model.Event;
+import teamScanner.repository.UserRepository;
+import teamScanner.service.EntityManagerService;
+import teamScanner.service.UserService;
+import teamScanner.service.impl.UserServiceImpl;
 
 import java.util.Date;
 
 @Data
+@Service
 public class EventDTO {
     private Long eventID;
     private String name;
+    private String nameCreator;
+    private String status;
     private String description;
     private String category;
     private String address;
@@ -19,8 +29,11 @@ public class EventDTO {
 
     public static EventDTO fromEvent(Event event) {
         EventDTO eventDTO = new EventDTO();
+        EntityManagerService ems = new EntityManagerService();
         eventDTO.setEventID(event.getId());
         eventDTO.setName(event.getName());
+        eventDTO.setNameCreator(ems.getLoginById(event.getCreatorId()));
+        eventDTO.setStatus(event.getStatus().name());
         eventDTO.setDescription(event.getDescription());
         eventDTO.setCategory(event.getCategory().toString());
         eventDTO.setAddress(event.getAddress());

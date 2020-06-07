@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import teamScanner.dto.AdminUserDto;
-import teamScanner.dto.EventDTO;
-import teamScanner.dto.FindByNameDto;
-import teamScanner.dto.MiniEventDTO;
+import teamScanner.dto.*;
 import teamScanner.model.*;
 import teamScanner.repository.CommentRepository;
 import teamScanner.repository.EventRepository;
@@ -35,6 +32,23 @@ public class EventController {
         this.userService = userService;
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
+
+    }
+
+
+    //    @Transactional
+//    @GetMapping(value = "get_subscribe/{id}")
+//    public ResponseEntity<List<EventDTO>> getSubscribe(@PathVariable(value = "id") Long id) {
+    @Transactional
+    @PostMapping(value = "get_subscribe")
+    public ResponseEntity<String> getSubscribe(@RequestBody MiniEventDTO subscribeEventDTO) {
+        Event event = new Event();
+        if (eventRepository.existsById(subscribeEventDTO.getEventID())) {
+            event = eventRepository.findById(subscribeEventDTO.getEventID()).get();
+        } else return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        List<User> participants = event.getParticipants();
+        boolean contains = participants.contains(userRepository.findByLogin(subscribeEventDTO.getUserName()));
+        return new ResponseEntity<>(String.valueOf(contains), HttpStatus.OK);
     }
 
     @Transactional
@@ -54,6 +68,8 @@ public class EventController {
             event.setCategory(Category.VOLLEYBALL);
         if (category.contains("баскетбол"))
             event.setCategory(Category.BASKETBALL);
+        if (category.toLowerCase().contains("хоккей"))
+            event.setCategory(Category.HOCKEY);
 
         event.setAddress(eventDTO.getAddress());
         event.setCreatorId(eventDTO.getCreator_id());
@@ -78,15 +94,26 @@ public class EventController {
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 
+    @Transactional
     @PostMapping(value = "rem_event")
     public ResponseEntity<AdminUserDto> removeEvent(@RequestBody MiniEventDTO deleteEventDTO) {
-        if (eventRepository.existsById(deleteEventDTO.getEventID()))
+        if (eventRepository.existsById(deleteEventDTO.getEventID())) {
+            Event event = eventRepository.findById(deleteEventDTO.getEventID()).get();
+            List<User> participants = event.getParticipants();
+            for (User participant : participants) {
+                List<Event> events = participant.getEvents();
+                events.remove(event);
+                participant.setEvents(events);
+                userRepository.save(participant);
+            }
+            event.setParticipants(null);
             eventRepository.deleteById(deleteEventDTO.getEventID());
-        else
+        } else
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional
     @PostMapping(value = "subscribe")
     public ResponseEntity<AdminUserDto> subscribeOnEvent(@RequestBody MiniEventDTO subscribeEventDTO) {
         User user = userRepository.findByLogin(subscribeEventDTO.getUserName());
@@ -98,6 +125,7 @@ public class EventController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional
     @PostMapping(value = "unsubscribe")
     public ResponseEntity<AdminUserDto> unsubscribeOnEvent(@RequestBody MiniEventDTO unsubscribeEventDTO) {
         User user = userRepository.findByLogin(unsubscribeEventDTO.getUserName());
@@ -117,17 +145,25 @@ public class EventController {
 
         String category = eventDTO.getCategory();
         if (category != null) {
-            if (category.contains("футбол"))
+            if (category.contains("Футбол"))
                 event.setCategory(Category.FOOTBALL);
-            if (category.contains("волейбол"))
+            if (category.contains("Волейбол"))
                 event.setCategory(Category.VOLLEYBALL);
-            if (category.contains("баскетбол"))
+            if (category.contains("Баскетбол"))
                 event.setCategory(Category.BASKETBALL);
+            if (category.toLowerCase().contains("хоккей"))
+                event.setCategory(Category.HOCKEY);
         }
         if (eventDTO.getAddress() != null)
             event.setAddress(eventDTO.getAddress());
         if (eventDTO.getCreator_id() != null && eventDTO.getCreator_id() > 0)
             event.setCreatorId(eventDTO.getCreator_id());
+
+        if (eventDTO.getDateEvent() != null)
+            event.setDateEvent(eventDTO.getDateEvent());
+
+        if (eventDTO.getCity() != null)
+            event.setCity(eventDTO.getCity());
 
         eventRepository.save(event);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -175,7 +211,7 @@ public class EventController {
 
         return new ResponseEntity<>(collect1, HttpStatus.OK);
     }
-
+    @Transactional
     @PostMapping(value = "eventsByName")
     public ResponseEntity<List<EventDTO>> getEventsByName(@RequestBody FindByNameDto nameDto) {
         List<Event> banned = eventRepository.findByName(nameDto.getName());
@@ -188,11 +224,10 @@ public class EventController {
     @Transactional
     @PostMapping(value = "sort_events")
     public ResponseEntity<List<EventDTO>> getSortedEvents(@RequestBody EventDTO eventDTO) {
-        Event event = new Event();
         Map<String, Object> map = new HashMap<>();
-        if (eventDTO.getName() != null)
+        if (eventDTO.getName() != null && eventDTO.getName() != "")
             map.put("name", eventDTO.getName());
-        if (eventDTO.getCategory() != null) {
+        if (eventDTO.getCategory() != null && eventDTO.getCategory() != "") {
             String category = eventDTO.getCategory().toLowerCase();
             if (category.contains("футбол"))
                 map.put("category", Category.FOOTBALL);
@@ -200,17 +235,31 @@ public class EventController {
                 map.put("category", Category.VOLLEYBALL);
             if (category.contains("баскетбол"))
                 map.put("category", Category.BASKETBALL);
+            if (category.toLowerCase().contains("хоккей"))
+                map.put("category", Category.HOCKEY);
         }
-        if (eventDTO.getAddress() != null)
+        if (eventDTO.getAddress() != null && eventDTO.getAddress() != "")
             map.put("address", eventDTO.getAddress());
-        if (eventDTO.getDateEvent() != null)
-            map.put("dateEvent", eventDTO.getDateEvent());
-        if (eventDTO.getCity() != null)
+
+        if (eventDTO.getCity() != null && eventDTO.getCity() != "")
             map.put("city", eventDTO.getCity());
 
         SearchSpecification search = new SearchSpecification(map);
 
         List<Event> all = eventRepository.findAll(Specification.where(search));
+
+
+        if (eventDTO.getDateEvent() != null) {
+            String now = eventDTO.getDateEvent().getYear() + " " + eventDTO.getDateEvent().getMonth() + " " + eventDTO.getDateEvent().getDay();
+            List<Event> allD = new ArrayList<>();
+            all.forEach(p -> {
+                String nowP = p.getDateEvent().getYear() + " " + p.getDateEvent().getMonth() + " " + p.getDateEvent().getDay();
+                if (now.equals(nowP))
+                    allD.add(p);
+            });
+            List<EventDTO> collect = allD.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
+            return new ResponseEntity<>(collect, HttpStatus.OK);
+        }
         List<EventDTO> collect = all.stream().map(EventDTO::fromEvent).collect(Collectors.toList());
         return new ResponseEntity<>(collect, HttpStatus.OK);
     }

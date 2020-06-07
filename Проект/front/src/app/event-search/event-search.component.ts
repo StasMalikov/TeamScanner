@@ -27,15 +27,29 @@ export class EventSearchComponent implements OnInit {
   categories: Category[] = [
     {value: 'Футбол', viewValue: 'Футбол'},
     {value: 'Волейбол', viewValue: 'Волейбол'},
-    {value: 'Баскетбол', viewValue: 'Баскетбол'}
+    {value: 'Баскетбол', viewValue: 'Баскетбол'},
+    {value: 'Хоккей', viewValue: 'Хоккей'}
   ];
 
   constructor(private auth: AuthService, private http: HttpClient,
               private eventService: EventService, private router: Router) { }
 
   ngOnInit() {
-    this.getEvents();
     this.getCities();
+    if (! this.preSort()) {
+      this.getEvents();
+    }
+  }
+
+  preSort(): boolean {
+    const sort = this.eventService.getEventSort();
+    if (sort != null) {
+      this.categorySelected = sort;
+      this.eventService.clearEventSort();
+      this.getSorted();
+      return true;
+    }
+    return false;
   }
 
   getCities() {
@@ -54,9 +68,7 @@ export class EventSearchComponent implements OnInit {
   }
 
   getEvents() {
-    this.http.post( environment.apiUrl + '/api/v1/events/get_events' , '', {
-      headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
-    })
+    this.http.post( environment.apiUrl + '/api/v1/events/get_events' , '')
       .subscribe((resp: FullEvent[]) => {
         this.events = resp;
         if (typeof this.events === undefined) {
@@ -69,10 +81,6 @@ export class EventSearchComponent implements OnInit {
       });
   }
 
-  selectCity(input: string) {
-    this.selectedCityVar = input;
-  }
-
   getSorted() {
     if (new Date(this.date.value).getDate() === new Date(new FormControl().value).getDate()) {
       const body: SortEventData = {
@@ -81,9 +89,7 @@ export class EventSearchComponent implements OnInit {
         city: this.selectedCityVar
       };
 
-      this.http.post( environment.apiUrl + '/api/v1/events/sort_events' , body, {
-        headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
-      })
+      this.http.post( environment.apiUrl + '/api/v1/events/sort_events' , body)
         .subscribe((resp: FullEvent[]) => {
           this.events = resp;
           if (typeof this.events === undefined) {
@@ -103,9 +109,7 @@ export class EventSearchComponent implements OnInit {
         city: this.selectedCityVar
       };
 
-      this.http.post( environment.apiUrl + '/api/v1/events/sort_events' , body, {
-        headers: {Authorization: 'TSToken_' + localStorage.getItem('auth_token')}
-      })
+      this.http.post( environment.apiUrl + '/api/v1/events/sort_events' , body)
         .subscribe((resp: FullEvent[]) => {
           this.events = resp;
           if (typeof this.events === undefined) {
@@ -117,5 +121,11 @@ export class EventSearchComponent implements OnInit {
           alert('Упс, ошибка');
         });
     }
+  }
+
+  resetFilters() {
+    this.date = new FormControl();
+    this.categorySelected = '';
+    this.selectedCityVar = '';
   }
 }

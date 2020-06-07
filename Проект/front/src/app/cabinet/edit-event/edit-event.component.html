@@ -12,7 +12,7 @@
       <a class="nav-link mycabinetnavlinks" href="/cabinet/user_data">Мои данные</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link mycabinetnavlinks active" href="/cabinet/create_event">Создание события</a>
+      <a class="nav-link mycabinetnavlinks" href="/cabinet/create_event">Создание события</a>
     </li>
   </ul>
 
@@ -26,12 +26,12 @@
           <div class="col-6">
             <h5>1. Название события</h5>
             <mat-form-field class="example-full-width" style="min-width: 70%">
-              <input matInput placeholder="Введите название" [(ngModel)]="cEvent.name" name="name" >
+              <input matInput placeholder="Введите название" [(ngModel)]="event.name" name="name" >
             </mat-form-field>
 
             <h5>2. Описание события</h5>
             <mat-form-field style="min-width: 70%">
-              <textarea matInput placeholder="Введите описание" [(ngModel)]="cEvent.description" name="description"></textarea>
+              <textarea matInput placeholder="Введите описание" [(ngModel)]="event.description" name="description"></textarea>
             </mat-form-field>
 
             <h5>3. Выбор категории</h5>
@@ -46,7 +46,7 @@
 
             <h5>4. Адрес события</h5>
             <mat-form-field class="example-full-width" style="min-width: 70%">
-              <input matInput placeholder="Укажите адрес" [(ngModel)]="cEvent.address" name="address">
+              <input matInput placeholder="Укажите адрес" [(ngModel)]="event.address" name="address">
             </mat-form-field>
 
           </div>
@@ -72,7 +72,7 @@
             <h5>7. Город события</h5>
             <mat-form-field style="min-width: 70%">
               <mat-label>Город</mat-label>
-              <mat-select name="city">
+              <mat-select name="city" [(ngModel)]="event.city">
                 <mat-option *ngFor="let state of allCities; index as i" [value]="state" (onSelectionChange)="selectCity(allCities[i])">
                   {{state}}
                 </mat-option>
@@ -81,7 +81,7 @@
 
             <br>
 
-            <button mat-raised-button color="primary" (click)="createEventAction()">Создать событие</button>
+            <button mat-raised-button color="primary" (click)="saveEvent()">Сохранить изменения</button>
           </div>
 
         </div>
@@ -95,4 +95,3 @@
   </div>
 
 </div>
-
