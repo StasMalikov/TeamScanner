@@ -33,7 +33,7 @@ export class ModerPageComponent implements OnInit {
   foundEventsCount = 0;
   seeFoundEvents = false;
 
-  constructor(private auth: AuthService, private http: HttpClient,
+  constructor(public auth: AuthService, private http: HttpClient,
               private eventService: EventService, private router: Router) { }
 
   ngOnInit() {

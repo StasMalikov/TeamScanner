@@ -26,7 +26,7 @@ export class EditEventComponent implements OnInit {
   selectedCategory: string;
   time: string;
 
-  constructor(private eventService: EventService, private http: HttpClient, private auth: AuthService) { }
+  constructor(private eventService: EventService, private http: HttpClient, public auth: AuthService) { }
 
   ngOnInit() {
     this.event = this.eventService.getEvent;

@@ -15,7 +15,7 @@ export class SubscriptionsComponent implements OnInit {
   events: FullEvent[];
   length = 0;
 
-  constructor(private auth: AuthService, private http: HttpClient,  private eventService: EventService, private router: Router) { }
+  constructor(public auth: AuthService, private http: HttpClient,  private eventService: EventService, private router: Router) { }
 
   ngOnInit() {
     this.getEvents();

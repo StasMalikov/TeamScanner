@@ -34,7 +34,7 @@ export class CreateEventComponent implements OnInit {
   };
   allCities: string[] = [];
 
-  constructor(private auth: AuthService, private http: HttpClient) { }
+  constructor(public auth: AuthService, private http: HttpClient) { }
 
   ngOnInit() {
     this.getCities();

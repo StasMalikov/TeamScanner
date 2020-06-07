@@ -29,7 +29,7 @@ export class AdminPageComponent implements OnInit {
   notFoundModerator = false;
   moderatorFound: StatusUser;
 
-  constructor(private auth: AuthService, private http: HttpClient,
+  constructor(public auth: AuthService, private http: HttpClient,
               private eventService: EventService, private router: Router) { }
 
   ngOnInit() {

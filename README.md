@@ -1,4 +1,4 @@
-# TeamScanner
+# [TeamScanner] (https://team-scanner.herokuapp.com/)
 
 ## Описание
 
@@ -18,6 +18,7 @@
 
 ## Ссылки
 
+- [Сайт приложения](https://team-scanner.herokuapp.com/) <br>
 - [Trello Board](https://trello.com/b/m29LZuzT) <br>
 - [Miro](https://miro.com/app/board/o9J_kulVy2I=/) <br>
 
