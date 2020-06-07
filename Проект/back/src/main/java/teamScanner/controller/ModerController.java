@@ -34,7 +34,7 @@ public class ModerController {
         this.roleRepository = roleRepository;
     }
 
-
+    @Transactional
     @GetMapping(value = "get_user/{id}")
     public ResponseEntity<AdminUserDto> getUserById(@PathVariable(name = "id") Long id) {
         User user = userService.findById(id);
@@ -54,6 +54,7 @@ public class ModerController {
             entity.setStatus(Status.BANNED);
     }
 
+    @Transactional
     @PostMapping(value = "set_userStatus")
     public ResponseEntity<AdminUserDto> setUserStatus(@RequestBody UserStatusDTO userStatusDTO) {
         User user = userService.findByUsername(userStatusDTO.getUserName());
@@ -76,6 +77,7 @@ public class ModerController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @Transactional
     @PostMapping(value = "set_eventStatus")
     public ResponseEntity<AdminUserDto> setEventStatus(@RequestBody EventStatusDTO eventStatusDTO) {
         Event event = eventRepository.findById(eventStatusDTO.getEventID()).get();
@@ -92,6 +94,7 @@ public class ModerController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional
     @PostMapping(value = "ban_listUsers")
     public ResponseEntity<List<AdminUserDto>> getBanListUsers() {
         List<User> banned = userRepository.findByStatus(Status.BANNED);
@@ -102,6 +105,7 @@ public class ModerController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @Transactional
     @PostMapping(value = "ban_listEvents")
     public ResponseEntity<List<EventDTO>> getBanListEvents() {
         List<Event> banned = eventRepository.findByStatus(Status.BANNED);
@@ -122,11 +126,12 @@ public class ModerController {
         Role mod = roleRepository.findByName("ROLE_MODER");
         Role adm = roleRepository.findByName("ROLE_ADMIN");
         if (!byLogin.getRoles().contains(mod) && !byLogin.getRoles().contains(adm))
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(AdminUserDto.fromUser(byLogin), HttpStatus.OK);
 
-        return new ResponseEntity<>(AdminUserDto.fromUser(byLogin), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @Transactional
     @PostMapping(value = "eventsByName")
     public ResponseEntity<List<EventDTO>> getEventsByName(@RequestBody FindByNameDto nameDto) {
         List<Event> banned = eventRepository.findByName(nameDto.getName());
@@ -136,6 +141,7 @@ public class ModerController {
         return new ResponseEntity<>(collect, HttpStatus.OK);
     }
 
+    @Transactional
     @PostMapping(value = "get_ban_users")
     public ResponseEntity<List<AdminUserDto>> getBanUsers() {
         List<User> byStatus = userRepository.findByStatus(Status.BANNED);
@@ -145,6 +151,7 @@ public class ModerController {
         } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @Transactional
     @PostMapping(value = "get_ban_events")
     public ResponseEntity<List<EventDTO>> getBanEvents() {
         List<Event> byStatus = eventRepository.findByStatus(Status.BANNED);
@@ -154,6 +161,7 @@ public class ModerController {
         } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @Transactional
     @PostMapping(value = "get_all_users")
     public ResponseEntity<List<AdminUserDto>> getUsers() {
 //        List<User> all = userRepository.findAll();
@@ -164,6 +172,7 @@ public class ModerController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @Transactional
     @PostMapping(value = "get_user_by_name")
     public ResponseEntity<AdminUserDto> getUserByName(@RequestBody StringDTO stringDTO) {
         User byLogin = userRepository.findByLogin(stringDTO.getInfo());
@@ -174,6 +183,7 @@ public class ModerController {
         return new ResponseEntity<>(adminUserDto, HttpStatus.OK);
     }
 
+    @Transactional
     @GetMapping("/pageable_users/{page}")
     @ResponseBody
     public Page<AdminUserDto> getPageableUsers(@PathVariable(value = "page") int page) {
