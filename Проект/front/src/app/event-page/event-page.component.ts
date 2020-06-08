@@ -9,6 +9,7 @@ import {MiniEvent} from '../models/event/MiniEvent';
 import {AuthService} from '../services/auth.service';
 import {CommentNew} from '../models/comment/CommentNew';
 import {CommentAll} from '../models/comment/CommentAll';
+import {StatusUser} from '../models/user/StatusUser';
 
 @Component({
   selector: 'app-event-page',
@@ -26,11 +27,22 @@ export class EventPageComponent implements OnInit {
   comments: CommentAll[];
   length = 0;
   notification = false;
+  creator: StatusUser;
 
   ngOnInit() {
     this.event = this.eventService.getEvent;
+    this.getCreator();
     this.getComments();
     this.checkSubscribe();
+  }
+
+  getCreator() {
+    this.http.get( environment.apiUrl + '/api/v1/events/get_login_creator/' + this.auth.id)
+      .subscribe((resp: StatusUser) => {
+        this.creator = resp;
+      }, error => {
+        //alert('Упс, ошибка');
+      });
   }
 
   checkSubscribe() {
