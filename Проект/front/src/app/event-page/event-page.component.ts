@@ -37,12 +37,10 @@ export class EventPageComponent implements OnInit {
   }
 
   getCreator() {
-    this.http.get( environment.apiUrl + '/api/v1/events/get_login_creator/' + this.auth.id)
+    this.http.get( environment.apiUrl + '/api/v1/events/get_login_creator/' + this.eventService.eventId)
       .subscribe((resp: StatusUser) => {
         this.creator = resp;
-      }, error => {
-        //alert('Упс, ошибка');
-      });
+      }, error => {});
   }
 
   checkSubscribe() {
