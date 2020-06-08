@@ -4,7 +4,7 @@
   <div class="col-1"></div>
   <div class="col-10">
     <div class="button">
-      <h4>{{event.name}}&nbsp;&nbsp;&nbsp;
+      <h4>{{creator.login}}&nbsp;&nbsp;&nbsp;
           <button mat-stroked-button *ngIf="!subscribe && !isCreator()" color="primary" (click)="subscribeOn()">Подписаться</button>
           <button mat-stroked-button *ngIf="subscribe && !isCreator()" color="warn" (click)="subscribeOff()">Отписаться</button>
       </h4>
@@ -48,7 +48,7 @@
     </table>
     <br>
     <div class="button">
-      <b>Комментарии:</b>
+      <b>Комментарии</b>
     </div>
 
     <table class="table">
