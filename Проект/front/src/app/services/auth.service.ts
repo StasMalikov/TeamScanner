@@ -19,7 +19,8 @@ export class AuthService {
         localStorage.setItem('auth_token', resp.token);
         localStorage.setItem('login', resp.login);
         localStorage.setItem('id', resp.id);
-        this.cookie.set('roles', resp.roles.toString());
+        localStorage.setItem('roles', resp.roles.toString());
+        //this.cookie.set('roles', resp.roles.toString());
 
         this.router.navigate(['']);
       }, error => {
@@ -28,15 +29,17 @@ export class AuthService {
   }
 
   logout() {
+    //this.cookie.delete('roles');
     this.cookie.deleteAll();
+    localStorage.removeItem('roles');
     localStorage.removeItem('auth_token');
     localStorage.removeItem('login');
     localStorage.removeItem('id');
   }
 
   public get isUser(): boolean {
-    if(this.cookie.get('roles') !== null) {
-      const roles = this.cookie.get('roles').split(',');
+    if(localStorage.getItem('roles') !== null) {
+      const roles = localStorage.getItem('roles').split(',');
       for (let i = 0; i < roles.length; i++) {
         if (roles[i] === 'ROLE_USER') {
           return true;
@@ -47,8 +50,8 @@ export class AuthService {
   }
 
   public get isModerator(): boolean {
-    if(this.cookie.get('roles') !== null) {
-      const roles = this.cookie.get('roles').split(',');
+    if(localStorage.getItem('roles') !== null) {
+      const roles = localStorage.getItem('roles').split(',');
       for (let i = 0; i < roles.length; i++) {
         if (roles[i] === 'ROLE_MODER') {
           return true;
@@ -59,8 +62,8 @@ export class AuthService {
   }
 
   public get isAdministrator(): boolean {
-    if(this.cookie.get('roles') !== null) {
-      const roles = this.cookie.get('roles').split(',');
+    if(localStorage.getItem('roles') !== null) {
+      const roles = localStorage.getItem('roles').split(',');
       for (let i = 0; i < roles.length; i++) {
         if (roles[i] === 'ROLE_ADMIN') {
           return true;
