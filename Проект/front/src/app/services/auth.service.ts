@@ -93,7 +93,7 @@ export class AuthService {
           localStorage.setItem('login', resp.login);
           localStorage.setItem('id', resp.id);
 
-          this.cookie.set('roles', resp.roles.toString());
+          localStorage.setItem('a', resp.roles.toString());
 
           this.router.navigate(['']);
       }, error => {
