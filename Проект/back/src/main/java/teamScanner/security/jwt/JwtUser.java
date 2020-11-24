@@ -15,7 +15,6 @@ public class JwtUser implements UserDetails {
     private final String city;
     private final Date age;
     private final String password;
-//    private final String email;
     private final boolean enabled;
     private final boolean banned;
     private final Date lastPasswordResetDate;
@@ -26,7 +25,6 @@ public class JwtUser implements UserDetails {
             String username,
             String city,
             Date age,
-//            String email,
             String password, Collection<? extends GrantedAuthority> authorities,
             boolean enabled,
             boolean banned,
@@ -36,7 +34,6 @@ public class JwtUser implements UserDetails {
         this.username = username;
         this.city = city;
         this.age = age;
-//        this.email = email;
         this.password = password;
         this.authorities = authorities;
         this.enabled = enabled;
@@ -60,7 +57,6 @@ public class JwtUser implements UserDetails {
         return true;
     }
 
-//    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return !banned;
@@ -79,18 +75,6 @@ public class JwtUser implements UserDetails {
     public Date getAge() {
         return age;
     }
-
-    //    public String getFirstname() {
-//        return city;
-//    }
-
-//    public String getLastname() {
-//        return lastName;
-//    }
-//
-//    public String getEmail() {
-//        return email;
-//    }
 
     @JsonIgnore
     @Override

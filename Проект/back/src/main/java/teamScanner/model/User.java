@@ -7,21 +7,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * the entity of a user who has lists of events and and comments
+ * that he subscribed to and which he left, a list of roles
+ * that grant access rights
+ */
 @Entity
 @Table(name = "users")
 @Data
 public class User extends BaseEntity {
     @Column(name = "login",unique = true)
     private String login;
-
-//    @Column(name = "first_name")
-//    private String firstName;
-
-//    @Column(name = "last_name")
-//    private String lastName;
-
-//    @Column(name = "email")
-//    private String email;
 
     @Column(name = "password")
     private String password;

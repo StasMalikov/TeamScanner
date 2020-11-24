@@ -24,46 +24,23 @@ public class SearchSpecification implements Specification<Event> {
     @Override
     public Predicate toPredicate(Root<Event> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
-
         for (Map.Entry<String, Object> entry : searchMap.entrySet()) {
             if (entry.getKey().equals("name")) {
-//                predicates.add(criteriaBuilder.like(
-//                        criteriaBuilder.lower(root.get(entry.getKey())), "%" + entry.getValue().toString().toLowerCase()));
-//                predicates.add(criteriaBuilder.in(root.get(entry.getKey())).value(entry.getValue()));
                 predicates.add(criteriaBuilder.equal(root.get(entry.getKey()), entry.getValue().toString()));
             }
             if (entry.getKey().equals("description")) {
-//                predicates.add(criteriaBuilder.like(
-//                    criteriaBuilder.lower(root.get(entry.getKey())), "%" + entry.getValue().toString().toLowerCase()));
-//                predicates.add(criteriaBuilder.in(root.get(entry.getKey())).value(entry.getValue()));
-
                 predicates.add(criteriaBuilder.equal(root.get(entry.getKey()), entry.getValue().toString()));
             }
             if (entry.getKey().equals("category")) {
-//                predicates.add(criteriaBuilder.like(
-//                        criteriaBuilder.lower(root.get(entry.getKey())), "%" + entry.getValue().toString().toLowerCase()));
-//                predicates.add(criteriaBuilder.in(root.get(entry.getKey())).value(entry.getValue()));
                 predicates.add(criteriaBuilder.equal(root.get(entry.getKey()), (Category) entry.getValue()));
             }
             if (entry.getKey().equals("address")) {
-//                predicates.add(criteriaBuilder.like(
-//                        criteriaBuilder.lower(root.get(entry.getKey())), "%" + entry.getValue().toString().toLowerCase()));
-//                predicates.add(criteriaBuilder.in(root.get(entry.getKey())).value(entry.getValue()));
                 predicates.add(criteriaBuilder.equal(root.get(entry.getKey()), entry.getValue().toString()));
             }
-//            if (entry.getKey().equals("dateEvent")) {
-////                predicates.add(criteriaBuilder.like(
-////                        criteriaBuilder.lower(root.get(entry.getKey())), "%" + entry.getValue().toString().toLowerCase()));
-////                predicates.add(criteriaBuilder.in(root.get(entry.getKey())).value(entry.getValue()));
-//                predicates.add(criteriaBuilder.equal(root.get(entry.getKey()), entry.getValue()));
-//            }
             if (entry.getKey().equals("city")) {
                 predicates.add(criteriaBuilder.equal(root.get(entry.getKey()), entry.getValue().toString()));
             }
-
-
         }
-
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
     }
 }

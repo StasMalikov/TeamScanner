@@ -12,7 +12,6 @@ import teamScanner.service.UserService;
 
 
 @Service
-//@Slf4j
 public class JwtUserDetailsService implements UserDetailsService {
 
     private final UserService userService;
@@ -31,7 +30,6 @@ public class JwtUserDetailsService implements UserDetailsService {
         }
 
         JwtUser jwtUser = JwtUserFactory.create(user);
-//        log.info("IN loadUserByUsername - user with username: {} successfully loaded", username);
         return jwtUser;
     }
 }

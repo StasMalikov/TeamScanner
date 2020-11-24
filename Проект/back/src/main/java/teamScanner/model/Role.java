@@ -6,7 +6,10 @@ import javax.persistence.*;
 import java.util.List;
 
 
-
+/**
+ * user roles
+ * USER,MODER,ADMIN
+ */
 @Entity
 @Table(name = "roles")
 @Data

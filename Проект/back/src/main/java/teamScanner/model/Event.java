@@ -6,6 +6,12 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * a sporting event that includes the creator of the event,
+ * the people who subscribed to it,
+ * the location and date of the event,
+ * and a list of comments
+ */
 @Data
 @Table(name = "events")
 @Entity

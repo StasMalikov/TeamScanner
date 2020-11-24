@@ -70,7 +70,6 @@ public class AuthenticationRestControllerV1 {
 
     @PostMapping("registration")
     public ResponseEntity registration(@RequestBody RegistrationRequestDto requestDto) {
-//        try {
         String login = requestDto.getLogin();
 
         if (userRepository.findByLogin(login) != null) {

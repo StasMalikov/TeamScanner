@@ -9,7 +9,4 @@ import java.util.Date;
 
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-
-//    Comment findByCreatorAndEventAndCommentTextAndCreated(User creator, Event event, String commentText, Date created);
-
 }

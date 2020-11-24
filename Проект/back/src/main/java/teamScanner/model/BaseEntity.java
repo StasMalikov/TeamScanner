@@ -8,7 +8,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 
-
+/**
+ * parent class of all entities
+ * stores records such as
+ * id, created time ,updated time ,enum status {ACTIVE, NOT_ACTIVE, BANNED}
+ */
 @MappedSuperclass
 @Data
 public class BaseEntity {

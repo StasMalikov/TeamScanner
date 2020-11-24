@@ -1,5 +1,8 @@
 package teamScanner.model;
 
+/**
+ * enumeration for storing different sports
+ */
 public enum Category {
     FOOTBALL{
         @Override
