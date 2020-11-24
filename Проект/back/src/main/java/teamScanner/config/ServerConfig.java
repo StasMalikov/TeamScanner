@@ -30,9 +30,6 @@ public class ServerConfig {
         return tomcat;
     }
 
-//    @Value("${server.port.http}") //Defined in application.properties file
-//            int httpPort;
-
     @Value("${server.port}") //Defined in application.properties file
             int httpsPort;
 

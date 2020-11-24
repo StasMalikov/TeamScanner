@@ -35,10 +35,6 @@ public class EventController {
 
     }
 
-
-    //    @Transactional
-//    @GetMapping(value = "get_subscribe/{id}")
-//    public ResponseEntity<List<EventDTO>> getSubscribe(@PathVariable(value = "id") Long id) {
     @Transactional
     @PostMapping(value = "get_subscribe")
     public ResponseEntity<String> getSubscribe(@RequestBody MiniEventDTO subscribeEventDTO) {

@@ -53,16 +53,6 @@ public class CommentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @PostMapping(value = "rem_comment")
-//    public ResponseEntity<AdminUserDto> getCommentInEvent(@RequestBody CommentEventDTO commentEventDTO) {
-//        if (commentRepository.existsById(commentEventDTO.getCommentID()))
-//            commentRepository.deleteById(commentEventDTO.getCommentID());
-//        else
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-
     @Transactional
     @GetMapping(value = "get_comments_in_event/{id}")
     public ResponseEntity<List<CommentDTO>> getCommentInEvent(@PathVariable(value = "id") Long id) {
@@ -72,14 +62,6 @@ public class CommentController {
         List<Comment> comments = event1.getComments();
 
         List<CommentDTO> collect1 = comments.stream().map(CommentDTO::fromComment).collect(Collectors.toList());
-//        List<Long> idEventsWhereUserExist = entityManagerService.getIdEventsWhereUserExist(id);
-//        List<Comment> collect = new ArrayList<>();
-//        for (Long integer : idEventsWhereUserExist) {
-//            Event event = eventRepository.findById(integer).get();
-//            if (event != null)
-//                collect.add(event);
-//        }
-//        List<CommentDTO> collect1 = collect.stream().map(CommentDTO::fromComment).collect(Collectors.toList());
         if (collect1.size() > 0)
             return new ResponseEntity<>(collect1, HttpStatus.OK);
         else

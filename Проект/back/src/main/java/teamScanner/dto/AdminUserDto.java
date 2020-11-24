@@ -26,8 +26,6 @@ public class AdminUserDto {
         user.setCity(city);
         user.setAge(age);
         user.setStatus(Status.valueOf(status));
-
-        //тут не записываются роли, ну да и ...
         return user;
     }
 

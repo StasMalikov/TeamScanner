@@ -63,16 +63,6 @@ public class ModerController {
 
         setStatus(user, userStatusDTO.getStatus());
 
-//        String strSt = userStatusDTO.getStatus().toLowerCase();
-//        if (strSt.contains("active"))
-//            user.setStatus(Status.ACTIVE);
-//        if (strSt.contains("not") && strSt.contains("active"))
-//            user.setStatus(Status.NOT_ACTIVE);
-//        if (strSt.contains("ban"))
-//            user.setStatus(Status.BANNED);
-////        if (!user.equals(userService.findByUsername(statusDTO.getUserName())))
-        userRepository.save(user);
-//        else return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
         AdminUserDto result = AdminUserDto.fromUser(user);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -82,14 +72,6 @@ public class ModerController {
     public ResponseEntity<AdminUserDto> setEventStatus(@RequestBody EventStatusDTO eventStatusDTO) {
         Event event = eventRepository.findById(eventStatusDTO.getEventID()).get();
         setStatus(event, eventStatusDTO.getStatus());
-
-//        String strSt = eventStatusDTO.getStatus().toLowerCase();
-//        if (strSt.contains("active"))
-//            event.setStatus(Status.ACTIVE);
-//        if (strSt.contains("not") && strSt.contains("active"))
-//            event.setStatus(Status.NOT_ACTIVE);
-//        if (strSt.contains("ban"))
-//            event.setStatus(Status.BANNED);
         eventRepository.save(event);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -179,7 +161,6 @@ public class ModerController {
         if (byLogin == null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         AdminUserDto adminUserDto = AdminUserDto.fromUser(byLogin);
-//        return new ResponseEntity<>(adminUserDto, HttpStatus.OK);
         return new ResponseEntity<>(adminUserDto, HttpStatus.OK);
     }
 

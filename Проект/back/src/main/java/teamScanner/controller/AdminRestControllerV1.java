@@ -22,13 +22,11 @@ public class AdminRestControllerV1 {
     private final UserService userService;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-//    private final EventRepository eventRepository;
 
     @Autowired
     public AdminRestControllerV1(UserService userService, UserRepository userRepository, RoleRepository roleRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
-//        this.eventRepository = eventRepository;
         this.roleRepository = roleRepository;
     }
     @Transactional
@@ -111,7 +109,6 @@ public class AdminRestControllerV1 {
     @PostMapping(value = "get_user_by_login")
     public ResponseEntity<AdminUserDto> getUserByLogin(@RequestBody StringDTO stringDTO) {
         User byLogin = userRepository.findByLogin(stringDTO.getInfo());
-//        return new ResponseEntity<>(adminUserDto, HttpStatus.OK);
         Role mdr = roleRepository.findByName("ROLE_MODER");
         Role adm = roleRepository.findByName("ROLE_ADMIN");
         if (byLogin.getRoles().contains(mdr) || byLogin.getRoles().contains(adm))
@@ -135,9 +132,7 @@ public class AdminRestControllerV1 {
             user = userService.setUserRole(user, "ROLE_MODER");
         if (userStatusDTO.getStatus().toLowerCase().contains("admin"))
             user = userService.setUserRole(user, "ROLE_ADMIN");
-//        if (!user.equals(userService.findByUsername(statusDTO.getUserName())))
         userRepository.save(user);
-//        else   return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
         AdminUserDto result = AdminUserDto.fromUser(user);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -153,9 +148,7 @@ public class AdminRestControllerV1 {
             user = userService.removeUserRole(user, "ROLE_MODER");
         if (userStatusDTO.getStatus().toLowerCase().contains("admin"))
             user = userService.removeUserRole(user, "ROLE_ADMIN");
-//        if (!user.equals(userService.findByUsername(statusDTO.getUserName())))
         userRepository.save(user);
-//        else   return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
         AdminUserDto result = AdminUserDto.fromUser(user);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

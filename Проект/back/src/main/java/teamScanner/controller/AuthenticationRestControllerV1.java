@@ -103,8 +103,6 @@ public class AuthenticationRestControllerV1 {
         response.put("id", saved.getId());
 
         return ResponseEntity.ok(response);
-//        } catch (AuthenticationException e) {
-//            throw new BadCredentialsException("Invalid username or password");
 //        }
     }
 }

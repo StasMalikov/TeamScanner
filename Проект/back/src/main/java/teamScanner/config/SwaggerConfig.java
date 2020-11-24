@@ -22,8 +22,6 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-//                .apis( RequestHandlerSelectors.basePackage("com.example.controller"))
-//                .paths(PathSelectors.any())
                 .paths(PathSelectors.ant("/api/v1/**"))
 
                 .build().apiInfo(apiInfo());
@@ -31,11 +29,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Team Scanner")
-//                .description("DESCRIPTION")
                 .version("V1")
-//                .termsOfServiceUrl("http://terms-of-services.url")
-//                .license("LICENSE")
-//                .licenseUrl("http://url-to-license.com")
                 .build();
     }
 
