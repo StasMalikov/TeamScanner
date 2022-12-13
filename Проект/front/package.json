@@ -23,7 +23,7 @@
     "@angular/router": "~8.2.14",
     "bootstrap": "^4.4.1",
     "compression": "latest",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "jquery": "^3.4.1",
     "ngx-cookie-service": "^3.0.4",
     "rxjs": "~6.4.0",
